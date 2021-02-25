@@ -1,12 +1,16 @@
 package com.smt.kata.object;
 
+import java.beans.IntrospectionException;
 //JDK 11.x
 import java.io.Serializable;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 // Inner class imports
 import com.smt.kata.object.Student.Grade;
@@ -18,8 +22,7 @@ import com.smt.kata.object.Student.Grade;
  * attributes of a class in runtime.  In this kata, you will display a list of 
  * the member variables with their class types as well as their methods and 
  * return types.  The returned entities will be alphabetized.  Also provide the 
- * Interface name and type for the student class
- * be alphabetized.
+ * Interface name and type for the student class will be alphabetized.
  * <b>Copyright:</b> Copyright (c) 2021
  * <b>Company:</b> Silicon Mountain Technologies
  * 
@@ -40,38 +43,55 @@ public class ReflectionKata {
 		super();
 		student = new Student(id, first, last, level, gpa);
 	}
-
 	
 	/**
 	 * Returns the values for each of the methods in the student class.
 	 * @return
+	 * @throws IntrospectionException 
+	 * @throws InvocationTargetException 
+	 * @throws IllegalArgumentException 
+	 * @throws IllegalAccessException 
 	 */
-	public Map<String, Object> getMethodValues() {
-		return new HashMap<>();
+	public Map<String, Object> getMethodValues()
+			throws IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+		Method[] methods = this.student.getClass().getDeclaredMethods();
+		Map<String, Object> map = new TreeMap<>();
+
+		for (var method : methods)
+			if (method.getName().startsWith("get"))
+				map.put(method.getName(), method.invoke(this.student));
+
+		return map;
 	}
-	
+
 	/**
-	 * Returns a collection of the interface types
+	 * Returns a collection of the interface types 
 	 * @return
 	 */
 	public List<Type> getInterfaces() {
-		return new ArrayList<>();
+		return Arrays.asList(this.student.getClass().getInterfaces());
 	}
-	
+
 	/**
-	 * Returns a collection of the enum types for the Grade enum
+	 * Returns a collection of the enum types for the Grade enum 
 	 * @return
 	 */
 	public List<Grade> getEnumTypes() {
-		return new ArrayList<>();
+		return Arrays.asList(Student.Grade.values());
 	}
-	
+
 	/**
-	 * Returns an alphabetized list of fields in the student class
+	 * Returns an alphabetized list of fields in the student class 
 	 * @return
 	 */
 	public Map<String, Class<?>> getFields() {
-		return new HashMap<>();
+		Field[] fields = this.student.getClass().getDeclaredFields();
+		Map<String, Class<?>> map = new TreeMap<>();
+
+		for (var field : fields)
+			map.put(field.getName(), field.getType());
+
+		return map;
 	}
 	
 	/**
@@ -79,7 +99,13 @@ public class ReflectionKata {
 	 * @return
 	 */
 	public Map<String, Class<?>> getMethods() {
-		return new HashMap<>();
+		Method[] methods = this.student.getClass().getDeclaredMethods();
+		Map<String, Class<?>> map = new TreeMap<>();
+
+		for (var method : methods)
+			map.put(method.getName(), method.getReturnType());
+
+		return map;
 	}
 
 }
@@ -126,7 +152,7 @@ class Student implements Serializable {
 		setLevel(level);
 		setGpa(gpa);
 	}
-
+	
 	/**
 	 * @return the studentId
 	 */

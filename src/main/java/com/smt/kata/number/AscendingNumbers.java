@@ -36,13 +36,31 @@ public class AscendingNumbers {
 		super();
 	}
 
+	public static void main(String[] args) {
+		isAscending("1213");
+	}
+
 	/**
 	 * Determines if the provided value has sequential numbers
 	 * @param sequence
 	 * @return
 	 */
-	public boolean isAscending(String sequence) {
+	public static boolean isAscending(String sequence) {
+		if (sequence.length() == 0) return true;
+
+		int halfLength = sequence.length() / 2;
 		
-		return false;
+		String firstHalf = sequence.substring(0, (halfLength));
+		String secondHalf = sequence.substring(halfLength);
+
+		System.out.println(firstHalf);
+		System.out.println(secondHalf);
+
+		if (Integer.parseInt(firstHalf) + 1 == Integer.parseInt(secondHalf)) 
+			return true;
+		else if (halfLength == 2) 
+			return false;
+		else 
+			return isAscending(firstHalf) && isAscending(secondHalf);
 	}
 }

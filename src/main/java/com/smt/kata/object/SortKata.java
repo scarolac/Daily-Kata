@@ -1,5 +1,10 @@
 package com.smt.kata.object;
 
+import java.util.Comparator;
+import java.util.Objects;
+
+import com.smt.kata.util.HashCodeUtil;
+
 /****************************************************************************
  * <b>Title</b>: SortKata.java
  * <b>Project</b>: SMT-Kata
@@ -15,7 +20,7 @@ package com.smt.kata.object;
  * @since Feb 7, 2021
  * @updates:
  ****************************************************************************/
-public class SortKata {
+public class SortKata implements Comparable<SortKata>{
 	
 	private String id;
 	private String name;
@@ -68,6 +73,36 @@ public class SortKata {
 	 */
 	public void setAge(int age) {
 		this.age = age;
+	}
+
+	@Override
+	public int compareTo(SortKata sortKata) {		
+		return Comparator.comparing(SortKata::getId, Comparator.nullsFirst(Comparator.reverseOrder()))
+				.thenComparingInt(SortKata::getAge).reversed()
+				.thenComparing(SortKata::getName, Comparator.nullsFirst(Comparator.naturalOrder()))				
+				.compare(this, sortKata);
+	}
+	@Override
+	public String toString() {
+		return id + "|" + name + "|" + age;
+	}
+	
+	@Override
+	public int hashCode() {
+	    return HashCodeUtil.hash(this.getId())
+	        + HashCodeUtil.hash(this.getName())
+	        + HashCodeUtil.hash(this.getAge());
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+	    if (this == obj) return true;
+	    if (obj == null || getClass() != obj.getClass())
+	        return false;
+	    SortKata sortKata = (SortKata) obj;
+		return Objects.equals(id, sortKata.id) &&
+				Objects.equals(age, sortKata.age) &&
+				Objects.equals(name, sortKata.name);
 	}
 }
 

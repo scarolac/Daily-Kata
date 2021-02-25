@@ -41,7 +41,11 @@ public class FriendFinder {
 	 * @return
 	 */
 	public int calculateDistance(String line) {
-		
-		return 0;
+		return (line.matches(".*\\w{1}.*\\w{1}.*")) ? Math.abs(line.indexOf("S") - line.indexOf("F")) : -1;
+
+		// if (line.contains("S") && line.contains("F"))
+		// 	return Math.abs(line.indexOf("S") - line.indexOf("F"));
+		// return -1;
 	}
+
 }

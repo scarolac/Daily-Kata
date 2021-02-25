@@ -33,8 +33,28 @@ public class IPAddress {
 	 * @param ipEnd
 	 * @return
 	 */
-	public int numberHosts(String ipStart, String ipEnd) {
+	public static int numberHosts(String ipStart, String ipEnd) {
+		final int SIZE = 256;
+
+		String[] ipStartArray = ipStart.split("\\.");
+		String[] ipEndArray = ipEnd.split("\\.");
 		
-        return 0;
+		int first, second, third, fourth;
+
+		first = Math.abs(Integer.parseInt(ipStartArray[0]) - Integer.parseInt(ipEndArray[0]));
+		second = Math.abs(Integer.parseInt(ipStartArray[1]) - Integer.parseInt(ipEndArray[1]));
+		third = Math.abs(Integer.parseInt(ipStartArray[2]) - Integer.parseInt(ipEndArray[2]));
+		fourth = Math.abs(Integer.parseInt(ipStartArray[3]) - Integer.parseInt(ipEndArray[3]));
+		
+		if (first > 0)
+			return first * (SIZE - second) * (SIZE - third) * (SIZE - fourth);
+		if (second > 0)
+			return second * (SIZE - third) * (SIZE - fourth);
+		if (third > 0)
+			return third * (SIZE - fourth);
+		if (fourth > 0)
+			return fourth;
+
+		return 0;
 	}
 }

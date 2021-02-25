@@ -1,14 +1,18 @@
 package com.smt.kata.object;
 
 // Junit 5
-import static org.junit.jupiter.api.Assertions.*;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 // JDk 11.x
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 /****************************************************************************
  * <b>Title</b>: SortKataTest.java
@@ -71,7 +75,7 @@ class SortKataTest {
 		assertNotEquals("1", people.get(0).getId());
 		
 		/*** Make sure this class will sort by ID to begin **/
-		//Collections.sort(people);
+		Collections.sort(people);
 		assertEquals(null, people.get(0).getId());
 		assertEquals("112345", people.get(1).getId());
 		
