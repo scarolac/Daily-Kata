@@ -46,31 +46,25 @@ public class RunningMedianCalculator {
 	 * @param values
 	 * @return
 	 */
-	public List<Double> getMedianValues(int[] values) {
-		List<Double> medianValues = new ArrayList<>();
-		if (values == null || values.length == 0) return medianValues;
-				
-		List<Integer> valueList = Arrays.stream(values).boxed().collect(Collectors.toList());		
-		
-		for (int i = 0; i < valueList.size(); ++i) 
-			medianValues.add(calculateMedian(valueList.subList(0, i)));			
-		
-		return medianValues;
-	}
-	
-	private double calculateMedian(List<Integer> values) {
-		Collections.sort(values);
-		System.out.println(values);
-		int size = values.size();
-//		System.out.println(values);
-		var half = (size / 2);
-		if (size % 2 != 0) {
-			System.out.println((double)values.get(size / 2));
-			return (double)values.get(size / 2);
-		}
-		System.out.println((values.get(0)));
-//		return ((values.get(size / 2) + values.get((size / 2) + 1)) / 2.0);	
-		return 0.0;
-	}
+    public List<Double> getMedianValues(int[] values) {
+        List<Double> medianValues = new ArrayList<>();
+        if (values == null || values.length == 0) return medianValues;
+        
+        List<Integer> valuesList = Arrays.stream(values).boxed().collect(Collectors.toList());
+
+        for (int i = 1; i <= valuesList.size(); ++i) 
+            medianValues.add(calculateMedian(valuesList.subList(0, i)));
+        
+        return medianValues;
+    }
+    
+    private double calculateMedian(List<Integer> values) {
+        Collections.sort(values);
+        int half = values.size() / 2;
+        
+        if (values.size() % 2 != 0)
+            return (double) values.get(half);
+        return (values.get(half) + values.get(half - 1)) / 2.0;
+    }
 
 }
