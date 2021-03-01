@@ -3,6 +3,8 @@ package com.smt.kata.data;
 // JDK 11.x
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /****************************************************************************
  * <b>Title</b>: TagParser.java
@@ -46,6 +48,34 @@ public class TagParser {
 	 */
 	public List<String> evaluateTags(String tag) {
 		List<String> tags = new ArrayList<>();
+		if (tag == null) return tags;
+		
+		List<String> openingTags = openingTag(tag);
+		
+		for (String item : openingTags) {
+			int startIndex = tag.indexOf(item);
+			int endIndex = tag.indexOf(closingTag(item));
+			
+			if (endIndex < 0) continue;
+			
+			tags.add(tag.substring(startIndex, endIndex + closingTag(item).length()));
+		}
+		
 		return tags;
+	}
+	
+	private List<String> openingTag(String tag) {
+		List<String> list = new ArrayList<>();
+		Pattern pattern = Pattern.compile("<\\w*>");
+		Matcher matcher = pattern.matcher(tag);
+		
+		while(matcher.find()) 
+			list.add(matcher.group());
+		
+		return list;
+	}
+	
+	private String closingTag(String tag) {
+		return tag.substring(0,1) + "/" + tag.substring(1);
 	}
 }
