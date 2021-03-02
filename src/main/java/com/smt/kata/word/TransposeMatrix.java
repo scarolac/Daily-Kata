@@ -38,6 +38,15 @@ public class TransposeMatrix {
 	 * @return
 	 */
 	public String parse(String[][] matrix) {
-		return null;
+		if (matrix == null || matrix.length == 0) return "";
+		
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < matrix[0].length; ++i) {
+			for (int j = 0; j < matrix.length; ++j)	{
+				sb.append(matrix[j][i] + " ");
+			}
+		}
+		
+		return sb.toString().trim();
 	}
 }
