@@ -44,6 +44,25 @@ public class BinaryAsciiConverter {
 	 * @return
 	 */
 	public String convert(String binary) {
-		return binary;
+		if (binary == null || binary.length() % 8 != 0) return "";		
+		StringBuilder result = new StringBuilder();
+		
+		for (int i = 0; i < binary.length(); i += 8) 
+			result.append(stringToLetter(flipBits(binary.substring(i, i + 8))));
+		
+		return result.toString();
+	}
+	
+	private String flipBits(String binary) {
+		return new StringBuilder(binary).reverse().toString();
+	}
+	
+	private Character stringToLetter(String letter) {
+		int sum = 0;
+		for (int j = 0; j < letter.length(); ++j) {				
+			sum += Integer.parseInt(letter.charAt(j) +"") * Math.pow(2, j);			
+		}
+		
+		return (char)sum;
 	}
 }
