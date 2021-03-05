@@ -33,17 +33,29 @@ class ArrangeWordTest {
 		assertEquals(6, permutations.size());
 		assertTrue(permutations.contains("odg"));
 		assertTrue(permutations.contains("dog"));
-		
+	}
+	
+	@Test
+	void testEmpty() {
+		ArrangeWord aw = new ArrangeWord();
 		// Evaluate empty case
-		permutations = aw.getPermutations(null);
+		List<String> permutations = aw.getPermutations(null);
 		assertEquals(0, permutations.size());
-		
+	}	
+	
+	@Test
+	void testSingle() {
+		ArrangeWord aw = new ArrangeWord();
 		// Evaluate single letter
-		permutations = aw.getPermutations("a");
+		List<String> permutations = aw.getPermutations("a");
 		assertEquals(1, permutations.size());
-		
+	}
+	
+	@Test
+	void testLong() {
+		ArrangeWord aw = new ArrangeWord();
 		// Evaluate long word
-		permutations = aw.getPermutations("evaluation");
+		List<String> permutations = aw.getPermutations("evaluation");
 		assertEquals(3628800, permutations.size());
 		assertTrue(permutations.contains("noitaulave"));
 		assertFalse(permutations.contains("val"));

@@ -38,7 +38,23 @@ public class ArrangeWord {
 	 */
 	public List<String> getPermutations(String word) {
 		items = new ArrayList<>();
+		if (word == null) return items;		
+		if (word.length() == 1) { items.add(word); return items; }
+		
+		
 		
 		return items;
+	}
+	
+	private String permutate(String word, String addition) {
+		// get letter at index
+		// put at front
+		// put all other letters in all other orders after it
+		// two letters?
+		// index = 0, put first letter first, other letter after
+		// index = 1, put second
+		for (int i = 0; i < word.length(); ++i) {
+			
+		}
 	}
 }
