@@ -41,7 +41,7 @@ public class ArrangeWord {
 		if (word == null) return items;		
 		if (word.length() == 1) { items.add(word); return items; }
 		
-		
+		permutate("","");
 		
 		return items;
 	}
@@ -56,5 +56,6 @@ public class ArrangeWord {
 		for (int i = 0; i < word.length(); ++i) {
 			
 		}
+		return "";
 	}
 }

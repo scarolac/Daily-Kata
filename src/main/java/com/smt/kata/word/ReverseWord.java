@@ -1,5 +1,7 @@
 package com.smt.kata.word;
 
+import java.util.Stack;
+
 /****************************************************************************
  * <b>Title</b>: ReverseWord.java
  * <b>Project</b>: SMT-Kata
@@ -36,6 +38,25 @@ public class ReverseWord {
 	 * @return
 	 */
 	public String processPhrase(String phrase) {
-		return phrase;
+		if (phrase == null) return "";
+		Stack<String> stack = new Stack<>();
+		
+		StringBuilder temp = new StringBuilder();
+		for (var letter : phrase.trim().toCharArray()) {
+			if (letter != ' ') 			
+				temp.append(letter);
+			else if (temp.length() > 0) {
+				stack.push(temp.toString());
+				temp = new StringBuilder();
+			}							
+		}
+		stack.push(temp.toString());
+		
+		StringBuilder result = new StringBuilder();
+		while(! stack.empty()) {
+			result.append(stack.pop()).append(" ");			
+		}
+		
+		return result.toString().trim();
 	}
 }
