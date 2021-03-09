@@ -19,7 +19,7 @@ import java.util.Stack;
  * The input string may contain leading or trailing spaces. However, your reversed 
  * string should not contain leading or trailing spaces. You need to reduce multiple 
  * spaces between two words to a single space in the reversed string. You *** MAY NOT ***
- * utilize String.split() or parsing methods.  You mut loop the phrase and process in a 
+ * utilize String.split() or parsing methods.  You must loop the phrase and process in a 
  * loop.  You may use collections to store words if desired.
  * 
  * <b>Copyright:</b> Copyright (c) 2021
@@ -32,6 +32,13 @@ import java.util.Stack;
  ****************************************************************************/
 public class ReverseWord {
 
+	/**
+	 * 
+	 */
+	public ReverseWord() {
+		super();
+	}
+	
 	/**
 	 * Takes the phrase and reverses the ords
 	 * @param phrase
