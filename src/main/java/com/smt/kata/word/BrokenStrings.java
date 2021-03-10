@@ -1,5 +1,7 @@
 package com.smt.kata.word;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 // JDK 11.x
 import java.util.List;
 
@@ -35,6 +37,33 @@ public class BrokenStrings {
 	 * @return Collection of sliced words
 	 */
 	public List<String> slice(String phrase, int k) {
-		return null;
+		List<String> result = new ArrayList<>();
+		if (phrase == null || phrase.length() == 0 || k == 0) return result;
+		
+		String[] array = phrase.trim().split(" ");
+		System.out.println(Arrays.toString(array));
+		StringBuilder row = new StringBuilder();
+		
+		
+		int max = k;
+		for (var item : array) {
+			row.append(item).append(" ");
+			
+			if (row.toString().trim().length() <= max) {
+				max -= row.toString().trim().length();
+			}
+			else {
+				result.add(row.toString().trim());
+				max = k;
+				row = new StringBuilder();
+			}
+			System.out.println(row);
+		}
+		result.add(row.toString().trim());
+		System.out.println(result);
+		
+		
+		
+		return result;
 	}
 }
