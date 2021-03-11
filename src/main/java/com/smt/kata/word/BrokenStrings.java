@@ -30,6 +30,14 @@ import java.util.List;
  * @updates:
  ****************************************************************************/
 public class BrokenStrings {
+
+	/**
+	 * 
+	 */
+	public BrokenStrings() {
+		super();
+	}
+	
 	/**
 	 * Slices the phrase into chunks no greater than k characters long
 	 * @param phrase Phrase to slice
