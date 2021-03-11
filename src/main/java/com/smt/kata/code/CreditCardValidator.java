@@ -44,6 +44,37 @@ public class CreditCardValidator {
 	 * @return
 	 */
 	public boolean isValid(String ccn) {
-		return true;
+		if (ccn == null || ccn.length() == 0 || ccn.matches(".*\\D.*")) return false;
+		
+		char check = ccn.charAt(ccn.length() - 1);
+		String reversed = new StringBuilder(ccn.substring(0, ccn.length() - 1)).reverse().toString();
+			
+		int temp = 0;
+		StringBuilder result = new StringBuilder();
+		for (int i = 0; i < reversed.length(); ++i) {
+			
+			if ((i + 1) % 2 != 0) {
+				temp = Integer.parseInt(reversed.charAt(i) + "") * 2;
+				if (temp > 9) {
+					int sum = 0;
+					while (temp > 0) {
+						sum += temp % 10;
+						temp /= 10;
+					}
+					temp = sum;
+				}
+				result.append(temp);				
+			}
+			else
+				result.append(reversed.charAt(i));
+		}
+		
+		int sum = 0;
+		for (int i = 0; i < result.length(); ++i)
+		{
+			sum += Integer.parseInt(result.charAt(i) + "");
+		}
+		
+		return (10 - (sum % 10) == Integer.parseInt(check + ""));
 	}
 }

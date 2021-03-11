@@ -28,17 +28,17 @@ public class PasswordValidator {
 	private final int specialAmt;
 	private final int digitsAmt;
 	
-	public static boolean validate(String password) {
-		for (var variable : PasswordValidator.class.getDeclaredFields()) {
-			// reflectively invoke each define field as a function for truth
-			Method m = PasswordValidator.class.getMethod(PasswordValidator.class, variable.getName());
-			if (m.invoke(variable.value())) {
-				continue;
-			} else {
-				return false;
-			}
-		}
-	}
+//	public static boolean validate(String password) {
+//		for (var variable : PasswordValidator.class.getDeclaredFields()) {
+//			// reflectively invoke each define field as a function for truth
+//			Method m = PasswordValidator.class.getMethod(PasswordValidator.class, variable.getName());
+//			if (m.invoke(variable.value())) {
+//				continue;
+//			} else {
+//				return false;
+//			}
+//		}
+//	}
 	
 	private PasswordValidator(PassValBuilder builder)
 	{
