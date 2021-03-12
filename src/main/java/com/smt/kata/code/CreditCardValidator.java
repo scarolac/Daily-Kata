@@ -7,8 +7,7 @@ package com.smt.kata.code;
  * Create a function that takes a number as an argument and returns true if the number 
  * is a valid credit card number, false otherwise.
  * 
- * Credit card numbers must be between 14-19 digits in length, and pass the
- *  Luhn test, described below:
+ * Credit card numbers must valid, and pass the Luhn test, described below:
  * 
  * Remove the last digit (this is the "check digit").
  * Reverse the number.
