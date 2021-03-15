@@ -60,8 +60,24 @@ class RomanNumeralMathTest {
 	 * Test method for {@link com.smt.kata.math.RomanNumeralMath#add(java.lang.String, java.lang.String)}.
 	 */
 	@Test
+	void testSubtractMore() throws Exception {
+		assertEquals("IV", rnm.subtract("I", "V"));
+	}
+	
+	/**
+	 * Test method for {@link com.smt.kata.math.RomanNumeralMath#add(java.lang.String, java.lang.String)}.
+	 */
+	@Test
 	void testAddFirstPreIssue() throws Exception {
 		assertEquals("IX", rnm.add("IV", "V"));
+	}
+	
+	/**
+	 * Test method for {@link com.smt.kata.math.RomanNumeralMath#add(java.lang.String, java.lang.String)}.
+	 */
+	@Test
+	void testSubtractFirstPreIssue() throws Exception {
+		assertEquals("I", rnm.subtract("IV", "V"));
 	}
 	
 	/**
@@ -76,6 +92,14 @@ class RomanNumeralMathTest {
 	 * Test method for {@link com.smt.kata.math.RomanNumeralMath#add(java.lang.String, java.lang.String)}.
 	 */
 	@Test
+	void testSubtractSecondPreIssue() throws Exception {
+		assertEquals("II", rnm.subtract("III", "I"));
+	}
+	
+	/**
+	 * Test method for {@link com.smt.kata.math.RomanNumeralMath#add(java.lang.String, java.lang.String)}.
+	 */
+	@Test
 	void testAddLarge() throws Exception {
 		assertEquals("CXXXXVIII", rnm.add("LXXIV", "LXXIV"));
 	}
@@ -84,7 +108,22 @@ class RomanNumeralMathTest {
 	 * Test method for {@link com.smt.kata.math.RomanNumeralMath#add(java.lang.String, java.lang.String)}.
 	 */
 	@Test
+	void testSubtractLarge() throws Exception {
+		assertEquals("IV", rnm.subtract("LXX", "LXXIV"));
+	}
+	
+	/**
+	 * Test method for {@link com.smt.kata.math.RomanNumeralMath#add(java.lang.String, java.lang.String)}.
+	 */
+	@Test
 	void testAddJumbo() throws Exception {
 		assertEquals("DCCCCLXXIII", rnm.add("DCCCXCIX", "LXXIV"));
+	}
+	/**
+	 * Test method for {@link com.smt.kata.math.RomanNumeralMath#add(java.lang.String, java.lang.String)}.
+	 */
+	@Test
+	void testSubtractJumbo() throws Exception {
+		assertEquals("DCCCXXV", rnm.subtract("DCCCXCIX", "LXXIV"));
 	}
 }
