@@ -68,5 +68,25 @@ public class RomanNumerals {
 		
 		return roman.toString();
 	}
+	
+	public int getNumberFromRoman(String roman) {
+		for (var letter : roman.toCharArray()) {
+			for (var pair : numerals.entrySet()) {
+				// if we are lucky
+				if (pair.getValue().equals(roman))
+					return pair.getKey();
+				
+				// do work
+				else {
+					int result = 0;
+					
+					return result;
+				}
+			}
+		}
+		
+		
+		return 0;
+	}
 
 }

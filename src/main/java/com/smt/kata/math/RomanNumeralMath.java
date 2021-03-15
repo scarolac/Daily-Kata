@@ -1,5 +1,9 @@
 package com.smt.kata.math;
 
+import org.apache.commons.lang3.StringUtils;
+
+import com.smt.kata.code.RomanNumerals;
+
 /****************************************************************************
  * <b>Title</b>: RomanNumeralMath.java
  * <b>Project</b>: SMT-Kata
@@ -17,6 +21,12 @@ package com.smt.kata.math;
  ****************************************************************************/
 public class RomanNumeralMath {
 	
+	private RomanNumerals romanNumerals;
+	
+	public RomanNumeralMath() {
+		romanNumerals = new RomanNumerals();
+	}
+	
 	/**
 	 * Takes two roman numerals and adds them together
 	 * @param first
@@ -24,7 +34,12 @@ public class RomanNumeralMath {
 	 * @return
 	 */
 	public String add(String first, String second) {
-		return first + second;
+		if (StringUtils.isEmpty(first) || StringUtils.isEmpty(second) || 
+				first.matches("\\d") || second.matches("\\d")) return "";		
+		
+		return romanNumerals.getRomanNumeral(
+				romanNumerals.getNumberFromRoman(first) +
+				romanNumerals.getNumberFromRoman(second));
 	}
 	
 	/**
@@ -34,7 +49,9 @@ public class RomanNumeralMath {
 	 * @param second
 	 * @return
 	 */
-	public String subtract(String first, String second) {
-		return first + second;
+	public String subtract(String first, String second) {		
+		return romanNumerals.getRomanNumeral(
+				romanNumerals.getNumberFromRoman(first) -
+				romanNumerals.getNumberFromRoman(second));
 	}
 }
