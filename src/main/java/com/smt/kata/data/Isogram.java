@@ -27,6 +27,19 @@ public class Isogram {
 	 * @return true if an isogram.  False if empty or not an isogram
 	 */
 	public boolean isValidIsogram(String phrase) {
-		return phrase == null;
+		if (phrase == null || phrase.isEmpty())
+			return false;
+
+		return distinct(phrase);
+	}
+
+	private boolean distinct(String phrase) {
+		for (var letter : phrase.toLowerCase().toCharArray()) {
+			if (letter == '-' || letter == ' ')
+				continue;
+			if (phrase.substring(phrase.indexOf(letter) + 1).contains((letter + "")))
+				return false;
+		}
+		return true;
 	}
 }
