@@ -1,9 +1,9 @@
 package com.smt.kata.data;
 
+// Junit 5
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import org.junit.jupiter.api.Test;
 
 /****************************************************************************
