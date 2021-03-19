@@ -2,6 +2,7 @@ package com.smt.kata.distance;
 
 // JDK 11.x
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /****************************************************************************
@@ -68,6 +69,26 @@ public class SaddlePoints {
 	 * @return List of int array of column/row/value for all saddle points
 	 */
 	public List<int[]> getCoordinates() {
+		List<Integer> rowInts = new ArrayList<>();
+		List<Integer> colInts = new ArrayList<>();
+		
+		for (int row = 0; row < matrix.length; ++row) {			
+			for (int col = 0; col < matrix[0].length; ++col) {
+				rowInts.add(matrix[row][col]);				
+			}
+			
+			System.out.println("row " + row + " max "+ Collections.max(rowInts));
+			rowInts = new ArrayList<>();
+		}
+		
+		for (int col = 0; col < matrix[0].length; ++col) {			
+			for (int row = 0; row < matrix.length; ++row) {
+				colInts.add(matrix[row][col]);				
+			}
+			System.out.println("col " + col + " min "+ Collections.min(colInts));
+			colInts = new ArrayList<>();
+		}
+		
 		return coords;
 	}
 
