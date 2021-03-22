@@ -1,5 +1,7 @@
 package com.smt.kata.distance;
 
+import java.util.Arrays;
+
 /****************************************************************************
  * <b>Title:</b> RailFenceCypher.java
  * <b>Project:</b> SMT-Kata
@@ -62,6 +64,10 @@ public class RailFenceCypher {
 	public RailFenceCypher() {
 		super();
 	}
+	
+	private String rowOne;
+	private String rowTwo;
+	private String rowThree;
 
 	/**
 	 * Loops the phrase and performs a Rail Fence Cypher
@@ -69,7 +75,26 @@ public class RailFenceCypher {
 	 * @return Rail Fence Cypher encoded phrase
 	 */
 	public String encodePhrase(String phrase) {
-		return phrase;
+		if (phrase == null || phrase.isEmpty()) return "";
+		
+		StringBuilder one = new StringBuilder();
+		StringBuilder two = new StringBuilder();
+		StringBuilder three = new StringBuilder();
+	
+		phrase = phrase.toUpperCase().replace(" ", "");
+		int count = 0;
+		one.append(phrase.charAt(count++));
+		while (count < phrase.length()) {			
+			two.append(phrase.charAt(count++));
+			three.append(phrase.charAt(count++));
+			two.append(phrase.charAt(count++));
+			one.append(phrase.charAt(count++));
+		}
+		rowOne = one.toString();
+		rowTwo = two.toString();
+		rowThree = three.toString();
+		
+		return one.append(two).append(three).toString();
 	}
 	
 	/**
@@ -78,7 +103,27 @@ public class RailFenceCypher {
 	 * @return Matrix of the cypher
 	 */
 	public char[][] getMatrixFromPhrase(String phrase) {
+		if (phrase == null || phrase.isEmpty()) return new char[0][];
+		encodePhrase(phrase);
+		
+		System.out.println(rowOne);
+		
+		System.out.println(Arrays.toString(rowOneDots(rowOne)));
+		
+		
 		return new char[0][];
+	}
+	
+	private String[] rowOneDots(String phrase) {
+		String[] dots = new String[phrase.length() * 3];
+		
+		for (int i = 0; i < dots.length; ++i) {
+			dots[i] = phrase.charAt(i) + "";
+			dots[i++] = ".";
+			dots[i++] = ".";
+			dots[i++] = ".";
+		}
+		return dots;
 	}
 
 }
