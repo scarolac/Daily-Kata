@@ -27,8 +27,12 @@ package com.smt.kata.number;
 public class ArmstrongNumber {
 
 	public boolean isArmstrongNumber(int number) {
-		
-		return number == 0;
+		String word = Integer.toString(number);		
+		int sum = 0;		
+		for (var letter : word.toCharArray()) 
+			sum += Math.pow(letter - '0', word.length());
+				
+		return sum == number;
 	}
 
 }
