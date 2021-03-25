@@ -24,19 +24,19 @@ package com.smt.kata.distance;
  * df
  * gi
  * 
- * So your function should return 1, since we only needed to remove 1 column.
+ * So your function should return the above updated Matrix, since we only needed to remove 1 column.
  * As another example, given the following table:
  * 
  * abcdef
  * 
- * Your function should return 0, since the rows are already ordered (there's only one row).
+ * Your function should return the original, since the rows are already ordered (there's only one row).
  * As another example, given the following table:
  * 
  * zyx
  * wvu
  * tsr
  * 
- * Your function should return 3, since we would need to remove all the columns to order it.
+ * Your function should return an empty matrix, since we would need to remove all the columns to order it.
  * 
  * <b>Copyright:</b> Copyright (c) 2021
  * <b>Company:</b> Silicon Mountain Technologies
