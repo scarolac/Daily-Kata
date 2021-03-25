@@ -1,5 +1,9 @@
 package com.smt.kata.distance;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 /****************************************************************************
  * <b>Title:</b> LexigraphicOrdering.java
  * <b>Project:</b> SMT-Kata
@@ -55,6 +59,55 @@ public class LexigraphicOrdering {
 	 * @return matrix of data that is properly ordered
 	 */
 	public char[][] orderData(char[][] data) {
-		return data;
+		if (data == null || data.length == 0) {
+			return new char[0][];
+		}
+		if (data.length == 1) {
+			return data;
+		}
+		
+		List<Integer> columns = new ArrayList<>();
+		for (int i = 0; i < data.length; i++) {
+			for (int j = 0; j < data[0].length-1; j++) {
+//				p(data[j][i]);
+				if (data[j][i] > data[j+1][i]) {
+					columns.add(i);
+					break;
+				}
+			}
+		}
+		p(columns);
+		
+		return removeColumns(data,columns);
 	}
+	
+	public char[][] removeColumns(char[][] data, List<Integer> columns) {
+		char[][] output = new char[data.length][data[0].length-columns.size()];
+		int counter = 0;
+		for (int i = 0; i < data.length; i++) {
+			if (columns.contains(i)) {
+				break;
+			}
+			for (int j = 0; j < data[0].length; j++) {
+				p(data[j][i]);
+				output[j][counter] =  data[j][i];
+			}
+			counter ++;
+			
+		}
+//		pA(output);
+		return output;
+	}
+	
+	private static <T> void p(T string) {
+		System.out.println(string);
+	}
+	
+//	private static <T> void pA(T[] array) {
+//		for (int i = 0; i < array.length; ++i) {
+//			for (int j = 0; j < array[0].length; ++j) {
+//				
+//			}
+//		}
+//	}
 }
