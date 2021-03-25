@@ -86,7 +86,7 @@ public class LexigraphicOrdering {
 		int counter = 0;
 		for (int i = 0; i < data.length; i++) {
 			if (columns.contains(i)) {
-				break;
+				continue;
 			}
 			for (int j = 0; j < data[0].length; j++) {
 				p(data[j][i]);
