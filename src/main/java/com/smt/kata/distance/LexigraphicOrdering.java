@@ -68,34 +68,38 @@ public class LexigraphicOrdering {
 		if (data.length == 1) {
 			return data;
 		}
+		int rowCount = data.length;
+		int colCount = data[0].length;
 		List<Integer> columns = new ArrayList<>();
-		for (int i = 0; i < data.length; i++) {
-			for (int j = 0; j < data[0].length-1; j++) {
-				if (data[j][i] > data[j+1][i]) {
-					columns.add(i);
+		for (int row = 0; row < rowCount; row++) {
+			for (int col = 0; col < colCount - 1; col++) {
+				if (data[col][row] > data[col + 1][row]) {
+					columns.add(row);
 					break;
 				}
 			}
 		}
-		
-		return removeColumns(data,columns);
+
+		return removeColumns(data, columns);
 	}
 	
 	public char[][] removeColumns(char[][] data, List<Integer> columns) {
-		char[][] output = new char[data.length][data[0].length-columns.size()];
+		if (columns.size() == data.length)
+			return new char[0][];
+		char[][] output = new char[data.length][data[0].length - columns.size()];
 		int counter = 0;
-		for (int i = 0; i < data.length; i++) {
-			if (columns.contains(i)) {
+		for (int row = 0; row < data.length; row++) {
+			if (columns.contains(row)) {
 				continue;
 			}
-			for (int j = 0; j < data[0].length; j++) {
-				output[j][counter] =  data[j][i];
+			for (int col = 0; col < data[0].length; col++) {
+				output[col][counter] = data[col][row];
 			}
-			counter ++;
-			
+			counter++;
+
 		}
 		pM(output);
-		return (output.length == 0 || output[0].length == 0) ? new char[0][] : output;
+		return output;
 	}
 	
 	private static <T> void p(T msg) { System.out.println(msg); }	
