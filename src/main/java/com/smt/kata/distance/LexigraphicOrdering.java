@@ -52,6 +52,8 @@ import java.util.List;
  * 
  ****************************************************************************/
 public class LexigraphicOrdering {
+	
+	private static int count = 0;
 
 	/**
 	 * Reorders the columns based upon lexigraphic order
@@ -59,24 +61,22 @@ public class LexigraphicOrdering {
 	 * @return matrix of data that is properly ordered
 	 */
 	public char[][] orderData(char[][] data) {
+		p("Testing " + count++);
 		if (data == null || data.length == 0) {
 			return new char[0][];
 		}
 		if (data.length == 1) {
 			return data;
 		}
-		
 		List<Integer> columns = new ArrayList<>();
 		for (int i = 0; i < data.length; i++) {
 			for (int j = 0; j < data[0].length-1; j++) {
-//				p(data[j][i]);
 				if (data[j][i] > data[j+1][i]) {
 					columns.add(i);
 					break;
 				}
 			}
 		}
-		p(columns);
 		
 		return removeColumns(data,columns);
 	}
@@ -89,25 +89,16 @@ public class LexigraphicOrdering {
 				continue;
 			}
 			for (int j = 0; j < data[0].length; j++) {
-				p(data[j][i]);
 				output[j][counter] =  data[j][i];
 			}
 			counter ++;
 			
 		}
-//		pA(output);
-		return output;
+		pM(output);
+		return (output.length == 0 || output[0].length == 0) ? new char[0][] : output;
 	}
 	
-	private static <T> void p(T string) {
-		System.out.println(string);
-	}
-	
-//	private static <T> void pA(T[] array) {
-//		for (int i = 0; i < array.length; ++i) {
-//			for (int j = 0; j < array[0].length; ++j) {
-//				
-//			}
-//		}
-//	}
+	private static <T> void p(T msg) { System.out.println(msg); }	
+	private static void pA(char[] array) { System.out.println(Arrays.toString(array));}
+	private static void pM(char[][] matrix) { p(matrix.length + "x" + matrix[0].length); for (var row : matrix) pA(row); }
 }
