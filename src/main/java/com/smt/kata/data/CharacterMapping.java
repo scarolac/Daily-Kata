@@ -2,6 +2,7 @@ package com.smt.kata.data;
 
 // JDK 11.x
 import java.io.InvalidObjectException;
+import java.util.Arrays;
 import java.util.Map;
 
 /****************************************************************************
@@ -37,7 +38,9 @@ public class CharacterMapping {
 	 */
 	public CharacterMapping(Map<Integer, char[]> digitMap) throws InvalidObjectException {
 		super();
-		throw new InvalidObjectException("Change Me");
+		if (digitMap == null || digitMap.size() == 0)
+			throw new InvalidObjectException("Invalid input map");
+		this.digitMap = digitMap;
 	}
 
 	/**
@@ -45,7 +48,21 @@ public class CharacterMapping {
 	 * @param locations Locations to concatenate
 	 * @return concatenated string array
 	 */
-	public String[] add(int[] locations) {
+	public String[] add(int[] locations) {		
+		
+		for (var pos : locations) {
+			pA(digitMap.get(pos));
+			for (int i = 0; i < digitMap.get(pos).length; ++i) {
+				
+			}
+		}
+			
+		
+		
+		
 		return new String[0];
 	}
+	
+	private static <T> void p(T msg) { System.out.println(msg); }    
+    private static void pA(char[] array) { System.out.println(Arrays.toString(array));}
 }
