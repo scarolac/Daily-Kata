@@ -54,6 +54,8 @@ public class CollatzConjecture {
 	 * @return
 	 */
 	public int calculate(int n) {
-		return n;
+		int count;		
+		for (count = 0; Math.abs(n) > 1; ++count) n = (n%2==0) ? Math.abs(n)/2 : Math.abs(n)*3+1;
+		return count;
 	}
 }
