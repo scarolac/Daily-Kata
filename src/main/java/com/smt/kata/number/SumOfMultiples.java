@@ -37,7 +37,15 @@ public class SumOfMultiples {
 	 * @param factors Factors used to calculate the multiples
 	 * @return Sum of th multiples
 	 */
-	public int calculate(int maxValue, Integer...factors) {
-		return maxValue;
+	public int calculate(int maxValue, Integer... factors) {
+		int sum = 0;
+		for (int i = 0; i < maxValue; ++i)
+			for (var item : factors)
+				if (i % item == 0) {
+					sum += i;
+					break;
+				}
+
+		return sum;
 	}
 }
