@@ -35,7 +35,7 @@ public class SumOfMultiples {
 	 * @param maxValue Maximum value to calculate the multiples. Multiples must
 	 * be LESS than the max Value
 	 * @param factors Factors used to calculate the multiples
-	 * @return Sum of th multiples
+	 * @return Sum of the multiples
 	 */
 	public int calculate(int maxValue, Integer... factors) {
 		int sum = 0;

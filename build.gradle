@@ -28,7 +28,7 @@ dependencies {
     implementation 'org.apache.commons:commons-io:1.3.2'
     
     // SMT Base Libs
-	implementation 'com.siliconmtn:spacelibs-java:1.0.0'
+	implementation 'com.siliconmtn:spacelibs-java:1.1.0'
 	
     // This dependency is used internally, and not exposed to consumers on their own compile classpath.
 	implementation 'org.mockito:mockito-core:3.7.0'
