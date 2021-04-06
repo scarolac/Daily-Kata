@@ -1,5 +1,7 @@
 package com.smt.kata.number;
 
+import java.util.Stack;
+
 /****************************************************************************
  * <b>Title:</b> CountingParens.java
  * <b>Project:</b> SMT-Kata
@@ -32,6 +34,23 @@ public class CountingParens {
 	 * @return
 	 */
 	public int calculate(String parens) {
-		return parens.length();
+		if (parens == null)
+			return 0;
+
+		Stack<Character> left = new Stack<>();
+		Stack<Character> right = new Stack<>();
+
+		for (var item : parens.toCharArray()) {
+			if (item == '(')
+				left.push(item);
+			else if (item == ')') {
+				if (!left.isEmpty())
+					left.pop();
+				else
+					right.push(item);
+			}
+		}
+
+		return left.size() + right.size();
 	}
 }
