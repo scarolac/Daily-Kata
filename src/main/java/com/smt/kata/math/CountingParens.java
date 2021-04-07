@@ -1,4 +1,4 @@
-package com.smt.kata.number;
+package com.smt.kata.math;
 
 import java.util.Stack;
 
