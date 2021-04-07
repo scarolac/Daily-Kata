@@ -1,5 +1,7 @@
 package com.smt.kata.math;
 
+import java.util.Arrays;
+import java.util.EnumMap;
 // JDK 11.x
 import java.util.Map;
 
@@ -31,7 +33,12 @@ public class PurchaseChange {
 	 * Currency enum to track money types
 	 */
 	public enum Currency {
-		TWENTY_DOLLAR, TEN_DOLLAR, FIVE_DOLLAR, DOLLAR, QUARTER, DIME, NICKEL, PENNY;
+		TWENTY_DOLLAR(20.00), TEN_DOLLAR(10.00), FIVE_DOLLAR(5.00), DOLLAR(1.00), QUARTER(0.25), DIME(0.10), NICKEL(0.05), PENNY(0.01);
+
+		double value;
+		Currency(double d) {
+			this.value = d;
+		}
 	}
 	
 	/**
@@ -41,7 +48,22 @@ public class PurchaseChange {
 	 * @return Map with currencies and amounts
 	 */
 	public Map<Currency, Integer> calculate(double purchaseAmount, double moneyPaid) {
-		
-		return null;
+		Map<Currency, Integer> result = new EnumMap<>(Currency.class);
+		double change = moneyPaid - purchaseAmount;
+		if (change < 0) return result;
+		for (var item : Currency.values()) {
+			double value = item.value;
+			if (value > change)	continue;
+
+			result.put(item, (int) (change / value));
+			change %= value;
+		}
+		result.computeIfPresent(Currency.PENNY, (key, val) -> val + 1);
+
+		return result;
 	}
+	
+	private static <T> void p(T msg) { System.out.println(msg); }    
+    private static void pA(Currency[] currencies) { System.out.println(Arrays.toString(currencies));}
+//    private static void pM(char[][] matrix) { p(matrix.length + "x" + matrix[0].length); for (var row : matrix) pA(row); }
 }
