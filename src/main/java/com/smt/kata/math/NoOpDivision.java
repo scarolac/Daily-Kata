@@ -38,7 +38,7 @@ public class NoOpDivision {
 		if (dividend == 0 || divisor == 0)
 			return 0;
 		
-		boolean flip = (dividend <= 0 ^ divisor <= 0);
+		boolean flip = (dividend < 0 ^ divisor < 0);
 		
 		dividend = Math.abs(dividend);
 		divisor = Math.abs(divisor);		
