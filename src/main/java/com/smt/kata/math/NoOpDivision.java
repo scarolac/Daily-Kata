@@ -28,13 +28,28 @@ package com.smt.kata.math;
 public class NoOpDivision {
 
 	/**
-	 * Divide two integers and receive an integer.  Round to floor
+	 * Divide two integers and receive an integer. Round to floor
+	 * 
 	 * @param dividend Number to be divided
-	 * @param divisor Number to be divided by
-	 * @return rounded number.  Zero if dividend or divisor is zero
+	 * @param divisor  Number to be divided by
+	 * @return rounded number. Zero if dividend or divisor is zero
 	 */
 	public int divide(int dividend, int divisor) {
-		return dividend + divisor;
+		if (dividend == 0 || divisor == 0)
+			return 0;
+		
+		boolean flip = (dividend <= 0 ^ divisor <= 0);
+		
+		dividend = Math.abs(dividend);
+		divisor = Math.abs(divisor);		
+		
+		int quotient = 0;		
+		while (dividend >= divisor) {
+			dividend -= divisor;
+			++quotient;
+		}
+		
+		return (flip) ? -quotient : quotient;
 	}
 
 }
