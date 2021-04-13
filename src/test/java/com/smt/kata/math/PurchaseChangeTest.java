@@ -13,7 +13,7 @@ import com.smt.kata.math.PurchaseChange.Currency;
 /****************************************************************************
  * <b>Title:</b> PurchaseChangeTest.java
  * <b>Project:</b> SMT-Kata
- * <b>Description:</b> CHANGE ME!!
+ * <b>Description:</b> Unit test for the Purchase Change kata
  * <b>Copyright:</b> Copyright (c) 2021
  * <b>Company:</b> Silicon Mountain Technologies
  * 
