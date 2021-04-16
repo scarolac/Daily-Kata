@@ -1,5 +1,7 @@
 package com.smt.kata.object;
 
+import java.util.Arrays;
+
 /****************************************************************************
  * <b>Title:</b> TimeMap.java
  * <b>Project:</b> SMT-Kata
@@ -54,11 +56,43 @@ public class TimeMap<K,V> {
 	// Members
 	protected int defaultSize = 8;
 	
+	private int size = 0;
+	
+	private TimeMap<K,V>[] entries;
+	private K key;
+	private V value;
+	private int time;
+	
 	/**
 	 * Initializes the array
 	 */
+	@SuppressWarnings("unchecked")
 	public TimeMap() {
 		super();
+		this.entries = new TimeMap[defaultSize];
+	}
+	
+	private TimeMap(K key, V value, int time) {
+		this.key = key;
+		this.value = value;
+		this.time = time;
+	}
+	
+	@Override
+	public String toString() {
+		return key + "|" + value + "|" + time;
+	}
+	
+	public K getKey() {
+		return key;
+	}
+	
+	public V getValue() {
+		return value;
+	}
+	
+	public int getTime() {
+		return time;
 	}
 	
 	/**
@@ -66,9 +100,12 @@ public class TimeMap<K,V> {
 	 * @return integer with the current size
 	 */
 	public int size() {
-		return 0;
+		return size;
+	}	
+	
+	private void resize() {
+		entries = Arrays.copyOf(entries, size + 1 + defaultSize);		
 	}
-
 
 	/**
 	 * Sets TimeMap properties
@@ -77,7 +114,9 @@ public class TimeMap<K,V> {
 	 * @param time Index of the TimeMap
 	 */
 	public void set(K key, V value, int time) {
-		/** Nothing to do **/
+		if ((size % defaultSize) < 2)
+			resize();
+		entries[size++] = new TimeMap<>(key, value, time);
 	}
 	
 	/**
@@ -86,7 +125,9 @@ public class TimeMap<K,V> {
 	 * @return TimeMap in the provided index.  Null if OOB or missing
 	 */
 	public TimeMap<K,V> get(int index) {
-		return null;
+		if (index > entries.length) 
+			return null;
+		return entries[index];
 	}
 	
 	/**
@@ -96,6 +137,16 @@ public class TimeMap<K,V> {
 	 * @return Value of the matching key and time
 	 */
 	public V get(K key, int time) {
-		return null;
+		if (key == null) return null;
+		TimeMap<K,V> match = null;
+		for (TimeMap<K,V> entry : entries) {
+			if (entry != null && entry.getKey().equals(key)) {
+				if (time == entry.getTime() ||
+						(entry.getTime() < time && (match == null || entry.getTime() > match.getTime())) ) {
+					match = entry;
+				}
+			}
+		}
+		return match != null? match.getValue():null;
 	}
 }
