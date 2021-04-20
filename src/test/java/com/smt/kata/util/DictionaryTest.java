@@ -4,11 +4,9 @@ package com.smt.kata.util;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 
 // JDK 11.x
 import java.util.Set;
-import java.io.BufferedReader;
 import java.util.Arrays;
 
 /****************************************************************************
@@ -25,7 +23,7 @@ import java.util.Arrays;
  ****************************************************************************/
 class DictionaryTest {
 	
-	@Mock BufferedReader reader;
+	// Members
 	private Dictionary dict;
 	
 	@BeforeEach

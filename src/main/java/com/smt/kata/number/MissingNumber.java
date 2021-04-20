@@ -21,7 +21,7 @@ public class MissingNumber {
 	 * @return
 	 */
 	public int calculateSum(int[] numbers) {
-		return 0;
+		return numbers[0];
 	}
 
 }

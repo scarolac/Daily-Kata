@@ -23,7 +23,7 @@ public class Palindrome {
 	 * @return
 	 */
 	public boolean isPalindrome(int startNumber){
-		return false;
+		return startNumber == 0;
 	}
 
 }

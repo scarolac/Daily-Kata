@@ -25,7 +25,7 @@ public class Pangram {
 	 * @return
 	 */
 	public boolean isPangram(String sentence){
-		return true;
+		return "".equals(sentence);
 	}
 
 }

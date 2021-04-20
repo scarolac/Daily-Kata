@@ -22,7 +22,7 @@ public class DisariumNumber {
 	 * @return
 	 */
 	public boolean isDisarium(int number) {
-		return true;
+		return number == 1;
 	}
 
 }

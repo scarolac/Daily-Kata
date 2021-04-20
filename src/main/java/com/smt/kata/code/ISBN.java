@@ -26,7 +26,7 @@ public class ISBN {
 	 */
 	public boolean isISBN(String isbnNumber){
 		
-		return true;
+		return "".equals(isbnNumber);
 	}
 
 }

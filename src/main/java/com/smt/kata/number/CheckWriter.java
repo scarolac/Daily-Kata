@@ -50,14 +50,14 @@ public class CheckWriter {
 	 */
 	public String convertWords(double data) {
 
-		return "";
+		return data + "";
 	}
 
 	/**
 	 * Create a numbers map to convert ints to words
 	 */
 	protected void loadMap() {
-		
+		/** Put something here **/
 	}
 
 }

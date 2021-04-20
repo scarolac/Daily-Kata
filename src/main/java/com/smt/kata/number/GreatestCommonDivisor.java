@@ -24,7 +24,7 @@ public class GreatestCommonDivisor {
 	 * @return
 	 */
 	public int gcd(int p, int q) {
-		return 0;
+		return p + q;
 	}
 
 }

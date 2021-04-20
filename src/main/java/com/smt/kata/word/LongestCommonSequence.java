@@ -23,7 +23,7 @@ public class LongestCommonSequence {
 	 */
 	public String find(String s1, String s2) {
 		
-		return "";
+		return s1 + s2;
 	}
 
 }

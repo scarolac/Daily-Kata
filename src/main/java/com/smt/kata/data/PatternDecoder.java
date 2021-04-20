@@ -34,7 +34,7 @@ public class PatternDecoder {
 	 * @param pattern Valid pattern to compare
 	 * @return Collection of the matching patterns
 	 */
-	public static List<String> decodePattern(String pattern) {
+	public List<String> decodePattern(String pattern) {
 		List<String> patterns = new ArrayList<>();
 		StringBuilder builder = new StringBuilder();
 

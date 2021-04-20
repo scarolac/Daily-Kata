@@ -22,7 +22,7 @@ public class TripleUp {
 	 */
 	public boolean tripleUp(int[] nums) {
 
-		return false;
+		return nums.length == 0;
 	}
 
 }

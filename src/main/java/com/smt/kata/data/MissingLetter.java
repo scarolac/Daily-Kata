@@ -31,7 +31,7 @@ public class MissingLetter {
 	 */
 	public char missingLetter(String[] chars) {
 		
-		return '*';
+		return chars[0].charAt(0);
 	}
 
 }

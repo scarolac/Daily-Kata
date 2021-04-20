@@ -21,7 +21,7 @@ public class CompressString {
 	 * @return
 	 */
 	public String compress(String val){
-		return "";
+		return val + "";
 	}
 
 }

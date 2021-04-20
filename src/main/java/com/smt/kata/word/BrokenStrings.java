@@ -1,5 +1,6 @@
 package com.smt.kata.word;
 
+// JDK 11.x
 import java.util.ArrayList;
 import java.util.Arrays;
 // JDK 11.x

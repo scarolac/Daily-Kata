@@ -29,7 +29,7 @@ public class QueryStringParser {
 	 */
 	public Map<String, List<String>> parseString(String qs){
 		Map<String, List<String>> mapping = new HashMap<>();
-
-		return mapping;
+		mapping.put(qs,  null);
+		return new HashMap<>();
 	}
 }

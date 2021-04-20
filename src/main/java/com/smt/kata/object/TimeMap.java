@@ -107,6 +107,7 @@ public class TimeMap<K,V> {
 		entries = Arrays.copyOf(entries, size + 1 + defaultSize);		
 	}
 
+
 	/**
 	 * Sets TimeMap properties
 	 * @param key Key of the TimeMap

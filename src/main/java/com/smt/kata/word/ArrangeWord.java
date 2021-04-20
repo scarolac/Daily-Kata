@@ -22,7 +22,7 @@ public class ArrangeWord {
 	/**
 	 * Holds the results of the permutation
 	 */
-	private List<String> items;
+	private static List<String> items;
 
 	/**
 	 * 

@@ -21,6 +21,6 @@ public class ReverseLettersKeepNumbers {
 	 * @return
 	 */
 	public String reverse(char[] cWord) {
-		return "";
+		return new String(cWord);
 	}
 }

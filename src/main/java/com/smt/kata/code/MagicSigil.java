@@ -31,7 +31,7 @@ public class MagicSigil {
 	 * @return
 	 */
 	public String sigilize(String word) {
-		return "";
+		return word + "";
 	}
 
 }

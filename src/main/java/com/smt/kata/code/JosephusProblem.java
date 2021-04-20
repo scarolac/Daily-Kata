@@ -30,6 +30,6 @@ public class JosephusProblem {
 	 * @return
 	 */
 	public int josephusRecursive(int numSoldiers, int interval) {
-		return 0;
+		return numSoldiers * interval;
 	}
 }

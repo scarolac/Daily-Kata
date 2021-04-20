@@ -27,7 +27,7 @@ public class LargestGap {
 	 * @return
 	 */
 	public int largestGap(int[] arr) {
-		return 0;
+		return arr.length;
 	}
 
 }

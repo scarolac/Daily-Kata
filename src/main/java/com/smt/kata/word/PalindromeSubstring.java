@@ -23,7 +23,7 @@ public class PalindromeSubstring {
 	 * @return
 	 */
 	public String find(String val) {
-		return "";
+		return val;
 	}
 
 }
