@@ -1,7 +1,11 @@
 package com.smt.kata.object;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 // JDK 11.x
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 
 
 /****************************************************************************
@@ -31,7 +35,11 @@ public class SerializerUtil {
 	 * and is equal to the original object
 	 */
 	public boolean isSerializable(Object o) {
-		return o == null;
+		try {
+			return o.equals(deserialize(serialize(o)));
+		} catch (Exception e) {
+			return false;
+		}
 	}
 	
 	
@@ -42,7 +50,9 @@ public class SerializerUtil {
 	 * @throws IOException thrown if the object instance can not be serialized
 	 */
 	public byte[] serialize(Object inst) throws IOException {
-	    return new byte[0];
+		var byteStream = new ByteArrayOutputStream();
+		new ObjectOutputStream(byteStream).writeObject(inst);
+		return byteStream.toByteArray();
 	}
 
 	/**
@@ -54,6 +64,6 @@ public class SerializerUtil {
 	 */
 	public Object deserialize(byte[] pickled) 
 	throws IOException, ClassNotFoundException {
-	    return pickled;
+	    return new ObjectInputStream(new ByteArrayInputStream(pickled)).readObject();
 	}
 }
