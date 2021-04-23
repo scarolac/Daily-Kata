@@ -1,5 +1,7 @@
 package com.smt.kata.distance;
 
+import java.util.Arrays;
+
 /****************************************************************************
  * <b>Title:</b> QueenAttack.java
  * <b>Project:</b> SMT-Kata
@@ -35,28 +37,4 @@ package com.smt.kata.distance;
  * <b>updates:</b>
  * 
  ****************************************************************************/
-public class QueenAttack {
-	
-	// Members
-	protected char[][] chessboard;
-
-	/**
-	 * Initialize the chess board
-	 * @param chessboard 2d array that expresses the chess board
-	 */
-	public QueenAttack(char[][] chessboard) {
-		super();
-		
-		this.chessboard = chessboard;
-	}
-
-	/**
-	 * Determines if the black and white queen can attach each other in any direction
-	 * @param white coordinate for the white queen
-	 * @param black coordinate for the black queen
-	 * @return true if they can attack in any direction.  False otherwise
-	 */
-	public boolean canAttack(int[] white, int[] black) {
-		return white[0] == black[0];
-	}
-}
+class QueenAttack{char[][]a;public QueenAttack(char[][]a){super();a=a;for(char[]c:a=a)Arrays.fill(c,'-');}boolean canAttack(int[]a,int[]b){return a!=null&&b!=null&&a.length==2&&b.length==2&&(a[0]==b[0]||a[1]==b[1]||Math.abs((a[1]-b[1])/(a[0]-b[0]))==1);}}
