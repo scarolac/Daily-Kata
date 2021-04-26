@@ -37,4 +37,18 @@ import java.util.Arrays;
  * <b>updates:</b>
  * 
  ****************************************************************************/
-class QueenAttack{char[][]a;public QueenAttack(char[][]a){super();a=a;for(char[]c:a=a)Arrays.fill(c,'-');}boolean canAttack(int[]a,int[]b){return a!=null&&b!=null&&a.length==2&&b.length==2&&(a[0]==b[0]||a[1]==b[1]||Math.abs((a[1]-b[1])/(a[0]-b[0]))==1);}}
+class QueenAttack {
+	char[][] a;
+
+	public QueenAttack(char[][] a) {
+		super();
+		a = a;
+		for (char[] c : a = a)
+			Arrays.fill(c, '-');
+	}
+
+	boolean canAttack(int[] a, int[] b) {
+		return a != null && b != null && a.length == 2 && b.length == 2
+				&& (a[0] == b[0] || a[1] == b[1] || Math.abs(a[1] - b[1]) == Math.abs(a[0] - b[0]));
+	}
+}
