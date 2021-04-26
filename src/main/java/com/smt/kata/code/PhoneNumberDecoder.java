@@ -1,5 +1,8 @@
 package com.smt.kata.code;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /****************************************************************************
  * <b>Title:</b> PhoneNumberDecoder.java
  * <b>Project:</b> Daily-Kata
@@ -23,6 +26,18 @@ package com.smt.kata.code;
  * 
  ****************************************************************************/
 public class PhoneNumberDecoder {
+	
+	private static Map<String, Integer> letterMap = new HashMap<>();
+	static {
+		letterMap.put("ABC", 2);
+		letterMap.put("DEF", 3);
+		letterMap.put("GHI", 4);
+		letterMap.put("JKL", 5);
+		letterMap.put("MNO", 6);
+		letterMap.put("PQRS", 7);
+		letterMap.put("TUV", 8);
+		letterMap.put("WXYZ", 9);
+	}
 
 	/**
 	 * 
@@ -37,6 +52,25 @@ public class PhoneNumberDecoder {
 	 * @return formatted phone number.
 	 */
 	public String textToNum(String pn) {
-		return pn;
+		if (pn == null) return "";
+		String newPn = pn.replaceAll("[^\\w]", "");
+		if (newPn.length() != 10) return "";
+		
+		StringBuilder result = new StringBuilder();
+		for (var letter : newPn.toUpperCase().toCharArray()) {
+			if (Character.isDigit(letter)) 
+				result.append(letter);
+			else {
+				for (var entry : letterMap.entrySet()) {
+					if (entry.getKey().contains(letter + "")) {
+						result.append(entry.getValue());
+						break;
+					}
+				}
+			}
+			if (result.length() == 3 || result.length() == 7)
+				result.append(".");
+		}
+		return result.toString();
 	}
 }
