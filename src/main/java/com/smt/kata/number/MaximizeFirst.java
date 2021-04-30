@@ -41,7 +41,23 @@ public class MaximizeFirst {
 	 * @return Largest swapped number possible
 	 */
 	public int maxPossible(int first, int second) {
-		return first + second;
+		
+		StringBuilder result = new StringBuilder();
+		for (var outer : (second +"").toCharArray()) {
+			for (var inner : (first + "").toCharArray()) {
+				if (Math.max(inner, outer) == outer) {
+					result.append(outer);
+				}
+				else
+					result.append(inner);
+				break;
+			}
+		}
+		System.out.println(result);
+		
+		
+		
+		return first;
 	}
 
 }
