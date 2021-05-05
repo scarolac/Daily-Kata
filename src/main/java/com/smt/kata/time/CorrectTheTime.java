@@ -1,4 +1,4 @@
-package com.smt.kata.data;
+package com.smt.kata.time;
 
 /****************************************************************************
  * <b>Title</b>: CorretTheTime.java
