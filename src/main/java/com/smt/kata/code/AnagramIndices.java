@@ -1,7 +1,11 @@
 package com.smt.kata.code;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 // JDK 11.x
 import java.util.Collection;
+
+import com.siliconmtn.data.text.StringUtil;
 
 /****************************************************************************
  * <b>Title:</b> AnagramIndicese.java
@@ -30,6 +34,18 @@ public class AnagramIndices {
 	 * @return Collection of indices locations.  Empty collection if none found
 	 */
 	public Collection<Integer> find(String w, String s) {
-		return null;
+		Collection<Integer> result = new ArrayList<>();
+		if (StringUtil.isEmpty(w) || StringUtil.isEmpty(s)) return result;
+						
+		for (int i = 0; i <= s.length() - w.length(); ++i) 
+			if(sortChars(s.substring(i, i + w.length())).equals(sortChars(w)))
+				result.add(i);
+		return result;
+	}
+	
+	private String sortChars(String s) {
+		var result = s.toLowerCase().toCharArray();
+		Arrays.sort(result);
+		return new String(result);
 	}
 }
