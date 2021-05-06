@@ -1,5 +1,7 @@
 package com.smt.kata.data;
 
+import java.util.Arrays;
+
 // Spacelibs 1.x
 import com.siliconmtn.data.bean.GenericVO;
 
@@ -45,7 +47,16 @@ public class Riffler {
 	 * @return Combined array.  Empty array if invalid data
 	 */
 	public char[] riffle(char[] source, char[] dest) {
-		return source;
+		if (source == null || dest == null || source.length < dest.length || source.length > dest.length + 1)
+			return new char[0];
+		
+		char[] output = new char[source.length + dest.length];
+		for (int i = 0; i < source.length; i++) {
+			output[2*i] = source[i];
+			if (i == dest.length) break;
+			output[2*i+1] = dest[i];
+		}
+		return output;
 	}
 	
 	/**
@@ -54,6 +65,18 @@ public class Riffler {
 	 * @return Source array as key and the dest array as value
 	 */
 	public GenericVO deriffle(char[] combined) {
-		return new GenericVO(combined, null);
+		char[] src = new char[(int)Math.ceil(combined.length / 2.0)];
+		char[] dest = new char[combined.length / 2];
+		
+		for (int i = 0; i < combined.length; i++) {
+			src[i] = combined[2*i];
+			if (i == dest.length) break;
+			dest[i] = combined[2*i + 1];
+		}
+		
+		System.out.println(Arrays.toString(src));
+		System.out.println(Arrays.toString(dest));
+		
+		return new GenericVO(src, dest);
 	}
 }
