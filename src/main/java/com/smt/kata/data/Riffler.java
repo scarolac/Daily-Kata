@@ -13,7 +13,11 @@ import com.siliconmtn.data.bean.GenericVO;
  * Riffle[{a,b,c},{1,2,3}] 
  * {a,1,b,2,c,3} 
  * 
- * Write a function Deriffle that takes a list of any length and separates it into 
+ * Write a method that implements the riffle.  Note, the source array can be equal
+ * in length to the 2nd array.  It can also be one item larger.  Any other scenario 
+ * doesn't work
+ * 
+ * Write a method Deriffle that takes a list of any length and separates it into 
  * two lists. The first list should contain all of the entries with odd indices in 
  * the original list, and the second should contain all of the entries with even indices. 
  * 
@@ -37,7 +41,7 @@ public class Riffler {
 	 * Combines the two arrays by alternating the elements from each array
 	 * @param source Source array.  Length must be greater than or equal to dest
 	 * @param dest Destination array to combine.  Must be within 1 character of
-	 * the length
+	 * the source length
 	 * @return Combined array.  Empty array if invalid data
 	 */
 	public char[] riffle(char[] source, char[] dest) {

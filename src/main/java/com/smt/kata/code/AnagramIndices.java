@@ -16,6 +16,9 @@ import com.siliconmtn.data.text.StringUtil;
  * 
  * For example, given that W is "ab", and S is "abxaba", return 0, 3, and 4.
  * 
+ * Remember, we are working with words, not characters.  The indice is the first
+ * index of W in S
+ * 
  * <b>Copyright:</b> Copyright (c) 2021
  * <b>Company:</b> Silicon Mountain Technologies
  * 
