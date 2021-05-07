@@ -1,5 +1,7 @@
 package com.smt.kata.word;
 
+import com.siliconmtn.data.text.StringUtil;
+
 /****************************************************************************
  * <b>Title:</b> StringOrder.java
  * <b>Project:</b> SMT-Kata
@@ -33,7 +35,10 @@ public class StringOrder {
 	 * @return true if each character is in order.  False otherwise
 	 */
 	public boolean isInOrder(String val) {
-		return val == null;
+		if (StringUtil.isEmpty(val)) return false;
+		for (int i = 1; i < val.length(); ++i) 
+			if (val.charAt(i-1) > val.charAt(i)) return false; 		
+		return true;
 	}
 
 }
