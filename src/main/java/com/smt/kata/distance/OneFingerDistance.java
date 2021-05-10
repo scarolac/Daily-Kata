@@ -36,10 +36,10 @@ public class OneFingerDistance {
 	 * @return distance between the letters
 	 */
 	public int calculate(String word) {
-		int sum = 0;
+		var sum = 0;
 		if (StringUtil.isEmpty(word) || word.length() == 1 || ! word.matches("[a-zA-Z]+")) return sum;		
 		word = word.toLowerCase();	
-		for (int i = 1; i < word.length(); ++i) 
+		for (var i = 1; i < word.length(); ++i) 
 			sum += Math.max(Math.abs((word.charAt(i - 1) - word.charAt(i))) - 1, 0);		
 		return sum;
 	}
