@@ -1,5 +1,7 @@
 package com.smt.kata.code;
 
+import java.util.Arrays;
+
 /****************************************************************************
  * <b>Title</b>: IdenticalNeighbors.java
  * <b>Project</b>: SMT-Kata
@@ -44,6 +46,17 @@ public class IdenticalNeighbors {
 	 * @return
 	 */
 	public int[] parse(int[] elements) {
-		return elements;
+		if (elements == null || elements.length == 0) return new int[0];
+		if (elements.length <= 1) return elements;
+		
+		var temp = new int[elements.length];
+		var index = 0;
+		for (var i = 0; i < elements.length; ++i) {
+			if (i + 1 == elements.length) temp[index++] = elements[i];
+			else if (elements[i] != elements[i + 1]) temp[index++] = elements[i];
+			else ++i;
+		}
+		
+		return Arrays.copyOf(temp, index);
 	}
 }
