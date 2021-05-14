@@ -1,13 +1,18 @@
 package com.smt.kata.number;
 
+import java.math.BigDecimal;
+import java.util.Arrays;
+import java.util.Map;
+import java.util.stream.Collectors;
+
 /****************************************************************************
  * <b>Title</b>: DigitFrequencies.java
  * <b>Project</b>: SMT-Kata
  * <b>Description: </b> Digit Frequencies
  * 
- * Given a positive integer n, find the frequencies of the digits from 0 to 9 of the number 2n.
+ * Given a positive integer n, find the frequencies of the digits from 0 to 9 of the number 2^n.
  * 
- * Here is an example for n=10. The digits of 210=1024 are (1,0,2,4). The 
+ * Here is an example for n=10. The digits of 2^10=1024 are (1,0,2,4). The 
  * frequencies of the digits 0, 1, 2, …, 9 are 1, 1, 1, 0, 1, 0, 0, 0, 0, 0:
  * 
  * DigitFrequenciesInThePowersOfTwo[10]
@@ -40,6 +45,12 @@ public class DigitFrequencies {
 	 * @return int array with 10 elements containing a count of each digit
 	 */
 	public int[] calculate(int pow) {
-		return null;
+		var number = new BigDecimal(Math.pow(2, pow)).toPlainString();		
+		Map<String, Long> counts = Arrays.stream(number.split("")).collect(Collectors.groupingBy(c -> c, Collectors.counting()));
+		
+		var result = new int[10];
+		for (var i = 0; i < 10; ++i) 
+			result[i] = (int) (counts.getOrDefault(i + "", 0L) + 0);
+		return result;
 	}
 }
