@@ -34,9 +34,15 @@ public class ZigZagNumbers {
 	/**
 	 * Determines if the numbers in the source provided ho up and down (zig and zag)
 	 * @param source Array of numbers to evaluate
-	 * @return True if a zig zgag array.  False otherwise
+	 * @return True if a zig zag array.  False otherwise
 	 */
 	public boolean isZigZag(int[] source) {
+		if (source == null || source.length < 2) return false;		
+		var zigZag = true;
+		for (var i = 1; i < source.length; ++i) 
+			if (zigZag && source[i] > source[i - 1]) zigZag = !zigZag;			
+			else if (!zigZag && source[i] < source[i - 1]) zigZag = !zigZag;			
+			else return false;				
 		return true;
 	}
 }
