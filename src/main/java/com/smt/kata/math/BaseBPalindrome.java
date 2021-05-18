@@ -34,7 +34,26 @@ public class BaseBPalindrome {
 	 * @return
 	 */
 	public boolean isPalindrome(int value, int base) {
+		if (base < 2) return false;
 		
-		return value == base;
+		int temp = value;
+		var baseCount = 0;
+		while (temp > 0) {
+			baseCount++;
+			temp /= base;
+		}
+		
+		var quotients = new int[baseCount];
+		for(var i = 0; value > 0; ++i) {
+			quotients[i] = value % base;
+			value /= base;
+		}
+		for (var i = 0; i < baseCount; ++i) 
+			if (quotients[i] != quotients[baseCount - 1 - i]) return false;		
+		
+		return true;
 	}
+	
+//	private static <T> void p(T msg) { System.out.println(msg); }
+//	private static void pA(int[] array) { System.out.println(Arrays.toString(array));}
 }
