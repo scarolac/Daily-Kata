@@ -25,14 +25,28 @@ package com.smt.kata.distance;
  * @updates:
  ****************************************************************************/
 public class CoinCollector {
-
+	
 	/**
 	 * Following various paths,calculate the most coins that can be retrieved
 	 * @param matrix Matrix of coins
 	 * @return Total number of coins collected
 	 */
 	public int collect(int[][] matrix) {
-		
-		return 0;
+		if (matrix == null || matrix.length == 0)
+			return 0;
+
+		return collector(0, 0, 0, matrix);
+	}
+
+	private int collector(int row, int col, int total, int[][] matrix) {
+		if (row >= matrix.length || col >= matrix[row].length)
+			return total;
+
+		total += matrix[row][col];
+
+		var goRight = collector(row, col + 1, total, matrix);
+		var goDown = collector(row + 1, col, total, matrix);
+
+		return Math.max(goRight, goDown);
 	}
 }
