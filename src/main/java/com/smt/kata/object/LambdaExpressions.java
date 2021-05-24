@@ -38,7 +38,8 @@ public class LambdaExpressions {
 	 * @return True if the value is odd.  False otherwise
 	 */
 	public boolean isOdd(int value) {
-		return value == 0;
+		IsOdd isodd = v -> v % 2 != 0;
+		return isodd.check(value);
 	}
 	
 	/**
@@ -47,7 +48,8 @@ public class LambdaExpressions {
 	 * @return True if the value is a palindrome.  False otherwise
 	 */
 	public boolean isPalindrome(String value) { 
-		return value == null;
+		IsPalindrome ispalindrome = v -> v.equalsIgnoreCase(new StringBuilder(v).reverse().toString());
+		return ispalindrome.check(value);
 	}
 	
 	/**
@@ -56,7 +58,29 @@ public class LambdaExpressions {
 	 * @return True if the value is a prime number.  False otherwise
 	 */
 	public boolean isPrime(int value) { 
-		return value == 0;
+		IsPrime isprime = v -> {
+			var sqrt = (int) Math.sqrt(v) + 1;
+	        for (var i = 2; i < sqrt; i++) 
+	            if (v % i == 0) 
+	                return false;
+	        return true;
+		};
+		return isprime.check(value);
+	}
+	
+	@FunctionalInterface
+	private interface IsOdd {
+		boolean check(int value);
+	}
+	
+	@FunctionalInterface
+	private interface IsPalindrome {
+		boolean check(String value);
+	}
+	
+	@FunctionalInterface
+	private interface IsPrime {
+		boolean check(int value);
 	}
 
 }
