@@ -1,7 +1,9 @@
 package com.smt.kata.io;
 
+import java.io.File;
 // JDK 11.x
 import java.io.IOException;
+import java.util.Scanner;
 
 
 /****************************************************************************
@@ -32,6 +34,19 @@ public class CountingLines {
 	 * @throws IOException
 	 */
 	public int getNumberLines(String clazzName) throws IOException {	
-		return clazzName.length();
+		if (clazzName == null) throw new NullPointerException();
+		
+		var fileName = "src/main/java/" + clazzName.replace(".", "/") + ".java";
+		var count = 0;
+		try (var scanner = new Scanner(new File(fileName))) {
+			while (scanner.hasNextLine()) {
+				var line = scanner.nextLine().trim();
+				if (line.startsWith("/") || line.startsWith("*") || line.length() == 0)
+					continue;
+				++count;
+			}
+		}	
+		
+		return count;
 	}
 }
