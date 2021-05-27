@@ -1,5 +1,9 @@
 package com.smt.kata.distance;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 /****************************************************************************
  * <b>Title:</b> MatrixIsland.java
  * <b>Project:</b> SMT-Kata
@@ -38,12 +42,50 @@ public class MatrixIsland {
 	protected boolean hasIslands = false;
 	protected int numberIslands = 0;
 	protected int nodesInLargestIsland = 0;
+	private List<Coord> coords = new ArrayList<>();
+	
+	class Coord {
+		int row;
+		int col;
+		public Coord(int row, int col) {
+			this.row = row;
+			this.col = col;
+		}
+		
+		@Override
+		public boolean equals(Object other) {
+			if (this == other) return true;
+			if (other == null) return false;
+			if (getClass() != other.getClass()) return false;
+			var coord = (Coord) other;
+			return row == coord.row && col == coord.col;
+		}
+		
+		public String toString() {
+			return "[" + row +", " + col + "]";
+		}
+	}
 	
 	/**
 	 * Assigns the matrix
 	 */
 	public MatrixIsland(int[][] matrix) throws NullPointerException {
 		super();
+		if (matrix == null || matrix.length == 0) 
+			throw new NullPointerException();
+		p("--------------------");
+		pM(matrix);
+				
+		for (var row = 0; row < matrix.length; ++row) {
+			for (var col = 0; col < matrix[0].length; ++col) {
+				if (matrix[row][col] == 1) 
+					coords.add(new Coord(row, col));
+			}
+		}
+	
+//		p(coords);
+		countIslands();
+		findLargest();
 	}
 	
 	/**
@@ -59,7 +101,37 @@ public class MatrixIsland {
 	 * variables when complete
 	 */
 	protected void countIslands() {
-		/** Do something here **/
+		if (coords.isEmpty()) return;
+		
+		hasIslands = true;
+		
+		if (coords.size() == 1) {
+			numberIslands = 1;
+			nodesInLargestIsland = 1;
+			return;
+		}
+		
+		
+		for (var item : coords) {
+			var size = 1;
+			if (coords.contains(new Coord(item.row + 1, item.col))) {
+				++size;
+			}
+					
+					|| 
+				coords.contains(new Coord(item.row, item.col + 1)) || 
+				coords.contains(new Coord(item.row - 1, item.col)) || 
+				coords.contains(new Coord(item.row, item.col - 1)))
+			{
+				++size;
+			}
+			else {
+				++numberIslands;
+			}
+			if (size > nodesInLargestIsland) nodesInLargestIsland = size;
+		}
+		
+		
 	}
 
 	/**
@@ -82,5 +154,9 @@ public class MatrixIsland {
 	public int getNodesInLargestIsland() {
 		return nodesInLargestIsland;
 	}
+	
+	private static <T> void p(T msg) { System.out.println(msg); }    
+    private static void pA(int[] array) { System.out.println(Arrays.toString(array));}
+    private static void pM(int[][] matrix) { p(matrix.length + "x" + matrix[0].length); for (var row : matrix) pA(row); }
 
 }

@@ -102,8 +102,8 @@ class MatrixIslandTest {
 	void testFindOneIslands() throws Exception {
 		MatrixIsland mi = new MatrixIsland(oneIslandSmall);
 		assertTrue(mi.hasIslands());
-		assertEquals(4, mi.getNumberIslands());
-		assertEquals(4, mi.getNodesInLargestIsland());
+		assertEquals(1, mi.getNumberIslands());
+		assertEquals(1, mi.getNodesInLargestIsland());
 	}
 	
 	/**
