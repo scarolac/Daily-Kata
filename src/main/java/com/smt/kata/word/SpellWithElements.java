@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.siliconmtn.data.text.StringUtil;
+
 /****************************************************************************
  * <b>Title</b>: SpellWithElements.java
  * <b>Project</b>: SMT-Kata
@@ -61,7 +63,40 @@ public class SpellWithElements {
 	 * @return Collection of lists of the matching patterns
 	 */
 	public List<List<String>> findPatterns(String source) {
+		List<List<String>> result = new ArrayList<>();
+		if (StringUtil.isEmpty(source)) return result;
+		
+		p("-------");
+		p("source " + source);
+		
+		var cursor = 0;
+		while (cursor < source.length()) {
+			p(source.substring(cursor, cursor + 1));
+			p(source.substring(cursor, cursor + 2));
+			++cursor;
+		}
+		
+		result = loop(0, source, result);
 		return new ArrayList<>();
+	}
+	
+	public void loop(int cursor, String source, List<String> result) {
+		if (cursor >= source.length()) return;
+		
+		var str = source.substring(cursor, cursor + 1);
+		if (elements.containsKey(str)) {
+			result.add(str);
+			loop(cursor += 1, source, result);			
+		}			
+		else {
+			str = source.substring(cursor, cursor + 2);
+			if (elements.containsKey(str)) {
+				result.add(str);
+				loop(cursor += 2, source, result);
+			}
+		}
+		
+		return;
 	}
 	
 	/**
@@ -178,4 +213,6 @@ public class SpellWithElements {
 		elements.put("hs","hassium");
 		elements.put("mt","meitnerium");
 	}
+	
+	private static <T> void p(T msg) { System.out.println(msg); }    
 }
