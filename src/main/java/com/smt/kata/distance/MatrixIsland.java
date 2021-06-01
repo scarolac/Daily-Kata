@@ -114,11 +114,7 @@ public class MatrixIsland {
 		
 		for (var item : coords) {
 			var size = 1;
-			if (coords.contains(new Coord(item.row + 1, item.col))) {
-				++size;
-			}
-					
-					|| 
+			if (coords.contains(new Coord(item.row + 1, item.col)) ||			
 				coords.contains(new Coord(item.row, item.col + 1)) || 
 				coords.contains(new Coord(item.row - 1, item.col)) || 
 				coords.contains(new Coord(item.row, item.col - 1)))
