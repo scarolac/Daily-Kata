@@ -33,6 +33,19 @@ public class LookSaySequence {
 	 * @return A look say sequence representing the passe din number
 	 */
 	public int translate(int number) {
-		return number;
+		var numString = (Math.abs(number) + "");
+		var temp = numString.charAt(0);
+		var count = 0;
+		var result = new StringBuilder();
+		for (var letter : numString.toCharArray()) {
+			if (letter == temp) ++count;
+			else {
+				result.append(count).append(temp);
+				count = 1;
+				temp = letter;
+			}								
+		}
+		result.append(count).append(temp);		
+		return Integer.parseInt(result.toString());
 	}
 }
