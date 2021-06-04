@@ -43,7 +43,21 @@ public class LunarMathematics {
 	 * @return Total of the lunar math addition of the provided 2 numbers
 	 */
 	public int add(int firstNumber, int secondNumber) {
-		return firstNumber + secondNumber;
+		var first = Math.abs(firstNumber) + "";
+		var second = Math.abs(secondNumber) + "";
+		var fL = first.length();
+		var sL = second.length();
+		var result = new StringBuilder();
+		
+		for (var i = 0; i < fL || i < sL; ++i) {
+			var temp1 = 0;
+			var temp2 = 0;
+			if (i < fL) temp1 = Integer.parseInt(first.charAt(fL - i - 1) + "");
+			if (i < sL) temp2 = Integer.parseInt(second.charAt(sL - i - 1) + "");
+			result.insert(0, (Math.max(temp1, temp2) + ""));
+		}
+		
+		return Integer.parseInt(result.toString());
 	}
 
 }
