@@ -1,5 +1,10 @@
 package com.smt.kata.word;
 
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import org.apache.commons.lang3.StringUtils;
+
 /****************************************************************************
  * <b>Title</b>: SpinningWords.java 
  * <b>Project</b>: SMT-Kata 
@@ -35,7 +40,9 @@ public class SpinningWords {
 	 * @return String that has been spun.  Empty string otherwise
 	 */
 	public String spin(String input) {
-		return input;
+		return Stream.of(StringUtils.defaultString(input).split(" "))
+				.map(s -> s.length() > 4 ? new StringBuilder(StringUtils.capitalize(s)).reverse().toString() :	s)
+				.collect(Collectors.joining(" "));
     }
 
 }
