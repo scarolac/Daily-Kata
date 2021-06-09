@@ -3,7 +3,6 @@ package com.smt.kata.security;
 // Junit 5
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.Test;
 
 /****************************************************************************
@@ -28,9 +27,7 @@ class PasswordEvaluatorTest {
 	 */
 	@Test
 	void testIsValidPassword() throws Exception {
-		assertThrows(NullPointerException.class, () -> {
-			pe.isValidPassword(null, 10);
-		});
+		assertFalse(pe.isValidPassword(null, 10));
 	}
 	
 	/**
@@ -38,9 +35,7 @@ class PasswordEvaluatorTest {
 	 */
 	@Test
 	void testIsValidPasswordEmpty() throws Exception {
-		assertThrows(StringIndexOutOfBoundsException.class, () -> {
-			pe.isValidPassword("", 10);
-		});
+		assertFalse(pe.isValidPassword("", 10));
 	}
 	
 	/**
