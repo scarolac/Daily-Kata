@@ -1,5 +1,11 @@
 package com.smt.kata.word;
 
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import com.siliconmtn.data.format.NumberUtil;
+import com.siliconmtn.data.text.StringUtil;
+
 /****************************************************************************
  * <b>Title</b>: OrderPlease.java
  * <b>Project</b>: SMT-Kata
@@ -26,7 +32,14 @@ package com.smt.kata.word;
 public class OrderPlease {
 
 	
-	public String reorder(String phrase) {
-        return phrase;
+	public String reorder(String phrase) {		
+        return Stream.of(
+        	StringUtil.defaultString(phrase).split(" "))
+        		.sorted((s1, s2) -> 
+        			Integer.compare(
+						NumberUtil.toInt(StringUtil.removeNonNumeric(s1)),
+						NumberUtil.toInt(StringUtil.removeNonNumeric(s2))))
+        		.collect(Collectors.joining(" ")
+        );
     }
 }
