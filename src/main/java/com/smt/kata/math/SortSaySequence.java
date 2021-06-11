@@ -1,5 +1,7 @@
 package com.smt.kata.math;
 
+import java.util.Arrays;
+
 /****************************************************************************
  * <b>Title</b>: SortSaySequence.java 
  * <b>Project</b>: SMT-Kata 
@@ -46,6 +48,13 @@ public class SortSaySequence {
 	 * @return Reordered array of elements
 	 */
     public int[] reorder(int[] input) {
-        return new int[0];
+        return input == null ? 
+        	new int[0] : 
+        	Arrays.stream(input)
+            	.mapToObj(i -> units.values()[Math.abs(i)].name())
+            	.sorted()
+            	.map(i -> units.valueOf(i).ordinal())
+            	.mapToInt(Integer::intValue)
+            	.toArray();
     }
 }
