@@ -40,6 +40,12 @@ public class RotateForMax {
 	 * @return
 	 */
 	public long rotate(long input) {
+		var str = String.valueOf(Math.abs(input));
+		
+		for (var i = 0; i < str.length() - 1; ++i) {
+			str = str.substring(0, i) + str.substring(i + 1) + str.charAt(i);
+			input = Math.max(input, Integer.parseInt(str));
+		}
         return input;
     }
 }
