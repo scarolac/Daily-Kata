@@ -1,5 +1,6 @@
 package com.smt.kata.tree;
 
+import java.util.ArrayList;
 // JDK 11.x
 import java.util.List;
 
@@ -27,6 +28,7 @@ public class KataTree<T> {
 	// Members
 	private KataNode<T> root;
 	private int depth = 0;
+	private int totalNodeCount= 0;
 	
 	/**
 	 * Creates a Tree of nodes based upon a Collection of unlinked nodes.  
@@ -36,7 +38,42 @@ public class KataTree<T> {
 	 * @param root Root Node object
 	 */
 	public KataTree(List<KataNode<T>> data,  KataNode<T> root) {
-		/** Intentionally Blank.  Please build **/
+		this.root = root; 
+		addChildren(data, root);
+		depth = calculateDepth(root);
+	}
+	
+	private void addChildren(List<KataNode<T>> data,  KataNode<T> root) {
+		var rootChildren = new ArrayList<KataNode<T>>();
+		var queue = new ArrayList<KataNode<T>>();
+		var children = new ArrayList<KataNode<T>>();
+		
+		for (var node : data) {
+			if (node.getParentId().equals(root.getNodeId())) {
+				rootChildren.add(node);
+				queue.add(node);
+			}
+			else
+				children.add(node);
+		}
+		root.setChildren(rootChildren);
+		
+		for (var newRoot : queue) {
+			addChildren(children, newRoot);
+		}
+		
+		this.totalNodeCount++;
+	}
+	
+	private int calculateDepth(KataNode<T> node) {
+		var children = node.getChildren();
+		if (children.isEmpty()) return 1;
+		
+		var tempDepth = 0;
+		for (var child : children) 
+			tempDepth += calculateDepth(child);
+		
+		return tempDepth;
 	}
 	
 	/**
@@ -59,6 +96,6 @@ public class KataTree<T> {
 	 * @return Total number of nodes calculated
 	 */
 	public int getTotalNodeCount() {
-		return 0;
+		return totalNodeCount;
 	}
 }
