@@ -27,7 +27,6 @@ import java.util.List;
 public class KataTree<T> {
 	// Members
 	private KataNode<T> root;
-	private int depth = 0;
 	private int totalNodeCount= 0;
 	
 	/**
@@ -40,7 +39,6 @@ public class KataTree<T> {
 	public KataTree(List<KataNode<T>> data,  KataNode<T> root) {
 		this.root = root; 
 		addChildren(data, root);
-		depth = calculateDepth(root);
 	}
 	
 	private void addChildren(List<KataNode<T>> data,  KataNode<T> root) {
@@ -56,8 +54,10 @@ public class KataTree<T> {
 			else
 				children.add(node);
 		}
+		rootChildren.sort((n1, n2) -> n1.getNodeId().compareTo(n2.getNodeId()));
 		root.setChildren(rootChildren);
 		
+		children.sort((n1, n2) -> n1.getNodeId().compareTo(n2.getNodeId()));
 		for (var newRoot : queue) {
 			addChildren(children, newRoot);
 		}
@@ -69,18 +69,18 @@ public class KataTree<T> {
 		var children = node.getChildren();
 		if (children.isEmpty()) return 1;
 		
-		var tempDepth = 0;
+		var depth = 0;
 		for (var child : children) 
-			tempDepth += calculateDepth(child);
+			depth += calculateDepth(child);
 		
-		return tempDepth;
+		return depth;
 	}
 	
 	/**
 	 * Returns the total depth of the tree
 	 * @return
 	 */
-	public int getDepth() { return depth; }
+	public int getDepth() { return calculateDepth(this.root); }
 	
 	/**
 	 * Retrieves the root node, which, if the tree is built properly, would contain 
@@ -104,6 +104,14 @@ public class KataTree<T> {
 	 * @return node corresponding to the ID.  Null if not found
 	 */
 	public KataNode<T> find(String nodeId) {
+		if (this.root.getNodeId().equals(nodeId))
+			return this.root;
+		else
+			for (var node : root.getChildren()) {
+				// ?
+//				return find(node);
+			}
+		
 		return null;
 	}
 	
@@ -112,6 +120,9 @@ public class KataTree<T> {
 	 * @return collection is provided in a preorder list formatting
 	 */
 	public List<KataNode<T>> getPreOrderList() {
+		// root
+		// left ...rest
+		// right
 		return new ArrayList<>();
 	}
 	
@@ -120,7 +131,26 @@ public class KataTree<T> {
 	 * @return collection is provided in a inorder list formatting
 	 */
 	public List<KataNode<T>> getInOrderList() {
-		return new ArrayList<>();
+		var result = new ArrayList<KataNode<T>>();
+		inOrderTraversal(this.root, result);
+
+		return result;
+	}
+	
+	private void inOrderTraversal(KataNode<T> root, List<KataNode<T>> result) {
+		if (! root.getChildren().isEmpty()) {
+			var children = root.getChildren();
+			var childCount = root.getChildren().size();
+			for (var i = 0; i < childCount - 1; ++i) {
+				inOrderTraversal(children.get(i), result);
+			}
+			System.out.println(root.getNodeId());
+			result.add(root);
+			inOrderTraversal(children.get(childCount - 1), result);
+		} else {
+			System.out.println(root.getNodeId());
+			result.add(root);
+		}	
 	}
 	
 	/**
@@ -128,6 +158,9 @@ public class KataTree<T> {
 	 * @return collection is provided in a postorder list formatting
 	 */
 	public List<KataNode<T>> getPostOrderList() {
+		// left ...rest
+		// right
+		// root
 		return new ArrayList<>();
 	}
 	
