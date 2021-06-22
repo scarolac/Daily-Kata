@@ -4,6 +4,7 @@ package com.smt.kata.tree;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.junit.Assert.assertNull;
 // Junit 5
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.BeforeEach;
@@ -28,7 +29,7 @@ class KataTreeTest {
 	KataTree<String> tree;
 	
 	@BeforeEach
-	public void initEach(){
+	void initEach(){
 		String rootParent = null;
 		KataNode<String> root = new KataNode<String>("1", rootParent, "John");
 	    nodes.add(new KataNode<String>("11", "1", "Steve"));
@@ -69,6 +70,55 @@ class KataTreeTest {
 	@Test
 	void testGetTotalNodeCount() throws Exception {
 		assertEquals(11, tree.getTotalNodeCount());
+	}
+
+	/**
+	 * Test method for {@link com.smt.kata.tree.KataTree#find(java.lang.String)}.
+	 */
+	@Test
+	void testFind() throws Exception {
+		assertEquals("Bob", tree.find("112"));
+		assertNull(tree.find("ABC"));
+	}
+
+	/**
+	 * Test method for {@link com.smt.kata.tree.KataTree#getPreOrderList()}.
+	 */
+	@Test
+	void testGetPreOrderList() throws Exception {
+		List<KataNode<String>> nodes = tree.getPreOrderList();
+		assertEquals("1", nodes.get(0).getNodeId());
+		assertEquals("1222", nodes.get(nodes.size() - 1).getNodeId());
+	}
+
+	/**
+	 * Test method for {@link com.smt.kata.tree.KataTree#getInOrderList()}.
+	 */
+	@Test
+	void testGetInOrderList() throws Exception {
+		List<KataNode<String>> nodes = tree.getInOrderList();
+		assertEquals("1111", nodes.get(0).getNodeId());
+		assertEquals("12211", nodes.get(nodes.size() - 2).getNodeId());
+	}
+
+	/**
+	 * Test method for {@link com.smt.kata.tree.KataTree#getPostOrderList()}.
+	 */
+	@Test
+	void testGetPostOrderList() throws Exception {
+		List<KataNode<String>> nodes = tree.getPostOrderList();
+		assertEquals("111", nodes.get(0).getNodeId());
+		assertEquals("1", nodes.get(nodes.size() - 1).getNodeId());
+	}
+
+	/**
+	 * Test method for {@link com.smt.kata.tree.KataTree#getLevelOrderList()}.
+	 */
+	@Test
+	void testGetLevelOrderList() throws Exception {
+		List<KataNode<String>> nodes = tree.getPostOrderList();
+		assertEquals("1", nodes.get(0).getNodeId());
+		assertEquals("12211", nodes.get(nodes.size() - 1).getNodeId());
 	}
 
 }
