@@ -41,7 +41,7 @@ class KataTreeTest {
 	    nodes.add(new KataNode<String>("121", "12", "Sal"));
 	    nodes.add(new KataNode<String>("1222", "122", "Raj"));
 	    nodes.add(new KataNode<String>("112", "11", "Bob"));
-	    nodes.add(new KataNode<String>("1221", "111", "Tom"));
+	    nodes.add(new KataNode<String>("1221", "122", "Tom"));
 	    
 	    tree = new KataTree<String>(nodes, root);
 	}
@@ -77,7 +77,7 @@ class KataTreeTest {
 	 */
 	@Test
 	void testFind() throws Exception {
-		assertEquals("Bob", tree.find("112"));
+		assertEquals("Bob", tree.find("112").getData());
 		assertNull(tree.find("ABC"));
 	}
 
@@ -97,8 +97,8 @@ class KataTreeTest {
 	@Test
 	void testGetInOrderList() throws Exception {
 		List<KataNode<String>> nodes = tree.getInOrderList();
-		assertEquals("1111", nodes.get(0).getNodeId());
-		assertEquals("12211", nodes.get(nodes.size() - 2).getNodeId());
+		assertEquals("111", nodes.get(0).getNodeId());
+		assertEquals("122", nodes.get(nodes.size() - 2).getNodeId());
 	}
 
 	/**
@@ -116,7 +116,7 @@ class KataTreeTest {
 	 */
 	@Test
 	void testGetLevelOrderList() throws Exception {
-		List<KataNode<String>> nodes = tree.getPostOrderList();
+		List<KataNode<String>> nodes = tree.getLevelOrderList();
 		assertEquals("1", nodes.get(0).getNodeId());
 		assertEquals("12211", nodes.get(nodes.size() - 1).getNodeId());
 	}
