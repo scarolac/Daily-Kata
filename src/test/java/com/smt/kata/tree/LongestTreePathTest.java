@@ -131,7 +131,7 @@ class LongestTreePathTest {
 		nodes.add(new KataNode<Integer>("h", "g", Integer.valueOf(9)));
 		nodes.add(new KataNode<Integer>("i", "g", Integer.valueOf(6)));
 		
-		assertEquals(14, ltp.caclculatePath(nodes));
+		assertEquals(16, ltp.caclculatePath(nodes));
 		// a -> b -> d -> e -> f -> g -> h
 		// 0 -> 1 -> 1 -> 1 -> 1 -> 1 -> 9
  	}

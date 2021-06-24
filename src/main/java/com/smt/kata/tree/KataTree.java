@@ -44,6 +44,7 @@ public class KataTree<T> {
 	}
 
 	private void addChildren(List<KataNode<T>> data, KataNode<T> root) {
+		if (root == null) return;
 		var rootChildren = new ArrayList<KataNode<T>>();
 		var queue = new ArrayList<KataNode<T>>();
 		var children = new ArrayList<KataNode<T>>();

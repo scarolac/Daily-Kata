@@ -117,7 +117,7 @@ public class KataNode<T> implements Serializable {
 	 * @return the leaf
 	 */
 	public boolean isLeaf() {
-		return false;
+		return children.isEmpty();
 	}
 
 	/**
@@ -132,5 +132,9 @@ public class KataNode<T> implements Serializable {
 	 */
 	public void setParentId(String parentId) {
 		this.parentId = parentId;
+	}
+	@Override
+	public String toString() {
+		return "id: " + nodeId + " parentId: " + parentId + " data: " + data.toString();
 	}
 }

@@ -1,7 +1,11 @@
 package com.smt.kata.tree;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 // JDK 11.x
 import java.util.List;
+import java.util.Set;
 
 /****************************************************************************
  * <b>Title</b>: LongestTreePath.java
@@ -44,8 +48,65 @@ public class LongestTreePath {
 	 * @return Sum of the weights from each node in the path
 	 */
 	public int caclculatePath(List<KataNode<Integer>> nodes) {
+		if (nodes == null || nodes.isEmpty()) return 0;
 		
-		return nodes.size();
+		// ------------ build tree ----------------
+		KataNode<Integer> root = null;
+		List<KataNode<Integer>> data = new ArrayList<>();
+		for (var node : nodes)
+			if (node.getParentId() == null) 
+				root = node;
+			else
+				data.add(node);		
+		
+		var tree = new KataTree<>(data, root);
+		// ---------- end build tree ---------------
+		
+		// start node  (anything)
+		// go any direction up or down (recurse to parent, or all children)
+		// add to visited list
+		// check node value compare to total (total = Math.max(total, loop(child or parent)))
+		// cannot repeat nodes
+		// if no children stop (while !children.isempty())
+//		var visited = new HashSet<String>();
+		
+		var longest = 0;
+		for (var node : nodes) {
+			var visited = new HashSet<String>();
+			longest = Math.max(longest, findLongestPath(visited, tree, node, 0));
+		}
+		
+		
+		return longest;
 	}
-
+	
+	private int findLongestPath(Set<String> visited, KataTree<Integer> tree, KataNode<Integer> startNode, int longest) {
+		var totalWeights = longest + startNode.getData();
+		
+		// get node out of tree somehow
+		var node = tree.find(startNode.getNodeId());
+		visited.add(node.getNodeId());
+		
+		var parent = node.getParent();
+		var children = node.getChildren();
+		
+		
+		// up
+		var up = 0;
+		if (parent != null && ! visited.contains(parent.getNodeId()))
+			up = findLongestPath(visited, tree, node.getParent(), totalWeights);
+		
+		// down		
+		// loop the kids
+		var down = 0;
+		if (! node.isLeaf())
+			for (var child : children) 
+				if (! visited.contains(child.getNodeId()))
+					down = findLongestPath(visited, tree, child, totalWeights);
+			
+		
+		return totalWeights + Math.max(up, down);
+	}
+	
+	private static <T> void p(T msg) { System.out.println(msg); }    
 }
