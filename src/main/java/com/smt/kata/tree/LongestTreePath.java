@@ -73,39 +73,34 @@ public class LongestTreePath {
 		var longest = 0;
 		for (var node : nodes) {
 			var visited = new HashSet<String>();
-			longest = Math.max(longest, findLongestPath(visited, tree, node, 0));
+			longest = Math.max(longest, findLongestPath(visited, tree, node));
 		}
 		
 		
 		return longest;
 	}
 	
-	private int findLongestPath(Set<String> visited, KataTree<Integer> tree, KataNode<Integer> startNode, int longest) {
-		var totalWeights = longest + startNode.getData();
-		
+	private int findLongestPath(Set<String> visited, KataTree<Integer> tree, KataNode<Integer> startNode) {
 		// get node out of tree somehow
 		var node = tree.find(startNode.getNodeId());
 		visited.add(node.getNodeId());
-		
 		var parent = node.getParent();
-		var children = node.getChildren();
-		
+		var children = node.getChildren();		
 		
 		// up
 		var up = 0;
-		if (parent != null && ! visited.contains(parent.getNodeId()))
-			up = findLongestPath(visited, tree, node.getParent(), totalWeights);
+		if (parent != null && ! visited.contains(parent.getNodeId())) 
+			up = Math.max(up, node.getData() + findLongestPath(visited, tree, parent));		
 		
 		// down		
 		// loop the kids
 		var down = 0;
-		if (! node.isLeaf())
+		if (! node.isLeaf()) 
 			for (var child : children) 
-				if (! visited.contains(child.getNodeId()))
-					down = findLongestPath(visited, tree, child, totalWeights);
-			
-		
-		return totalWeights + Math.max(up, down);
+				if (! visited.contains(child.getNodeId())) 
+					down = Math.max(down, child.getData() + findLongestPath(visited, tree, child));			
+
+		return Math.max(up, down);
 	}
 	
 	private static <T> void p(T msg) { System.out.println(msg); }    

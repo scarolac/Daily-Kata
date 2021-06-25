@@ -61,6 +61,7 @@ public class KataTree<T> {
 
 		children.sort((n1, n2) -> n1.getNodeId().compareTo(n2.getNodeId()));
 		for (var newRoot : queue) {
+			newRoot.setParent(root);
 			addChildren(children, newRoot);
 		}
 

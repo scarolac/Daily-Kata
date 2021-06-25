@@ -135,6 +135,10 @@ public class KataNode<T> implements Serializable {
 	}
 	@Override
 	public String toString() {
-		return "id: " + nodeId + " parentId: " + parentId + " data: " + data.toString();
+		return "id: " + nodeId + 
+				" parentId: " + parentId + 
+				" parent: {"  + parent + "}" + 
+				" data: " + data.toString() + 
+				" chidlrenCount: " + children.size();
 	}
 }
