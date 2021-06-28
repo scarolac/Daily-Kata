@@ -48,7 +48,7 @@ public class RotateMatrix {
 	 * @return Rotated matrix.  Empty matrix of input is null
 	 */
 	public int[][] rotateClockwise(int[][] matrix) {
-		return new int[0][0];
+		return rotate(matrix, true);
 	}
 	
 	/**
@@ -57,6 +57,26 @@ public class RotateMatrix {
 	 * @return Rotated matrix.  Empty matrix of input is null
 	 */
 	public int[][] rotateCounterClockwise(int[][] matrix) {
-		return new int[0][0];
+		return rotate(matrix, false);
 	}
+	
+	private int[][] rotate(int[][] matrix, boolean right) {
+		if (matrix == null || matrix.length == 0)
+			return new int[0][0];
+
+		var n = matrix[0].length;
+		var result = new int[n][n];
+
+		for (var row = 0; row < n; ++row)
+			for (var col = 0; col < n; ++col) {
+				if (right)
+					result[col][n - row - 1] = matrix[row][col];
+				else
+					result[n - col - 1][row] = matrix[row][col];
+			}
+
+		return result;
+
+	}
+	
 }
