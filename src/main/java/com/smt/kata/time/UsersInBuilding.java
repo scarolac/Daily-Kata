@@ -33,12 +33,16 @@ import java.util.Date;
 public class UsersInBuilding {
 
 	protected enum EntryType { ENTER, EXIT }
+	private Response response;
+	int max;
 	
 	/**
 	 * Initializes the counts and transactions
 	 */
 	public UsersInBuilding() {
 		super();
+		response = new Response();
+		max = 0;
 	}
 
 	/**
@@ -48,7 +52,21 @@ public class UsersInBuilding {
 	 * @param type Entering or exiting the building
 	 */
 	public void addEntry(Date entryTime, int count, EntryType type) {
-		/** Add something here **/
+		if (response.getStart() == null)
+			response.start = entryTime;
+		
+		if (type.equals(EntryType.ENTER))
+			response.count += count;
+		else {
+			if (response.count == max)
+				response.end = entryTime;
+			response.count -= count;
+		}
+		
+		if (response.count > max) {
+			max = response.count;
+			response.start = entryTime;
+		}		
 	}
 	
 	/**
@@ -56,7 +74,8 @@ public class UsersInBuilding {
 	 * @return
 	 */
 	public Response getBusyPeriod() {
-		return new Response();
+		response.count = max;
+		return response;
 	}
 
 	/**
