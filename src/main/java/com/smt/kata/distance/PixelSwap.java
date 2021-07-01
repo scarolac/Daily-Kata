@@ -41,6 +41,22 @@ public class PixelSwap {
 	 * @return Updated pixel map
 	 */
 	public char[][] swap(char[][] pixels, int[] coords, char color) {
+		if (pixels == null || coords == null || coords[0] > pixels.length)
+			return new char[0][];
+				
+		move(pixels, coords[0], coords[1], pixels[coords[0]][coords[1]], color);
+		
 		return pixels;
 	}
+	
+	private void move(char[][] pixels, int row, int col, char currentColor, char color) {
+		if (row >= 0 && col >=0 && row < pixels.length && col < pixels[row].length && pixels[row][col] == currentColor) {
+			pixels[row][col] = color;
+			move(pixels, row - 1, col, currentColor, color);
+			move(pixels, row + 1, col, currentColor, color);
+			move(pixels, row, col - 1, currentColor, color);
+			move(pixels, row, col + 1, currentColor, color);
+		}
+	}
+	
 }

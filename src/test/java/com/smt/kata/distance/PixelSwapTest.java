@@ -97,13 +97,14 @@ class PixelSwapTest {
 	void testSwapOneMatch() throws Exception {
 		char[][] pixels = new char[][] {
 			{ 'B', 'B', 'B', 'B' },
-			{ 'B', 'B', 'B', 'B' },
+			{ 'B', 'W', 'B', 'B' },
 			{ 'B', 'B', 'B', 'B' },
 			{ 'B', 'B', 'B', 'W' }
 		};
 		
 		char[][] swapped = ps.swap(pixels, new int[] { 3,3 }, 'R');
 		assertEquals('R', swapped[3][3]);
+		assertEquals('W', swapped[1][1]);
 	}
 	
 	/**
@@ -127,4 +128,23 @@ class PixelSwapTest {
 		assertEquals('R', swapped[2][3]);
 		assertEquals('R', swapped[3][3]);
 	}
+	
+	@Test
+    void testSwapIslands() throws Exception {
+        char[][] pixels = new char[][] {
+                { 'W', 'B', 'B', 'B' },
+                { 'B', 'B', 'W', 'B' },
+                { 'B', 'B', 'W', 'W' },
+                { 'B', 'B', 'B', 'W' }
+        };
+
+        char[][] swapped = ps.swap(pixels, new int[] { 3,3 }, 'R');
+        assertEquals('W', swapped[0][0]);
+        assertEquals('B', swapped[0][1]);
+        assertEquals('B', swapped[1][1]);
+        assertEquals('R', swapped[1][2]);
+        assertEquals('R', swapped[2][2]);
+        assertEquals('R', swapped[2][3]);
+        assertEquals('R', swapped[3][3]);
+    }
 }
