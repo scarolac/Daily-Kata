@@ -39,6 +39,18 @@ public class Longest7SegmentWord {
 	 * @return Longest word.  Empty string if none can be displayed
 	 */
 	public String calculate(String[] words) {
-		return words[0];
+		if (words == null) return null; 
+		
+		var longest = "";
+		for (var word : words) 
+			if (word != null && word.length() > longest.length() && checkWord(word))				
+				longest = word;		
+		
+		return longest;
+	}
+	
+	private boolean checkWord(String word) {
+		word = word.toLowerCase();
+		return !word.contains("m") && !word.contains("v") && !word.contains("w") && !word.contains("x") && !word.contains("k");			
 	}
 }
