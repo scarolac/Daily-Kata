@@ -7,7 +7,15 @@ import java.util.Map;
 /****************************************************************************
  * <b>Title</b>: RepeatCounter.java
  * <b>Project</b>: SMT-Kata
- * <b>Description: </b> CHANGE ME!!
+ * <b>Description: </b> Repeat Counter
+ * 
+ * Given an array, create a function that returns an object detailing how many 
+ * times each element was repeated. Any object type may be passed
+ * 
+ * calculate(["cat", "dog", "cat", "cow", "cow", "cow"]) ➞ { cow: 3, cat: 2, dog: 1 }
+ * calculate([1, 5, 5, 5, 12, 12, 0, 0, 0, 0, 0, 0]) ➞ { 0: 6, 5: 3, 12: 2, 1: 1 }
+ * calculate(["Infinity", "null", "Infinity", "null", "null"]) ➞ { null: 3, Infinity: 2}
+ * 
  * <b>Copyright:</b> Copyright (c) 2021
  * <b>Company:</b> Silicon Mountain Technologies
  * 
