@@ -34,6 +34,9 @@ public class RepeatCounter {
 	 * @return Map with each object and it's count
 	 */
 	public Map<Object, Integer> calculate(Object[] items) {
+		if (items != null) 
+			for (var item : items)		
+				counter.merge(item, 1, Integer::sum);
 		return counter;
 	}
 	
@@ -58,5 +61,21 @@ public class RepeatCounter {
 		public Object getValue() { return value; }
 		public void setKey(Object key) { this.key = key; }
 		public void setValue(Object value) { this.value = value; }
+		
+		@Override
+		public int hashCode() {
+			return key.hashCode();
+		}
+		
+		@Override
+		public boolean equals(Object obj) {
+			if (this == obj) return true;
+			if (obj == null) return false;
+			if (getClass() != obj.getClass()) 
+				return false;
+			MyBean mb = (MyBean) obj;
+			return mb.getKey().equals(key) && 
+					mb.getValue().equals(value);
+		}
 	}
 }
