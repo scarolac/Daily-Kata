@@ -2,8 +2,11 @@ package com.smt.kata.object;
 
 // JDK 11.x
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+
+import com.siliconmtn.data.text.StringUtil;
 
 /****************************************************************************
  * <b>Title</b>: JsonParser.java
@@ -51,7 +54,39 @@ public class JsonParser {
 	 */
 	public Map<String, Object> parse(String json) throws IOException {
 		Map<String, Object> data = new HashMap<>();
+		if (StringUtil.isEmpty(json)) return data;
 
+		// chop
+		json = json.replace("\t", "").replace("\n", "").replace("\'","").replace(" ", "");
+		json = json.substring(1, json.length() - 1);
+		
+		for (var set : json.split(",")) {
+			var pair = set.split(":");
+			System.out.println(Arrays.asList(pair));
+			if (pair.length != 2) {
+				var key = pair[0];
+				for (var item : pair) {
+					if (key.equals(item)) continue;
+					if (item.contains("{")) key += "." + getValue(item.replace("{",""));
+					if (item.contains("}")) data.put(key, getValue(item.replace("}", "")));
+					else {
+						data.put(key, getValue(item));
+					}
+				}
+				
+			} else 
+				data.put(pair[0],  getValue(pair[1]));
+			
+		}
+		
 		return data;
+	}
+	
+	private Object getValue(String str) {
+		try {
+			return Integer.parseInt(str);
+		} catch(Exception e) {
+			return str;
+		}
 	}
 }
