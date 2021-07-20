@@ -76,7 +76,7 @@ public class SpellWithElements {
 			++cursor;
 		}
 		
-		result = loop(0, source, result);
+//		result = loop(0, source, result);
 		return new ArrayList<>();
 	}
 	
