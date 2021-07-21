@@ -1,8 +1,9 @@
 package com.smt.kata.math;
 
+import java.util.concurrent.ThreadLocalRandom;
+import java.util.logging.Level;
 // JDK 11.x
 import java.util.logging.Logger;
-import java.util.logging.Level;
 
 /****************************************************************************
  * <b>Title</b>: ProbabilityStudentClub.java
@@ -44,7 +45,7 @@ import java.util.logging.Level;
  ****************************************************************************/
 public class ProbabilityStudentClub {
 	
-	// Members
+	static // Members
 	Logger logger = Logger.getLogger(ProbabilityStudentClub.class.getName());
 	
 	/**
@@ -61,6 +62,63 @@ public class ProbabilityStudentClub {
 	 * @param args not utilized
 	 */
 	public static void main(String[] args) {
-		/** Entry Point Here **/
+		var totalRuns = 10;
+		var gameOneCount = 0;
+		var gameTwoCount = 0;
+		
+		Game gameOne;
+		Game gameTwo;
+		for (var i = 0; i < totalRuns; ++i) {
+			gameOne = new Game("First", 5, 6);
+			gameOne.logResult();
+			gameOneCount += gameOne.getCount();
+			gameTwo = new Game("Second", 5, 5);
+			gameTwo.logResult();
+			gameTwoCount += gameTwo.getCount();
+			logger.log(Level.INFO, "**************************************************");
+		}
+		
+		logger.log(Level.INFO, "The First Game took and average of " + gameOneCount / totalRuns + " rolls");
+		logger.log(Level.INFO, "The Second Game took and average of " + gameTwoCount / totalRuns + " rolls");
+	}
+}
+
+class Game {
+	boolean firstStop = false;
+	int rollCount = 0;
+	String name;
+	Logger logger = Logger.getLogger(Game.class.getName());
+
+	Game(String name, int trigger, int stopPoint) {
+		System.setProperty("java.util.logging.SimpleFormatter.format", "[%1$tF %1$tT] [%4$-7s] %5$s %n");
+		var roll = 0;
+		this.name = name;
+		var end = false;
+
+		while (!end) {
+			roll = roll();
+			rollCount++;
+
+			if (firstStop && roll != stopPoint)
+				firstStop = false;
+
+			if (firstStop && roll == stopPoint)
+				end = true;
+
+			if (roll == trigger)
+				firstStop = true;
+		}
+	}
+
+	public int getCount() {
+		return this.rollCount;
+	}
+
+	private int roll() {
+		return ThreadLocalRandom.current().nextInt(1, 6 + 1);
+	}
+
+	public void logResult() {
+		logger.log(Level.INFO, "The " + this.name + " Probability took " + this.rollCount + " rolls");
 	}
 }
