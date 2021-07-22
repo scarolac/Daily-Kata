@@ -1,5 +1,7 @@
 package com.smt.kata.code;
 
+import java.util.HashMap;
+
 /****************************************************************************
  * <b>Title</b>: ValidSherlockString.java
  * <b>Project</b>: SMT-Kata
@@ -28,7 +30,20 @@ public class ValidSherlockString {
 	 * @param startNumber
 	 * @return
 	 */
-	public boolean isValid(String sequence) {
-		return sequence == null;
+	public boolean isValid(String sequence) {		
+		var counts = new HashMap<Character, Integer>();
+		
+		for (var letter : sequence.toLowerCase().toCharArray())
+			counts.put(letter, counts.getOrDefault(letter, 0) + 1);
+		
+		int min = Integer.MAX_VALUE;
+		for (var value : counts.values())
+			min = Math.min(min, value);
+		
+		var removed = 0;
+		for (var value : counts.values())
+			removed += value - min;
+		
+		return removed < 2;
 	}
 }
