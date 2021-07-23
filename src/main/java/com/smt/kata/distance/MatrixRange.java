@@ -43,6 +43,27 @@ public class MatrixRange {
 	 * @return number of coordinates outside the range
 	 */
 	public int getNumberElements(int[][] matrix, CoordinateVO start, CoordinateVO end) {
-		return matrix.length;
+		if (matrix == null || start == null || end == null) return 0;
+		if (start.getColumn() < 0 || start.getRow() < 0 || start.getColumn() > matrix.length || start.getRow() > matrix[0].length ||
+			end.getColumn() < 0 || end.getRow() < 0 || end.getColumn() > matrix.length || end.getRow() > matrix[0].length) 
+			return 0;
+		
+		var lower = matrix[start.getRow()][start.getColumn()];
+		var upper = matrix[end.getRow()][end.getColumn()];
+		
+		if (lower > upper) {
+			lower = lower ^ upper;
+			upper = lower ^ upper;
+			lower = lower ^ upper;
+		}
+		
+		var count = 0;
+		
+		for (var col = 0; col < matrix.length; ++col)
+			for (var row = 0; row < matrix[0].length; ++row) 
+				if (matrix[col][row] < lower || matrix[col][row] > upper)
+					++count;
+			
+		return count;
 	}
 }
