@@ -38,7 +38,7 @@ class DatabaseIntroTest {
 	private static final String URL = "jdbc:postgresql://dev-common-sb-db.aws.siliconmtn.com:5432/columbiad_marathon?defaultRowFetchSize=25&amp;prepareThreshold=3";
 	private static final String DRIVER = "org.postgresql.Driver";
 	private static final String USER = "columbiad_user";
-	private static final String PASSWORD = "";
+	private static final String PASSWORD = "sqll0gin";
 	
 
 	/**

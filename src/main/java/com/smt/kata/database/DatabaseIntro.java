@@ -3,6 +3,8 @@ package com.smt.kata.database;
 // JDK 11.x
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -34,6 +36,7 @@ public class DatabaseIntro {
 	 */
 	public DatabaseIntro(Connection conn) throws SQLException {
 		super();
+		this.conn = conn;
 	}
 
 	/**
@@ -41,9 +44,20 @@ public class DatabaseIntro {
 	 * @param tableName Table to retrieve metadata
 	 * @return Map with the column name as the key and ther java data type as the value
 	 * @throws SQLException 
+	 * @throws ClassNotFoundException 
 	 */
 	public Map<String, String> getTableMetaData(String tableName) throws SQLException {
-		return null;
+		var result = new HashMap<String, String>();
+
+		try (var preparedStatement = conn.prepareStatement("select * from " + tableName)) {
+			var resultSet = preparedStatement.executeQuery();
+			var resultMeta = resultSet.getMetaData();
+
+			for (var i = 1; i <= resultMeta.getColumnCount(); ++i)
+				result.put(resultMeta.getColumnName(i), resultMeta.getColumnClassName(i));
+		}
+
+		return result;
 	}
 	
 	/**
@@ -53,6 +67,22 @@ public class DatabaseIntro {
 	 * as the key and the value for each row as the value
 	 */
 	public List<Map<String, Object>> retrieveDataFromTable(String tableName) throws SQLException {
-		return null;
+		var result = new ArrayList<Map<String, Object>>();
+
+		try (var preparedStatement = conn.prepareStatement("select * from " + tableName)) {
+			var resultSet = preparedStatement.executeQuery();
+			var resultMeta = resultSet.getMetaData();
+
+			while (resultSet.next()) {
+				var row = new HashMap<String, Object>();
+				
+				for (var i = 1; i <= resultMeta.getColumnCount(); ++i)
+					row.put(resultMeta.getColumnName(i), resultSet.getObject(resultMeta.getColumnName(i)));
+				
+				result.add(row);
+			}
+		}
+
+		return result;
 	}
 }
