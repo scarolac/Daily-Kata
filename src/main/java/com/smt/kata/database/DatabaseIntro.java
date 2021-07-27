@@ -44,7 +44,6 @@ public class DatabaseIntro {
 	 * @param tableName Table to retrieve metadata
 	 * @return Map with the column name as the key and ther java data type as the value
 	 * @throws SQLException 
-	 * @throws ClassNotFoundException 
 	 */
 	public Map<String, String> getTableMetaData(String tableName) throws SQLException {
 		var result = new HashMap<String, String>();
@@ -84,5 +83,25 @@ public class DatabaseIntro {
 		}
 
 		return result;
+	}
+	
+	/**
+	 * Retrieves the primary key for the provided table
+	 * @param tableName Table's primary key to locate
+	 * @return Column name of the primary key
+	 * @throws SQLException
+	 */
+	public String getPrimaryKeyColumn(String tableName) throws SQLException {
+		return null;
+	}
+	
+	/**
+	 * Retrieves the names of all of the tables
+	 * @param schema Schema to filer.  All schemas if null
+	 * @return Collection of table names
+	 * @throws SQLException
+	 */
+	public List<String> listDatabaseTables(String schema) throws SQLException {
+		return new ArrayList<>();
 	}
 }
