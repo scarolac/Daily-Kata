@@ -34,7 +34,7 @@ public class DatabaseIntro {
 	 * Initializes the class with the database connection
 	 * @param dbConn
 	 */
-	public DatabaseIntro(Connection conn) throws SQLException {
+	public DatabaseIntro(Connection conn) {
 		super();
 		this.conn = conn;
 	}
@@ -66,23 +66,23 @@ public class DatabaseIntro {
 	 * as the key and the value for each row as the value
 	 */
 	public List<Map<String, Object>> retrieveDataFromTable(String tableName) throws SQLException {
-		var result = new ArrayList<Map<String, Object>>();
+		var table = new ArrayList<Map<String, Object>>();
 
 		try (var preparedStatement = conn.prepareStatement("select * from " + tableName)) {
-			var resultSet = preparedStatement.executeQuery();
-			var resultMeta = resultSet.getMetaData();
+			var queryResult = preparedStatement.executeQuery();
+			var resultMetadata = queryResult.getMetaData();
 
-			while (resultSet.next()) {
+			while (queryResult.next()) {
 				var row = new HashMap<String, Object>();
 				
-				for (var i = 1; i <= resultMeta.getColumnCount(); ++i)
-					row.put(resultMeta.getColumnName(i), resultSet.getObject(resultMeta.getColumnName(i)));
+				for (var i = 1; i <= resultMetadata.getColumnCount(); ++i)
+					row.put(resultMetadata.getColumnName(i), queryResult.getObject(resultMetadata.getColumnName(i)));
 				
-				result.add(row);
+				table.add(row);
 			}
 		}
 
-		return result;
+		return table;
 	}
 	
 	/**
@@ -92,7 +92,8 @@ public class DatabaseIntro {
 	 * @throws SQLException
 	 */
 	public String getPrimaryKeyColumn(String tableName) throws SQLException {
-		return null;
+		var primaryKeys = conn.getMetaData().getPrimaryKeys(null, null, tableName);		
+		return (primaryKeys.next()) ? primaryKeys.getString("COLUMN_NAME") : null;
 	}
 	
 	/**
@@ -102,6 +103,13 @@ public class DatabaseIntro {
 	 * @throws SQLException
 	 */
 	public List<String> listDatabaseTables(String schema) throws SQLException {
-		return new ArrayList<>();
+		var tables = new ArrayList<String>();
+		
+		var tablesResultSet = conn.getMetaData().getTables(null, schema, "%", null);
+		
+		while(tablesResultSet.next()) 
+			tables.add(tablesResultSet.getString("TABLE_NAME"));
+				
+		return tables;
 	}
 }

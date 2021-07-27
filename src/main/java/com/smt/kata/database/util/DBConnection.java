@@ -31,13 +31,15 @@ public class DBConnection {
 	 * @param pwd
 	 * @param driver
 	 * @param url
+	 * @throws SQLException 
 	 */
-	public DBConnection(String user, String pwd, String driver, String url) {
+	public DBConnection(String user, String pwd, String driver, String url) throws SQLException {
 		super();
 		this.user = user;
 		this.pwd = pwd;
 		this.driver = driver;
 		this.url = url;
+		this.conn = DriverManager.getConnection(url, user, pwd);
 	}
 	
 	
@@ -45,9 +47,7 @@ public class DBConnection {
 	 * Connects to the database 
 	 * @return
 	 */
-	public Connection getConnection() throws SQLException {
-		conn = DriverManager.getConnection(url, user, pwd);
-		
+	public Connection getConnection() {				
 		return conn;
 	}
 	
@@ -56,20 +56,16 @@ public class DBConnection {
 	 * @return
 	 */
 	public boolean isConnected() throws SQLException {
-		return (conn == null) ? false : !conn.isClosed();
+		return (conn != null && !conn.isClosed());
 	}
 	
 	/**
 	 * Closes the database connection
 	 *
 	 */
-	public void close() {
-		try {
-			if (conn != null)
-				conn.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+	public void close() throws SQLException {
+		if (conn != null)
+			conn.close();
 	}
 
 }
