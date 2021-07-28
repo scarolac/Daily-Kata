@@ -4,6 +4,7 @@ package com.smt.kata.database;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -41,6 +42,27 @@ public class DatabaseQuery {
 	 * @throws SQLException
 	 */
 	public List<Map<String, Object>> execute(String sql, List<Object> params) throws SQLException {
-		return new ArrayList<>();
+		var table = new ArrayList<Map<String, Object>>();
+
+		try (var preparedStatement = conn.prepareStatement(sql)) {
+			
+			var count = (params == null) ? 0 : params.size(); 
+			for (var i = 0; i < count; ++i)
+				preparedStatement.setObject(i + 1, params.get(i));
+			
+			var queryResult = preparedStatement.executeQuery();
+			var resultMetadata = queryResult.getMetaData();
+
+			while (queryResult.next()) {
+				var row = new HashMap<String, Object>();
+				
+				for (var i = 1; i <= resultMetadata.getColumnCount(); ++i)
+					row.put(resultMetadata.getColumnName(i), queryResult.getObject(resultMetadata.getColumnName(i)));
+				
+				table.add(row);
+			}
+		}
+
+		return table;
 	}
 }

@@ -1,11 +1,14 @@
 package com.smt.kata.database;
 
+// Junit 5
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import java.util.ArrayList;
 // JDK 11.x
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
-// Junit 5
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -54,10 +57,10 @@ class DatabaseQueryTest {
 	 */
 	@Test
 	void testExecuteStar() throws Exception {
-		String sql = "--- Fill Me out ---";
+		String sql = "select * from ezform";
 		
 		List<Map<String, Object>> data = dq.execute(sql, null);
-		assertEquals(12, data.size());
+		assertEquals(13, data.size());
 	}
 
 	/**
@@ -67,10 +70,10 @@ class DatabaseQueryTest {
 	 */
 	@Test
 	void testExecuteCountStar() throws Exception {
-		String sql = "--- Fill Me out ---";
+		String sql = "select count(*) from ezform";
 		
 		List<Map<String, Object>> data = dq.execute(sql, null);
-		assertEquals(12, data.size());
+		assertEquals(13L, data.get(0).get("count"));
 	}
 
 	/**
@@ -81,11 +84,14 @@ class DatabaseQueryTest {
 	 */
 	@Test
 	void testExecuteOptionsPerQuestion() throws Exception {
-		String sql = "--- Fill Me out ---";
+		String sql = "select count(eqo.ezform_question_option_id) as count, eq.question_txt "
+				+ "from ezform_question_option eqo "
+				+ "join ezform_question eq on eqo.ezform_question_id = eq.ezform_question_id "
+				+ "group by eq.question_txt order by count asc";
 		List<Map<String, Object>> data = dq.execute(sql, null);
-		assertEquals(21, data.size());
-		assertEquals(630, data.size());
-		assertEquals(7, data.size());
+		 assertEquals(21, data.size());
+	     assertEquals(630, Integer.parseInt(data.get(data.size()-1).get("count").toString()));
+	     assertEquals(7, Integer.parseInt(data.get(0).get("count").toString()));
 	}
 	
 	/**
@@ -96,11 +102,18 @@ class DatabaseQueryTest {
 	 */
 	@Test
 	void testExecuteOptionsPerQuestionFilterByForm() throws Exception {
-		//String uuid = "477396fc-8e71-4775-8474-43a171a0e574";
-		String sql = "--- Fill Me out ---";
-		List<Map<String, Object>> data = dq.execute(sql, null);
+		String uuid = "477396fc-8e71-4775-8474-43a171a0e574";
+		String sql = "select count(eqo.ezform_question_option_id) as count, eq.question_txt "
+				+ "from ezform_question_option eqo "
+				+ "join ezform_question eq on eqo.ezform_question_id = eq.ezform_question_id "
+				+ "where eq.ezform_id = ? "
+				+ "group by eq.question_txt order by count asc";
+		List<Object> params = new ArrayList<>();
+		params.add(UUID.fromString(uuid));
+		
+		List<Map<String, Object>> data = dq.execute(sql, params);
 		assertEquals(20, data.size());
-		assertEquals(90, data.size());
-		assertEquals(2, data.size());
+        assertEquals(90, Integer.parseInt(data.get(data.size()-1).get("count").toString()));
+        assertEquals(2, Integer.parseInt(data.get(0).get("count").toString()));
 	}
 }
