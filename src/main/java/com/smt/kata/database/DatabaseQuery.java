@@ -44,10 +44,8 @@ public class DatabaseQuery {
 	public List<Map<String, Object>> execute(String sql, List<Object> params) throws SQLException {
 		var table = new ArrayList<Map<String, Object>>();
 
-		try (var preparedStatement = conn.prepareStatement(sql)) {
-			
-			var count = (params == null) ? 0 : params.size(); 
-			for (var i = 0; i < count; ++i)
+		try (var preparedStatement = conn.prepareStatement(sql)) { 
+			for (var i = 0; params != null && i < params.size(); ++i)
 				preparedStatement.setObject(i + 1, params.get(i));
 			
 			var queryResult = preparedStatement.executeQuery();

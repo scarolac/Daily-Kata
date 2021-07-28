@@ -90,8 +90,8 @@ class DatabaseQueryTest {
 				+ "group by eq.question_txt order by count asc";
 		List<Map<String, Object>> data = dq.execute(sql, null);
 		 assertEquals(21, data.size());
-	     assertEquals(630, Integer.parseInt(data.get(data.size()-1).get("count").toString()));
-	     assertEquals(7, Integer.parseInt(data.get(0).get("count").toString()));
+	     assertEquals(630L, data.get(data.size()-1).get("count"));
+	     assertEquals(7L, data.get(0).get("count"));
 	}
 	
 	/**
@@ -113,7 +113,7 @@ class DatabaseQueryTest {
 		
 		List<Map<String, Object>> data = dq.execute(sql, params);
 		assertEquals(20, data.size());
-        assertEquals(90, Integer.parseInt(data.get(data.size()-1).get("count").toString()));
-        assertEquals(2, Integer.parseInt(data.get(0).get("count").toString()));
+        assertEquals(90L, data.get(data.size()-1).get("count"));
+        assertEquals(2L, data.get(0).get("count"));
 	}
 }
