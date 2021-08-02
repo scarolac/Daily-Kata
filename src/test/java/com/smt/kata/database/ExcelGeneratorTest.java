@@ -39,12 +39,12 @@ class ExcelGeneratorTest {
 	DBConnection dbConn;
 
 	// Database members
-	private static final String URL = "jdbc:postgresql://staging-sb-db.aws.siliconmtn.com:5432/wc_staging_sb?defaultRowFetchSize=25&amp;prepareThreshold=3";
+	private static final String URL = "jdbc:postgresql://dev-common-sb-db.aws.siliconmtn.com:5432/wc_dev_sb?defaultRowFetchSize=25&amp;prepareThreshold=3";
 	private static final String DRIVER = "org.postgresql.Driver";
-	private static final String USER = "wc_user_sb";
-	private static final String PASSWORD = "CHANGE_ME";
-	private static final String ORG_ID = "SMT";
-	private static final String FILE_PATH = "/home/etewa/Desktop/ExcelTest/";
+	private static final String USER = "wc_user_dev";
+	private static final String PASSWORD = "sqll0gin";
+	private static final String ORG_ID = "GROUT_DOCTOR";
+	private static final String FILE_PATH = "/home/chris/ExcelTest/";
 	
 	/**
 	 * @throws java.lang.Exception
@@ -79,13 +79,10 @@ class ExcelGeneratorTest {
 	void testGetContactCountByOrganization() throws Exception {
 		System.out.println("First");
 		forms = eg.getContactCountByOrganization(ORG_ID);
-		assertEquals(6, forms.size());
-		assertEquals(1, forms.get("c0a80237dd8b7a2a5cb215e02cd3af00"));
-		assertEquals(6, forms.get("c0a802414b160c7c4605e406a3a840db"));
-		assertEquals(3, forms.get("c0a802419df2f2fd73312c272b2e864d"));
-		assertEquals(72, forms.get("c0a8024190bc749edf9f88c2ac98838"));
-		assertEquals(8, forms.get("c0a8021ebdcf63c5994c784475a1503"));
-		assertEquals(1, forms.get("c0a802411654f352bd47b4e6f253ef11"));
+		assertEquals(3, forms.size());
+		assertEquals(885, forms.get("283440b8771afaf5ac10025828bb89bb"));
+		assertEquals(4964, forms.get("2f979c5f82e7953dac1002589e1659fb"));
+		assertEquals(124, forms.get("9840cecbc9a65b62c0a802413b701732"));
 	}
 	
 	/**

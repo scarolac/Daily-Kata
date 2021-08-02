@@ -4,11 +4,14 @@ package com.smt.kata.database;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 // Apache Commons 3.x
 import org.apache.commons.lang3.StringUtils;
+
+import com.siliconmtn.data.report.ExcelReport;
 
 /****************************************************************************
  * <b>Title</b>: ExcelGenerator.java
@@ -45,8 +48,16 @@ public class ExcelGenerator {
 	 * @throws IOException
 	 * @throws SQLException
 	 */
-	public byte[] getContactReport(String actionGroupId) 
-	throws IOException, SQLException {
+	public byte[] getContactReport(String actionGroupId) throws IOException, SQLException {
+
+		//need headers, form fields
+		// need data, form answers
+		// sheet name is groupId
+		
+//		ExcelReport output = new ExcelReport(headers);
+//		output.setFileName(actionGroupId);
+//		output.setData(rows);
+//		return output.generateReport();
 		return new byte[0];
 	}
 	
@@ -61,6 +72,23 @@ public class ExcelGenerator {
 	throws SQLException {
 		if (StringUtils.isEmpty(orgId)) throw new SQLException("Organization ID is required");
 		Map<String, Integer> data = new LinkedHashMap<>();
+		
+		var sql = "select sa.action_group_id, count(sa.action_id) "
+				+ "from sb_action sa "
+				+ "join contact c on sa.action_id = c.action_id "
+				+ "join contact_submittal cs on c.action_id = cs.action_id "
+				+ "where sa.organization_id = ? "
+				+ "group by sa.action_id "; 
+		
+		try (var preparedStatement = conn.prepareStatement(sql)) {
+			preparedStatement.setObject(1, orgId);
+			
+			var queryResult = preparedStatement.executeQuery();
+			
+			while (queryResult.next()) 
+				data.put(queryResult.getString("action_group_id"), queryResult.getInt("count"));			
+		}
+		
 		return data;
 	}
 }
