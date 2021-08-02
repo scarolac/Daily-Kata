@@ -79,7 +79,7 @@ class DatabaseQueryTest {
 	/**
 	 * Test method for {@link com.smt.kata.database.DatabaseQuery#execute(java.lang.String, java.util.List)}.
 	 * 
-	 * --- Execute a query to the number of options for each question text that is 
+	 * --- Execute a query to get the number of options for each question text that is 
 	 * the same
 	 */
 	@Test
@@ -97,7 +97,7 @@ class DatabaseQueryTest {
 	/**
 	 * Test method for {@link com.smt.kata.database.DatabaseQuery#execute(java.lang.String, java.util.List)}.
 	 * 	 * 
-	 * --- Execute a query to the number of options for each question text that is 
+	 * --- Execute a query to get the number of options for each question text that is 
 	 * the same.  Filter the query by the provided UUID
 	 */
 	@Test
