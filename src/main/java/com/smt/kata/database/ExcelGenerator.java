@@ -4,8 +4,10 @@ package com.smt.kata.database;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 // Apache Commons 3.x
@@ -49,16 +51,68 @@ public class ExcelGenerator {
 	 * @throws SQLException
 	 */
 	public byte[] getContactReport(String actionGroupId) throws IOException, SQLException {
-
-		//need headers, form fields
-		// need data, form answers
-		// sheet name is groupId
 		
-//		ExcelReport output = new ExcelReport(headers);
-//		output.setFileName(actionGroupId);
-//		output.setData(rows);
-//		return output.generateReport();
-		return new byte[0];
+		var headers = buildHeaderMap(actionGroupId);
+		var rows = buildDataRows(actionGroupId);
+		
+		var output = new ExcelReport(headers);
+		output.setFileName(actionGroupId);
+		output.setData(rows);
+		return output.generateReport();
+	}
+	
+	protected Map<String, String> buildHeaderMap(String actionGroupId) throws SQLException {
+		var result = new HashMap<String, String>();
+		
+		var sql = "select cf.contact_field_id, cf.field_nm "
+				+ "from contact_field cf "
+				+ "join contact_assoc ca on cf.contact_field_id = ca.contact_field_id "
+				+ "join contact c on ca.action_id = c.action_id "
+				+ "join sb_action sa on c.action_id = sa.action_id "
+				+ "where sa.action_group_id = ? ";
+		
+		try (var preparedStatement = conn.prepareStatement(sql)) {
+			preparedStatement.setObject(1, actionGroupId);
+			
+			var queryResult = preparedStatement.executeQuery();
+			
+			while (queryResult.next())
+				result.put(queryResult.getString("contact_field_id"), queryResult.getString("field_nm"));
+		}
+
+		return result;
+	}
+	
+	protected List<Map<String, Object>> buildDataRows(String actionGroupId) throws SQLException {
+		var data = new ArrayList<Map<String, Object>>();
+		var row = new HashMap<String, Object>();
+		
+		var sql = "select cd.contact_submittal_id, cd.contact_field_id, substring(cd.value_txt,0,128) as value_txt "
+				+ "from sb_action sa "
+				+ "join contact_submittal cs on cs.action_id = sa.action_id "
+				+ "join contact_data cd on cs.contact_submittal_id = cd.contact_submittal_id "
+				+ "where sa.action_group_id = ? "
+				+ "order by cs.contact_submittal_id";
+		
+		try (var preparedStatement = conn.prepareStatement(sql)) {
+			preparedStatement.setObject(1, actionGroupId);
+			
+			var queryResult = preparedStatement.executeQuery();
+			
+			final var SUBMITTAL_ID = "contact_submittal_id";
+			var submittalId = "";
+			while (queryResult.next()) {
+				if (! StringUtils.isEmpty(submittalId) && ! submittalId.equals(queryResult.getString(SUBMITTAL_ID))) {
+					data.add(row);
+					row = new HashMap<String, Object>();
+				}
+				row.put(queryResult.getString("contact_field_id"), queryResult.getObject("value_txt"));
+				submittalId = queryResult.getString(SUBMITTAL_ID);
+			}
+			data.add(row);
+		}
+		
+		return data;
 	}
 	
 	/**
