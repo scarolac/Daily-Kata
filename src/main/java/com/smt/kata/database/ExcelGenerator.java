@@ -53,6 +53,7 @@ public class ExcelGenerator {
 	public byte[] getContactReport(String actionGroupId) throws IOException, SQLException {
 		
 		var headers = buildHeaderMap(actionGroupId);
+//		System.out.println(headers);
 		var rows = buildDataRows(actionGroupId);
 		
 		var output = new ExcelReport(headers);
@@ -76,8 +77,10 @@ public class ExcelGenerator {
 			
 			var queryResult = preparedStatement.executeQuery();
 			
-			while (queryResult.next())
+			while (queryResult.next()) {
 				result.put(queryResult.getString("contact_field_id"), queryResult.getString("field_nm"));
+				result.put("field_nm", "question");
+			}
 		}
 
 		return result;
@@ -87,10 +90,15 @@ public class ExcelGenerator {
 		var data = new ArrayList<Map<String, Object>>();
 		var row = new HashMap<String, Object>();
 		
-		var sql = "select cd.contact_submittal_id, cd.contact_field_id, substring(cd.value_txt,0,128) as value_txt "
+		var sql = "select cd.contact_submittal_id, cd.contact_field_id, substring(cd.value_txt,0,128) as value_txt, "
+				+ "p.first_nm, p.last_nm, p.email_address_txt, pa.city_nm, pa.state_cd, "
+				+ "pa.address_txt, pa.zip_cd, pn.phone_number_txt, cs.create_dt "
 				+ "from sb_action sa "
 				+ "join contact_submittal cs on cs.action_id = sa.action_id "
 				+ "join contact_data cd on cs.contact_submittal_id = cd.contact_submittal_id "
+				+ "join profile p on cs.profile_id = p.profile_id "
+				+ "join profile_address pa on p.profile_id = pa.profile_id "
+				+ "join phone_number pn on p.profile_id = pn.profile_id "
 				+ "where sa.action_group_id = ? "
 				+ "order by cs.contact_submittal_id";
 		
@@ -105,9 +113,14 @@ public class ExcelGenerator {
 				if (! StringUtils.isEmpty(submittalId) && ! submittalId.equals(queryResult.getString(SUBMITTAL_ID))) {
 					data.add(row);
 					row = new HashMap<String, Object>();
+					row.put("first_nm", queryResult.getString("first_nm"));
+					row.put("last_nm", queryResult.getString("last_nm"));
+					row.put("email_address_txt", queryResult.getObject("email_address_txt"));
+					row.put("", queryResult.getString(""));
 				}
 				row.put(queryResult.getString("contact_field_id"), queryResult.getObject("value_txt"));
 				submittalId = queryResult.getString(SUBMITTAL_ID);
+//				System.out.println(row);
 			}
 			data.add(row);
 		}
@@ -129,8 +142,7 @@ public class ExcelGenerator {
 		
 		var sql = "select sa.action_group_id, count(sa.action_id) "
 				+ "from sb_action sa "
-				+ "join contact c on sa.action_id = c.action_id "
-				+ "join contact_submittal cs on c.action_id = cs.action_id "
+				+ "join contact_submittal cs on sa.action_id = cs.action_id "
 				+ "where sa.organization_id = ? "
 				+ "group by sa.action_id "; 
 		

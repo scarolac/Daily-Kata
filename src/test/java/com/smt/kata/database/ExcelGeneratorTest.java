@@ -80,10 +80,10 @@ class ExcelGeneratorTest {
 		System.out.println("First");
 		forms = eg.getContactCountByOrganization(ORG_ID);
 		assertEquals(4, forms.size());
-		assertEquals(2432, forms.get("283440b8771afaf5ac10025828bb89bb"));
+		assertEquals(2481, forms.get("283440b8771afaf5ac10025828bb89bb"));
 		assertEquals(2, forms.get("ea95dedb52381255ac1002581b241d1f"));
 		assertEquals(2013, forms.get("9840cecbc9a65b62c0a802413b701732"));
-		assertEquals(16801, forms.get("2f979c5f82e7953dac1002589e1659fb"));
+		assertEquals(17020, forms.get("2f979c5f82e7953dac1002589e1659fb"));
 	}
 	
 	/**
