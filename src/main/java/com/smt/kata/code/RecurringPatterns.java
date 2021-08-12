@@ -4,6 +4,8 @@ package com.smt.kata.code;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
+
 /****************************************************************************
  * <b>Title</b>: RecurringPatterns.java
  * <b>Project</b>: SMT-Kata
@@ -29,11 +31,17 @@ public class RecurringPatterns {
 	 * Gets the number of occurrences of a pattern in a word
 	 * @param pattern Pattern to evaluate
 	 * @param word word to search against
-	 * @return starting location of all patterms
+	 * @return starting location of all patterns
 	 */
 	public List<Integer> count(String word, String pattern) {
-		
-		return new ArrayList<>();
+		var result = new ArrayList<Integer>();
+		if (StringUtils.isEmpty(word) || StringUtils.isEmpty(pattern)) return result;
+
+		word = word.replace(" ", "");
+		for (var index = 0; (index = word.indexOf(pattern, index)) > -1; ++index)
+			result.add(index);
+
+		return result;
 	}
 
 }
