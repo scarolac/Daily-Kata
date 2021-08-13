@@ -2,6 +2,7 @@ package com.smt.kata.math;
 
 // JDK 11.x
 import java.util.Collection;
+import java.util.HashSet;
 
 /****************************************************************************
  * <b>Title</b>: ModulusSets.java
@@ -33,7 +34,22 @@ public class ModulusSets {
 	 * @return Largest colleciton of matchin modulus values
 	 */
 	public Collection<Integer> calculate(int[] input) {
-		return null;
+		var result = new HashSet<Integer>();
+		if (input == null || input.length == 0) return result;
+		
+		for (var i = 0; i < input.length; ++i) {
+			var temp = new HashSet<Integer>();
+			for (var j = 0; j < input.length; ++j) {
+				if (i != j && (input[i] % input[j] == 0 || input[j] % input[i] == 0)) {
+					temp.add(input[i]);
+					temp.add(input[j]);
+				}				
+			}
+			if (temp.size() > result.size())
+				result = temp;
+		}
+		
+		return result;
 	}
 
 }
