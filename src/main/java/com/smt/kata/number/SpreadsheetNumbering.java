@@ -26,6 +26,22 @@ public class SpreadsheetNumbering {
 	 * @return Excel column heading
 	 */
 	public String getColumnLabel(int col) {
-		return "";
+		var result = new StringBuilder();		
+		while (col > 0) {
+			var mod = col % 26;
+			if (mod == 0) {
+				result.append("Z");
+				col = (col / 26) - 1;
+			} else {
+				result.append(letter(mod));
+				col /= 26;	
+			}				
+		}
+		
+		return result.reverse().toString();
+	}
+	
+	private String letter(int val) {
+		return ((char)((val - 1) + 'A')) + "";
 	}
 }

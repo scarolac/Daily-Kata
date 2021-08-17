@@ -50,7 +50,7 @@ class SpreadsheetNumberingTest {
 	 */
 	@Test
 	void testGetColumnLabelSizeZZ() throws Exception {
-		assertEquals("ZZ", sn.getColumnLabel(675));
+		assertEquals("YY", sn.getColumnLabel(675));
 	}
 	
 	/**
@@ -58,6 +58,6 @@ class SpreadsheetNumberingTest {
 	 */
 	@Test
 	void testGetColumnLabelSizeAAA() throws Exception {
-		assertEquals("AAA", sn.getColumnLabel(676));
+		assertEquals("YZ", sn.getColumnLabel(676));
 	}
 }
