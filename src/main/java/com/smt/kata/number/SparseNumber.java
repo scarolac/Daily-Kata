@@ -31,7 +31,7 @@ public class SparseNumber {
 	 * @return True if sparse, false otherwise
 	 */
 	public boolean isSparse(int val) {
-		return val > 0;
+		return !Integer.toBinaryString(Math.abs(val)).contains("11"); 
 	}
 	
 	/**
@@ -40,6 +40,7 @@ public class SparseNumber {
 	 * @return Next sparse number
 	 */
 	public int findNext(int val) {
-		return val;
+		val = Math.abs(val);
+		return isSparse(val) ? val : findNext(++val);
 	}
 }
