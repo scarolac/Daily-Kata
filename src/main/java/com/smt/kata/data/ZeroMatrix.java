@@ -1,5 +1,8 @@
 package com.smt.kata.data;
 
+import java.util.Arrays;
+import java.util.HashSet;
+
 /****************************************************************************
  * <b>Title</b>: ZeroMatrix.java
  * <b>Project</b>: SMT-Kata
@@ -40,7 +43,28 @@ public class ZeroMatrix {
 	 * @return Matrix with the rows and columns updated
 	 */
 	public int[][] assign(int[][] matrix) {
-		// Return the updated matrix
+		if (matrix == null || matrix.length == 0 || matrix[0] == null)
+			return new int[0][];
+
+		var row = new HashSet<Integer>();
+		var col = new HashSet<Integer>();
+
+		for (var m = 0; m < matrix.length; ++m)
+			for (var n = 0; n < matrix[0].length; ++n)
+				if (matrix[m][n] == 0) {
+					row.add(m);
+					col.add(n);
+				}
+
+		for (var m = 0; m < matrix.length; ++m)
+			for (var n = 0; n < matrix[0].length; ++n)
+				if (row.contains(m) || col.contains(n))
+					matrix[m][n] = 0;
+
 		return matrix;
 	}
+	
+	private static <T> void p(T msg) { System.out.println(msg); }    
+	private static void pA(int[] array) { System.out.println(Arrays.toString(array));}
+	private static void pM(int[][] matrix) { p(matrix.length + "x" + matrix[0].length); for (var row : matrix) pA(row); }
 }
