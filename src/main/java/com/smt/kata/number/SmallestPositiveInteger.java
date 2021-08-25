@@ -1,5 +1,9 @@
 package com.smt.kata.number;
 
+import java.util.Arrays;
+
+import org.apache.commons.lang3.ArrayUtils;
+
 /****************************************************************************
  * <b>Title</b>: SmallestPositiveInteger.java
  * <b>Project</b>: SMT-Kata
@@ -34,10 +38,21 @@ public class SmallestPositiveInteger {
 
 	/**
 	 * Finds the smallest positive integer NOT in the sum of values
-	 * @param arr Values to evaluate and sum
+	 * 
+	 * @param intArray Values to evaluate and sum
 	 * @return smallest integer
 	 */
-	public int find(int[] arr) {
-		return arr[0];
+	public int find(int[] intArray) {
+		int smallestPositiveInteger = 0;
+		if (ArrayUtils.isEmpty(intArray)) return smallestPositiveInteger;
+		
+		++smallestPositiveInteger;
+		Arrays.sort(intArray);		
+		
+		for (var number : intArray)
+			if (number <= smallestPositiveInteger)
+				smallestPositiveInteger += number;
+
+		return smallestPositiveInteger;
 	}
 }
