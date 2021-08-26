@@ -35,6 +35,22 @@ public class LongestConsecutiveSequence {
 	 * @return Largest sequence of numbers in the array
 	 */
 	public int calculate(int[] items) {
-		return items.length;
+		var longest = 1;
+		sort(items);		
+		for (var i = 0; i < items.length - 1; ++i) 
+			if (items[i] + 1 == items[i + 1]) 
+				++longest;		
+			
+		return longest;
+	}
+	
+	private void sort(int[] array) {
+		for (var i = 0; i < array.length; ++i)
+			for (var j = 0; j < array.length; ++j)
+				if (array[i] < array[j]) {
+					var temp = array[i];
+					array[i] = array[j];
+					array[j] = temp;
+				}
 	}
 }
