@@ -43,6 +43,14 @@ public class CountingNumbers {
 	 * @return Number of smaller elements for each item in the source array
 	 */
 	public int[] calculate(int[] source) {
-		return source;
+		if (source == null)	return new int[0];
+		
+		var counts = new int[source.length];
+		for (var i = 0; i < source.length; ++i)
+			for (var j = i + 1 == source.length ? 0 : i + 1; j < source.length; ++j)
+				if (source[j] < source[i])
+					counts[i]++;
+
+		return counts;
 	}
 }
