@@ -2,7 +2,11 @@ package com.smt.kata.code;
 
 // JDK 11.x
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.lang3.StringUtils;
 
 /****************************************************************************
  * <b>Title</b>: DecodeWays.java
@@ -56,13 +60,40 @@ import java.util.List;
  * @updates:
  ****************************************************************************/
 public class DecodeWays {
-	
+
+	Map<String, String> map = new HashMap<>();
+
+	public DecodeWays() {
+		buildCharMap(map);
+	}
+
 	/**
 	 * Encodes the provided sequence into all possible variations
+	 * 
 	 * @param code Code to be encoded
 	 * @return Collection of possible codes
 	 */
 	public List<String> encode(String code) {
-		return new ArrayList<>();
+		List<String> results = new ArrayList<>();
+		if (StringUtils.isEmpty(code))
+			return results;
+
+		recurse(code, "", results);
+		return results;
+	}
+
+	public void recurse(String code, String prev, List<String> results) {
+		if (code.length() == 0) results.add(prev);
+		for (int x = 1; x <= code.length(); x++) {
+			var decoded = map.get(code.substring(0, x));
+			if (decoded != null)
+				recurse(code.substring(x), prev + decoded, results);
+		}
+
+	}
+
+	public void buildCharMap(Map<String, String> map) {
+		for (int i = 0; i <= 25; i++)
+			map.put(i + 1 + "", (char) ('A' + i) + "");
 	}
 }
