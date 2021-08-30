@@ -82,17 +82,16 @@ public class DecodeWays {
 		return results;
 	}
 
-	public void recurse(String code, String prev, List<String> results) {
+	private void recurse(String code, String prev, List<String> results) {
 		if (code.length() == 0) results.add(prev);
 		for (int x = 1; x <= code.length(); x++) {
 			var decoded = map.get(code.substring(0, x));
 			if (decoded != null)
 				recurse(code.substring(x), prev + decoded, results);
 		}
-
 	}
 
-	public void buildCharMap(Map<String, String> map) {
+	private void buildCharMap(Map<String, String> map) {
 		for (int i = 0; i <= 25; i++)
 			map.put(i + 1 + "", (char) ('A' + i) + "");
 	}
