@@ -1,5 +1,7 @@
 package com.smt.kata.math;
 
+import org.apache.commons.lang3.ArrayUtils;
+
 /****************************************************************************
  * <b>Title</b>: CostClimbingStairs.java
  * <b>Project</b>: Daily-Kata
@@ -38,6 +40,22 @@ public class CostClimbingStairs {
 	 * @return Smallest cost to climb
 	 */
 	public int calculate(int[] costs) {
-		return costs.length;
+		if (ArrayUtils.isEmpty(costs)) return 0;
+		if (costs.length == 1) return costs[0];
+		
+		int startAtOne = step(costs, 0, 0);
+		int startAtTwo = step(costs, 1, 0);
+
+		return Math.min(startAtOne,startAtTwo);
+	}
+
+	public int step(int[] costs, int index, int previous){
+		if(index >= costs.length)
+			return previous;
+		
+		int one = step(costs, index + 1, previous + costs[index]);
+		int two = step(costs, index + 2, previous + costs[index]);
+
+		return Math.min(one, two);
 	}
 }
