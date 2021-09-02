@@ -1,5 +1,11 @@
 package com.smt.kata.object;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import org.apache.commons.lang3.ArrayUtils;
+
 /****************************************************************************
  * <b>Title</b>: MatchstickToSquare.java
  * <b>Project</b>: SMT-Kata
@@ -39,8 +45,54 @@ public class MatchstickToSquare {
 	 * @return True if they form a square, false otherwise
 	 */
 	public boolean canFormSquare(int[] matchsticks) {
-				
-		return true;
+		if (ArrayUtils.isEmpty(matchsticks))
+			return false;
+		Arrays.sort(matchsticks);
+
+		List<Integer> sticks = new ArrayList<>();
+		int count = 0;
+		for (int i : matchsticks) {
+			sticks.add(i);
+			count += i;
+		}
+
+		int sideLength = (int) Math.sqrt(count);
+		List<Integer> sides = new ArrayList<>();
+		sides.add(0);
+		sides.add(0);
+		sides.add(0);
+		sides.add(0);
+
+		return trySides(sides, sticks, sideLength);
+	}
+
+	boolean trySides(List<Integer> sides, List<Integer> available, int target) {
+		for (int x = 0; x < sides.size(); x++) {
+			int side = sides.get(x);
+			if (side == target) {
+				continue;
+			}
+
+			// Side is not filled
+			boolean anyPass = false;
+			for (int y = 0; y < available.size(); y++) {
+				List<Integer> cSides = new ArrayList<>(sides);
+				List<Integer> cAvail = new ArrayList<>(available);
+				int currentSideHeight = side + available.get(y);
+				if (currentSideHeight > target)
+					continue;
+
+				cSides.set(x, currentSideHeight);
+				cAvail.remove(y);
+
+				boolean result = trySides(cSides, cAvail, target);
+				if (result)
+					anyPass = true;
+			}
+			return anyPass;
+		}
+
+		return available.isEmpty();
 	}
 
 }
