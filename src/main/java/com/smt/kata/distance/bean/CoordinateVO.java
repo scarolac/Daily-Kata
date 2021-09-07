@@ -32,10 +32,18 @@ public class CoordinateVO implements Serializable {
 	/**
 	 * Constructor.  Assigns coords
 	 */
-	public CoordinateVO(int x, int y) {
+	public CoordinateVO(int row, int column) {
 		this();
-		this.column = x;
-		this.row = y;
+		this.column = column;
+		this.row = row;
+	}
+	
+	/**
+	 * Outputs the value of this coordinate
+	 */
+	@Override
+	public String toString() {
+		return "Row[" + row + "] - Col[" + column + "]";
 	}
 	
 	/**
