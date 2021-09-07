@@ -1,5 +1,10 @@
 package com.smt.kata.tree;
 
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+
 /****************************************************************************
  * <b>Title</b>: OpenTheLock.java
  * <b>Project</b>: SMT-Kata
@@ -57,6 +62,52 @@ public class OpenTheLock {
 	 * @return Number of moves.  -1 if it can't be accomplished
 	 */
 	public int calculatePath(String[] deadends, String target) {
-        return -1;
+		
+		String starting = "0000";
+		
+		Map<String, Integer> visited = new HashMap<>();
+		Set<String> dead = new HashSet<>();
+		for(String s: deadends) dead.add(s);
+		
+        return recurse(starting, 0, visited, dead, target);
     }
+
+	public int recurse(String current, int count, Map<String, Integer> visited, Set<String> deadends, String target){
+		if (visited.size() > 3750) 
+			System.out.println("here tho");
+		if (deadends.contains(current)) return -1;
+		else if (visited.containsKey(current)){
+			if(count >= visited.get(current)) return -1;
+		}else if (current.equals(target)) return count;
+		
+		visited.put(current, count);
+
+		int min = Integer.MAX_VALUE;
+		for(int index = 0; index < current.length(); index++){
+			String str = current.charAt(index) + "";
+			int num = Integer.parseInt(str);
+			int upNum = (num + 1);
+			int downNum = (num - 1);
+			if(downNum < 0) downNum += 10;
+			if(upNum >= 10) upNum -= 10;
+
+			char[] chars = current.toCharArray();
+			chars[index] = Character.forDigit(upNum,10);
+			int countA = recurse(String.valueOf(chars), ++count, visited, deadends, target);
+			chars[index] = Character.forDigit(downNum,10);
+			int countB = recurse(String.valueOf(chars), ++count, visited, deadends, target);
+		
+			if(countA != -1)
+				min = Math.min(countA, min);
+			
+			if(countB != -1)
+				min = Math.min(countA, min);
+			
+		}
+
+		if(min == Integer.MAX_VALUE) return -1;
+		else return min;
+	}
+
+
 }
