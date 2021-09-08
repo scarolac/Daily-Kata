@@ -1,5 +1,7 @@
 package com.smt.kata.data;
 
+import com.siliconmtn.data.text.StringUtil;
+
 /****************************************************************************
  * <b>Title</b>: MatchingSubsequence.java
  * <b>Project</b>: Daily-Kata
@@ -40,6 +42,26 @@ public class MatchingSubsequence {
 	 * @return Number of matches
 	 */
 	public int match(String source, String[] words) {
-		return words.length;
+		if (StringUtil.isEmpty(source) || words == null) return 0;
+		
+		source = source.toLowerCase();
+		var count = 0;		
+		for (var word : words) 
+			if (word != null) {
+				word = word.toLowerCase();
+				++count;
+				var index = 0;
+				for (var c : word.toCharArray()) {
+					index = source.indexOf(c, index);
+					if (index == -1) {
+						--count;
+						break;
+					}
+					++index;					
+				}
+			}
+		
+		
+		return count;
 	}
 }
