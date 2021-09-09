@@ -2,6 +2,8 @@ package com.smt.kata.word;
 
 import javax.xml.datatype.DatatypeConfigurationException;
 
+import org.apache.commons.lang3.ArrayUtils;
+
 /****************************************************************************
  * <b>Title</b>: AlienDictionary.java
  * <b>Project</b>: SMT-Kata
@@ -49,6 +51,8 @@ import javax.xml.datatype.DatatypeConfigurationException;
  * @updates:
  ****************************************************************************/
 public class AlienDictionary {
+	
+	private String order;
 
 	/**
 	 * Initializes the class with the new alphabet order
@@ -57,16 +61,41 @@ public class AlienDictionary {
 	 */
 	public AlienDictionary(String order) throws DatatypeConfigurationException {
 		super();
+		if(order.length() != 26)
+			throw new DatatypeConfigurationException("Don't do this");
 		
-		throw new DatatypeConfigurationException("Don't do this");
+		this.order = order;
 	}
 
 	/**
 	 * Determines if the provided words are in order
+	 * 
 	 * @param words Words to check
 	 * @return True if the words are in order and false otherwise
 	 */
 	public boolean isSorted(String[] words) {
-		return words.length == 0;
+		if (ArrayUtils.isEmpty(words) || words.length == 1)
+			return false;
+
+		for (var i = 0; i < words.length - 1; ++i) {
+			if(words[i] == null) ++i;
+			var first = words[i].toLowerCase();
+			if (words[i+1] == null) ++i; 
+			var second = words[i + 1].toLowerCase();
+
+			for (var j = 0; j < first.length(); ++j) {
+				try {
+					var pos = order.indexOf(first.charAt(j)) - order.indexOf(second.charAt(j));
+					if (pos < 0) 
+						return true;
+					if (pos > 0)
+						return false;
+				} catch (Exception e) {
+					return false;
+				}
+			}
+		}
+
+		return true;
 	}
 }
