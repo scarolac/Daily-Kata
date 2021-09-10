@@ -42,12 +42,44 @@ package com.smt.kata.tree;
  * @updates:
  ****************************************************************************/
 public class WallsAndGates {
-	
+
 	/**
 	 * Assigns the distance from each room to a gate
+	 * 
 	 * @param rooms Matrix of rooms, gates and walls
 	 */
 	public int[][] assign(int[][] rooms) {
-		return new int[0][];
+		if (invalidArray(rooms))
+			return new int[0][];
+
+		for (var row = 0; row < rooms.length; ++row)
+			for (var col = 0; col < rooms[row].length; ++col)
+				if (rooms[row][col] == 0)
+					search(rooms, row, col, 0);
+
+		return rooms;
+	}
+
+	private boolean invalidArray(int[][] rooms) {
+		return rooms == null || rooms.length == 0 || rooms[0] == null || rooms[0].length == 0;
+	}
+
+	private void search(int[][] rooms, int row, int col, int count) {
+		if (outOfBounds(rooms, row, col) || shorterPathFound(rooms, row, col, count))
+			return;
+
+		rooms[row][col] = count++;
+		search(rooms, row, col + 1, count);
+		search(rooms, row, col - 1, count);
+		search(rooms, row - 1, col, count);
+		search(rooms, row + 1, col, count);
+	}
+
+	private boolean outOfBounds(int[][] rooms, int row, int col) {
+		return row < 0 || row >= rooms.length || col < 0 || col >= rooms[row].length;
+	}
+
+	private boolean shorterPathFound(int[][] rooms, int row, int col, int count) {
+		return rooms[row][col] < count;
 	}
 }
