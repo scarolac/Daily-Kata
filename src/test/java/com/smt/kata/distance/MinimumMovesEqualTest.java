@@ -74,6 +74,11 @@ class MinimumMovesEqualTest {
 	 */
 	@Test
 	void testCalculateNegative() throws Exception {
-		assertEquals(144, mme.calculate(new int[] {2, 20, 33, -10, -12, 45, 34, 26} ));
+		assertEquals(138, mme.calculate(new int[] {2, 20, 33, -10, -12, 45, 34, 26} ));
 	}
+	
+	@Test
+    void testCalculateLongerClose() throws Exception {
+        assertEquals(4, mme.calculate(new int[] {1,5,5,5,5} ));
+    }
 }
