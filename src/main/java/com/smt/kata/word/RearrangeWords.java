@@ -1,7 +1,13 @@
 package com.smt.kata.word;
 
+import java.util.ArrayList;
 // JDK 11.x
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import org.apache.commons.lang3.StringUtils;
 
 /****************************************************************************
  * <b>Title</b>: RearrangeWords.java
@@ -36,7 +42,37 @@ public class RearrangeWords {
 	 * @return All the possible ways the word can be rearranged to not have sequential characters
 	 */
 	public Collection<String> arrange(String word) {
-		return null;
+		if (StringUtils.isEmpty(word) || word.length() < 2 || !word.chars().allMatch(Character::isLetter))
+			return new ArrayList<>();
+
+		var result = new HashSet<String>();
+		if (check(word))
+			return List.of(word);
+		else
+			mix("", word, result);
+
+		return result;
+	}
+
+	/**
+	 * Check the word is good
+	 */
+	private boolean check(String word) {
+		for (var i = 0; i < word.length() - 1; ++i)
+			if (word.charAt(i) == word.charAt(i + 1))
+				return false;
+		return true;
+	}
+
+	/**
+	 * Make a bunch of words
+	 */
+	private void mix(String temp, String word, Set<String> result) {
+		if (word.isEmpty() && check(temp))
+			result.add(temp);
+		else
+			for (var i = 0; i < word.length(); ++i)
+				mix(temp + word.charAt(i), word.substring(0, i) + word.substring(i + 1, word.length()), result);
 	}
 
 }
