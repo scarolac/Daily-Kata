@@ -23,8 +23,8 @@ public class Rectangle implements Serializable {
 	private static final long serialVersionUID = -3615572197475045115L;
 	
 	// Members
-	CoordinateVO topLeft;
-	CoordinateVO bottomRight;
+	public CoordinateVO topLeft;
+	public CoordinateVO bottomRight;
 	
 	/**
 	 * 
