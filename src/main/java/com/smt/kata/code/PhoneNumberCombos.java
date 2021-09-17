@@ -2,6 +2,7 @@ package com.smt.kata.code;
 
 //JDK 11.x
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /****************************************************************************
@@ -51,6 +52,26 @@ public class PhoneNumberCombos {
 	 * @return Collection of all of the permutations
 	 */
 	public List<String> calculate(String digits) {
-		return new ArrayList<>();
+		var result = new ArrayList<String>();
+		if(digits == null || digits.isEmpty() || !digits.matches("[0-9]+"))			
+			return result;
+		
+		var resultMap = new String[digits.length()];
+		for (var i = 0; i < digits.length(); ++i) 
+			resultMap[i] = DIGIT_MAP[Integer.parseInt(digits.charAt(i) + "")];
+		
+		System.out.println(Arrays.asList(resultMap));
+		
+		for(var i = 0; i < resultMap.length; ++i) {
+			for (var j = 0; j < resultMap.length; ++j) {
+				for (var k = 0; k < resultMap[j].length(); ++k) {
+					
+				}
+			}
+		}
+		
+		System.out.println(result);
+		return result;
+		
 	}
 }
