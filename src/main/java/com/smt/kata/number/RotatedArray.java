@@ -46,7 +46,7 @@ public class RotatedArray {
 	 * @return Index of the target after pivoting.  -1 if target not located
 	 */
 	public int search(int[] nums, int target) {
-		return search(nums, target, 0);
+		return search(nums, target, (nums.length / 2) - 1);
 	}
 	
 	/**
@@ -58,6 +58,16 @@ public class RotatedArray {
 	 * @return Index of the target after pivoting.  -1 if target not located
 	 */
 	public int search(int[] nums, int target, int pivot) {
+		var targetIndex = indexOf(nums, target);
+		if (targetIndex < 0)
+			return -1;
+		var distance = pivot - targetIndex;
+		return distance < 0 ? ((distance + 1) * -1) : nums.length - 1 - distance;
+	}
+	
+	private int indexOf(int[] array, int target) {
+		for (var index = 0; index < array.length; ++index)
+			if (target == array[index]) return index;
 		return -1;
 	}
 }
