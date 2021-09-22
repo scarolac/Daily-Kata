@@ -57,6 +57,14 @@ public class DuplicateRemover {
 	 * @return Processed String.
 	 */
 	public String process(String source, int numDups) {
-		return source;
+		if (source == null) return null;
+		if (source.isEmpty()) return "";
+		if (numDups < 2) return source;
+		
+		var temp = source;
+		for (var letter : source.toCharArray())
+			temp = temp.replaceAll((letter + "").repeat(numDups), "");
+		
+		return temp;
 	}
 }
