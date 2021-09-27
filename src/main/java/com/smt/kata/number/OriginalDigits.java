@@ -43,6 +43,23 @@ public class OriginalDigits {
 	 * @return Digits in order
 	 */
 	public String calculate(String source) {
-		return source;
+		if (source == null || source.isEmpty()) return "";
+		source = source.toLowerCase();
+		var numbers = new String[] { "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine" };
+		var result = new StringBuilder();
+
+		for (var i = 0; i < numbers.length; ++i)
+			if (check(source, numbers[i]))
+				result.append(i);
+
+		return result.toString();
+	}
+
+	private boolean check(String source, String number) {
+		for (var letter : number.toCharArray())
+			if (!source.contains(letter + ""))
+				return false;
+
+		return true;
 	}
 }
