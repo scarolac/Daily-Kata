@@ -2,7 +2,11 @@ package com.smt.kata.word;
 
 // JDK 11.x
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+
+import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.StringUtils;
 
 /****************************************************************************
  * <b>Title</b>: WordSubsets.java
@@ -63,6 +67,40 @@ public class WordSubsets {
 	 * @return Collection of words that match the patterns
 	 */
 	public List<String> find(String[] words, String[] searchVal) {
-		return new ArrayList<>();
+		var result = new ArrayList<String>();
+		if (ArrayUtils.isEmpty(words) || ArrayUtils.isEmpty(searchVal))
+			return result;
+
+		words = cleanArray(words);
+		searchVal = cleanArray(searchVal);
+		result = new ArrayList<String>(Arrays.asList(words));
+		
+		for (var word : words) 
+			for (var search : searchVal)
+				if (!containsAll(word, search))
+					result.remove(word);		
+
+		return result;
+	}
+
+	private String[] cleanArray(String[] input) {
+		var result = new ArrayList<String>();
+		
+		for (var word : input)
+			if (!StringUtils.isEmpty(word))
+				result.add(word.toLowerCase());
+		
+		return result.toArray(String[]::new);
+	}
+
+	private boolean containsAll(String word, String letters) {
+		var wordList = new ArrayList<>(Arrays.asList(word.split("")));
+		var letterList = new ArrayList<>(Arrays.asList(letters.split("")));
+
+		for (var letter : letterList)
+			if (!wordList.remove(letter))
+				return false;
+		
+		return true;
 	}
 }
