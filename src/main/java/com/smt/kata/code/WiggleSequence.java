@@ -1,4 +1,5 @@
 package com.smt.kata.code;
+import org.apache.commons.lang3.ArrayUtils;
 
 /****************************************************************************
  * <b>Title</b>: WiggleSequence.java
@@ -54,6 +55,11 @@ public class WiggleSequence {
 	 * @return Number of wiggles in the sequence
 	 */
 	public int count(int[] sequence) {
-		return sequence.length;
+		if (ArrayUtils.isEmpty(sequence)) return 0;
+		return backwards(sequence, 0, 1, 0);
+	}
+
+	private int backwards(int[] seq, int pos, int count, int sign) {
+		return (pos >= seq.length - 1) ? count : backwards(seq, pos + 1, count + ((Math.signum(seq[pos + 1] - seq[pos]) != sign) ? 1 : 0), (int) Math.signum(seq[pos + 1] - seq[pos]));
 	}
 }
