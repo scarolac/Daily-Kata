@@ -2,7 +2,11 @@ package com.smt.kata.word;
 
 // JDK 11.x
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
+
+import org.apache.commons.lang3.ArrayUtils;
 
 /****************************************************************************
  * <b>Title</b>: CircularArray.java
@@ -32,6 +36,49 @@ public class CircularArray {
 	 * @return Collection of words reordered.  Empty list if not possible
 	 */
 	public List<String> create(String[] words) {
-		return new ArrayList<>();
+		if (ArrayUtils.isEmpty(words) || words.length < 2)
+			return new ArrayList<>();
+		
+		var result = new LinkedList<>(Arrays.asList(words));
+		
+		var first = 0;
+		var second = 0;
+		var word = result.pollFirst();
+		var firstLetter = word.charAt(0);
+		var lastLetter = word.charAt(word.length() - 1);
+		for (var i = 1; i < result.size(); ++i) {
+			var check = result.get(i);
+			if (check.charAt(0) == firstLetter)
+				first = result.indexOf(check);
+		}
+		
+		for (var j = 1; j < result.size(); ++j) {
+			var check = result.get(j);
+			if (j != first && check.charAt(check.length() - 1) == lastLetter)
+				second = result.indexOf(check);
+		}
+		
+		
+		return result;
+	}
+	
+	
+	
+	private List<String> findLastChar(char letter, List<String> words) {
+		var result = new ArrayList<String>();
+		for (var word : words)
+			if (word.charAt(word.length() - 1) == letter)
+				result.add(word);
+			
+		return result;
+	}
+	
+	private List<String> findFirstChar(char letter, List<String> words) {
+		var result = new ArrayList<String>();
+		for (var word : words)
+			if (word.charAt(0) == letter)
+				result.add(word);
+			
+		return result;
 	}
 }
