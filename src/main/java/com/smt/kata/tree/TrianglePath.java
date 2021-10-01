@@ -1,5 +1,7 @@
 package com.smt.kata.tree;
 
+import org.apache.commons.lang3.ArrayUtils;
+
 /****************************************************************************
  * <b>Title</b>: TrianglePath.java
  * <b>Project</b>: SMT-Kata
@@ -49,6 +51,16 @@ public class TrianglePath {
 	 * @return Sum of the shortest path
 	 */
 	public int sum(int[][] triangle) {
-		return triangle.length;
+		if (ArrayUtils.isEmpty(triangle) || ArrayUtils.isEmpty(triangle[0])) return 0;
+		
+		return sum(triangle, 0, 0, 0);
+	}
+	
+	private int sum(int[][] triangle, int row, int col, int sum) {
+		if(row >= triangle.length || col >= triangle[row].length) return sum;
+		
+		sum += triangle[row][col];
+		
+		return Math.min(sum(triangle, row + 1, col, sum), sum(triangle, row + 1, col + 1, sum));
 	}
 }
