@@ -1,5 +1,7 @@
 package com.smt.kata.code;
 
+import org.apache.commons.lang3.ArrayUtils;
+
 /****************************************************************************
  * <b>Title</b>: HarmoniousSequence.java
  * <b>Project</b>: SMT-Kata
@@ -47,6 +49,23 @@ public class HarmoniousSequence {
 	 * @return total items in the harmonious sequence
 	 */
 	public int getLongest(int[] sequence) {
-		return sequence.length;
+		if (ArrayUtils.isEmpty(sequence) || sequence.length < 2)
+			return 0;
+
+		var max = 0;
+		for (var i = 0; i < sequence.length - 1; ++i)
+			if (Math.abs(sequence[i] - sequence[i + 1]) == 1) 
+				max = Math.max(max, countHarmonies(sequence, sequence[i], sequence[i + 1]));
+			
+		return max;
+	}
+
+	private int countHarmonies(int[] sequence, int lower, int upper) {
+		var count = 0;
+		for (var num : sequence)
+			if (num == lower || num == upper)
+				++count;
+		
+		return count;
 	}
 }
