@@ -1,5 +1,7 @@
 package com.smt.kata.code;
 
+import java.util.Arrays;
+
 import org.apache.commons.lang3.ArrayUtils;
 
 /****************************************************************************
@@ -52,6 +54,7 @@ public class HarmoniousSequence {
 		if (ArrayUtils.isEmpty(sequence) || sequence.length < 2)
 			return 0;
 
+		Arrays.sort(sequence);
 		var max = 0;
 		for (var i = 0; i < sequence.length - 1; ++i)
 			if (Math.abs(sequence[i] - sequence[i + 1]) == 1) 
