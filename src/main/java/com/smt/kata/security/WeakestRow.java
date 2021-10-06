@@ -1,5 +1,13 @@
 package com.smt.kata.security;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.stream.Collectors;
+
+import org.apache.commons.lang3.ArrayUtils;
+
 /****************************************************************************
  * <b>Title</b>: WeakestRow.java
  * <b>Project</b>: Daily-Kata
@@ -68,6 +76,21 @@ public class WeakestRow {
 	 * @return int array with the row ids of the weakest rows
 	 */
 	public int[] find(int[][] matrix, int k) {
-		return matrix[0];
+		if (! validInput(matrix, k)) return new int[0];	
+
+		return new ArrayList<>(mapTho(matrix).entrySet().stream().sorted(Map.Entry.comparingByValue())
+				.collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e1, LinkedHashMap::new))
+				.keySet()).subList(0, k).stream().mapToInt(i -> i).toArray();
+	}
+	
+	private boolean validInput(int[][] matrix, int k) {
+		return ArrayUtils.isEmpty(matrix) || ArrayUtils.isEmpty(matrix[0]) || k < 1 || k > matrix.length;
+	}
+	
+	private LinkedHashMap<Integer, Integer> mapTho(int[][] matrix) {
+		var map = new LinkedHashMap<Integer, Integer>();
+		for (var i = 0; i < matrix.length; ++i)
+			map.put(i, Arrays.stream(matrix[i]).sum());
+		return map;
 	}
 }
