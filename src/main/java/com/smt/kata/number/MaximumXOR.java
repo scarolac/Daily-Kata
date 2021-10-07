@@ -28,27 +28,6 @@ public class MaximumXOR {
 	 * array < 2 elements ...)
 	 */
 	public int calculate(int[] numbers) {
-		// Validate the data
-		int  maxTotal = 0;
-		if (numbers == null || numbers.length < 2) return maxTotal;
-		
-		// Loop each number in the array
-		for (int i = 0; i < numbers.length; i++) {
-			
-			// Loop each subsequent number to get all combinations
-			for (int j = i+1; j < numbers.length; j++) {
-				// Get the first and last number and XOR them
-				int first = numbers[i];
-				int last = numbers[j];
-				int xor = first ^ last;
-				
-				// If the number is larger than the current max, update it
-				if (xor > maxTotal) maxTotal = xor;
-			}
-		}
-		
-		// Return the highest XOR value
-		return maxTotal;
+		return numbers.length;
 	}
-
 }
