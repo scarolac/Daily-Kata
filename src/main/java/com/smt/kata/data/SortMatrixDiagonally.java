@@ -1,5 +1,10 @@
 package com.smt.kata.data;
 
+import java.util.Collections;
+import java.util.LinkedList;
+
+import org.apache.commons.lang3.ArrayUtils;
+
 /****************************************************************************
  * <b>Title</b>: SortMatrixDiagonally.java
  * <b>Project</b>: SMT-Kata
@@ -22,7 +27,13 @@ package com.smt.kata.data;
  * ]
  * 
  * Example 2:
- * Input: mat = [[11,25,66,1,69,7],[23,55,17,45,15,52],[75,31,36,44,58,8],[22,27,33,25,68,4],[84,28,14,11,5,50]]
+ * Input: mat = [
+ * 	[11, 25, 66, 1,  69, 7],
+ * 	[23, 55, 17, 45, 15, 52],
+ * 	[75, 31, 36, 44, 58, 8],
+ * 	[22, 27, 33, 25, 68, 4],
+ * 	[84, 28, 14, 11, 5,  50]
+ * ]
  * Output: [
  * 	[8, 11, 11, 14, 15, 17]
  * 	[7, 25, 27, 28, 31, 33]
@@ -47,6 +58,36 @@ public class SortMatrixDiagonally {
 	 * @return A sorted matrix
 	 */
 	public int[][] sort(int[][] matrix) {
+		if (ArrayUtils.isEmpty(matrix)) return new int[0][];
+		
+		return rebuild(flatten(matrix), matrix.length, matrix[0].length);
+	}
+	
+	private LinkedList<Integer> flatten(int[][] matrix){
+		var result = new LinkedList<Integer>();
+		for (var row : matrix) 
+			for (var num : row)
+				result.add(num);		
+		Collections.sort(result);
+		return result;
+	}
+	
+	private int[][] rebuild(LinkedList<Integer> list, int rowSize, int colSize){
+		var matrix = new int[rowSize][colSize];
+		for (var col = 0; col < colSize; ++col) {
+			for (var row = rowSize - 1; row >= 0; --row) {
+				System.out.println("-----");
+				System.out.println("row " + row);
+				System.out.println("col " + col);
+			}
+			
+			for (var col2 = col + 1; col2 < colSize; ++col2) {
+				System.out.println("row " + row);
+				System.out.println("col " + col2);
+			}
+
+		}
+		
 		return matrix;
 	}
 }
