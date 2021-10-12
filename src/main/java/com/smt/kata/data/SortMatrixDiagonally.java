@@ -75,7 +75,8 @@ public class SortMatrixDiagonally {
 	private int[][] rebuild(LinkedList<Integer> list, int rowSize, int colSize){
 		var matrix = new int[rowSize][colSize];
 		for (var col = 0; col < colSize; ++col) {
-			for (var row = rowSize - 1; row >= 0; --row) {
+			var row = rowSize - 1;
+			for (; row >= 0; --row) {
 				System.out.println("-----");
 				System.out.println("row " + row);
 				System.out.println("col " + col);

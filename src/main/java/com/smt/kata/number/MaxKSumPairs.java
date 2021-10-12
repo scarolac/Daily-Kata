@@ -1,5 +1,11 @@
 package com.smt.kata.number;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.stream.Collectors;
+
+import org.apache.commons.lang3.ArrayUtils;
+
 /****************************************************************************
  * <b>Title</b>: MaxKSumPairs.java
  * <b>Project</b>: SMT-Kata
@@ -46,6 +52,54 @@ public class MaxKSumPairs {
 	 */
 	public int calculate(int[] source, int target) {
 		// Validate the data
-		return source.length + target;
+		if (ArrayUtils.isEmpty(source) || source.length < 2) return 0;
+			
+		var numbers = (ArrayList<Integer>) Arrays.stream(source).boxed().sorted().collect(Collectors.toList());
+		
+		return find(numbers, target, target, 0, numbers.size() - 1);
+	}
+	
+	private int find(ArrayList<Integer> source, int target, int sum, int count, int index) {
+		if (source.isEmpty() || index < 0)
+			return count;
+		
+		if (sum == source.get(index)) {
+			source.remove(index);
+			return find(source, target, target, ++count, source.size() - 1);
+		}
+		else if (sum - source.get(index) > 0) {
+			return find(source, target, sum - source.get(index), count, --index);
+		}
+		else
+			return find(source, target, target, count, --index);
+		
+		
+		
+		
+		
+//
+//		var reset = 0;
+//		var same = 0;
+//		for (var i = 0; i < source.size(); ++i) {
+//			if (sum - source.get(i) >= 0) {
+//				sum -= source.remove(i);
+//				if (sum == 0) {
+//					reset = find(source, target, target, ++count, 0);
+//				}
+//				else
+//					same = find(source, target, sum, count, 0);
+//			}
+//		}
+//		
+//		
+//		if (sum - source.get(index) >= 0) {
+//			sum -= source.remove(index);
+//			if (sum == 0) {
+//				++count;
+//				reset = find(source, target, target, count, ++index);
+//			} else
+//				same = find(source, target, sum, count, index);
+//		}
+//		return Math.max(reset, same);
 	}
 }
