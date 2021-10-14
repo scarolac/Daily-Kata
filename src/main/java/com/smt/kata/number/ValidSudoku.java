@@ -1,5 +1,8 @@
 package com.smt.kata.number;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 /****************************************************************************
  * <b>Title</b>: ValidSudoku.java
  * <b>Project</b>: SMT-Kata
@@ -59,13 +62,49 @@ package com.smt.kata.number;
  * @updates:
  ****************************************************************************/
 public class ValidSudoku {
-	
+	ArrayList<String> possible = new ArrayList<String>(Arrays.asList("1","2","3","4","5","6","7","8","9"));
 	/**
 	 * Determines if the values in the Sudoku board are valid
 	 * @param board Sudoku board to evaluate
 	 * @return True if the values are valid.  False otherwise
 	 */
-	public boolean isValid(String[][] board) {
-		return board == null;
+	public boolean isValid(String[][] board) {		
+		return checkRows(board) && checkColumns(board) && checkSubBoxes(board);
+	}
+
+	private boolean checkSubBoxes(String[][] board) {
+		var copy = new ArrayList<>(possible);
+		for (var multiple = 0; multiple < 3; ++multiple) {
+			for (var row = multiple; row < (multiple+1)*3; ++row)
+				for (var col = multiple; col < (multiple+1)*3; ++col)
+					if (!board[row][col].equals(".") && !copy.remove(board[row][col]))
+						return false;
+			copy = new ArrayList<>(possible);
+		}
+		return true;
+	}
+
+	private boolean checkRows(String[][] board) {
+		var copy = new ArrayList<>(possible);
+		for (var row = 0; row < board.length; ++row) {
+			for (var col = 0; col < board[0].length; ++col)
+				if (!board[row][col].equals(".") && !copy.remove(board[row][col]))
+					return false;
+			copy = new ArrayList<>(possible);
+		}
+		
+		return true;		
+	}
+
+	private boolean checkColumns(String[][] board) {
+		var copy = new ArrayList<>(possible);
+		for (var col = 0; col < board[0].length; ++col) {
+			for (var row = 0; row < board.length; ++row)
+				if (!board[row][col].equals(".") && !copy.remove(board[row][col]))
+					return false;
+			copy = new ArrayList<>(possible);
+		}
+		
+		return true;	
 	}
 }
