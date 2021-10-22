@@ -1,5 +1,7 @@
 package com.smt.kata.distance;
 
+import org.apache.commons.lang3.ArrayUtils;
+
 /****************************************************************************
  * <b>Title</b>: SkylineView.java
  * <b>Project</b>: SMT-Kata
@@ -35,7 +37,17 @@ public class SkylineView {
 	 * @return Number of buildings with a view
 	 */
 	public int getNumViewsBackwards(int[] buildings) {
-		return buildings.length;
+		if (badInput(buildings)) return 0;
+		
+		var max = 0;
+		var count = 0;
+		for (var i = buildings.length - 1; i >= 0; --i) 
+			if (buildings[i] > max) { 
+				++count;
+				max = buildings[i];
+			}
+		
+		return count;
 	}
 	
 	/**
@@ -44,7 +56,24 @@ public class SkylineView {
 	 * @return Number of buildings with a view
 	 */
 	public int getNumViewsForward(int[] buildings) {
-		return buildings.length;
+		if (badInput(buildings)) return 0;	
+		
+		var count = 0;
+		boolean biggest;
+		for (var i = 0; i < buildings.length; ++i) {
+			biggest = true;
+			for (var j = i + 1; j < buildings.length; ++j)
+				if (buildings[i] <= buildings[j])
+					biggest = false;
+			if (biggest) 
+				++count;
+		}
+		
+		return count;
+	}
+	
+	private boolean badInput(int[] buildings) {
+		return ArrayUtils.isEmpty(buildings);
 	}
 
 }
