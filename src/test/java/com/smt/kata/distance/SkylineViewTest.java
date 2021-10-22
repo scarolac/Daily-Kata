@@ -82,5 +82,6 @@ class SkylineViewTest {
 	void testGetNumViewsBackwardsAlt() throws Exception {
 		assertEquals(2,  sv.getNumViewsBackwards(new int[] { 5, 2, 5, 1, 4 }));
 		assertEquals(2,  sv.getNumViewsForward(new int[] { 5, 2, 5, 1, 4 }));
+		assertEquals(3,  sv.getNumViewsForward(new int[] { 5, 4,3,4,1 }));
 	}
 }
