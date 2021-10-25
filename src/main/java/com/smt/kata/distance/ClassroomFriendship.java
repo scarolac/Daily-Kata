@@ -1,8 +1,11 @@
 package com.smt.kata.distance;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 // JDK 11.x
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /****************************************************************************
  * <b>Title</b>: ClassroomFriendship.java
@@ -46,6 +49,35 @@ public class ClassroomFriendship {
 	 * @return count of the number of friend groups
 	 */
 	public int countGroups(Map<Integer, List<Integer>> friends) {
-		return friends.size();
+		if (friends == null || friends.size() == 0) return 0;
+		var group = new HashSet<Integer>();
+		var groups = new ArrayList<Set<Integer>>();
+
+		for (var item : friends.entrySet())
+			if (item.getKey() != null && item.getValue() != null) {
+				for (var num : item.getValue())
+					group.add(num);
+
+				for (var index : group)
+					for (var person : friends.get(index))
+						group.add(person);
+
+				groups.add(group);
+			}
+		
+		while(!friends.isEmpty()) {
+			var list = friends.values().iterator().next();
+			for (var num : list) {
+				group.add(num);
+			}
+			for (var person : group) {
+				for (var num : friends.get(person)) {
+					group.add(num);
+				}
+			}
+			
+		}
+		
+		return groups.size();
 	}
 }
