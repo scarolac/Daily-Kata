@@ -55,7 +55,7 @@ public class SortByFrequency {
 				.entrySet().stream()
 				.sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
 				.map(entry -> entry.getKey().toString())
-				.collect(Collectors.joining(""));
+				.collect(Collectors.joining());
 	}
 
 }
