@@ -1,5 +1,12 @@
 package com.smt.kata.word;
 
+import java.util.Comparator;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+
+import org.apache.commons.lang3.StringUtils;
+
 /****************************************************************************
  * <b>Title</b>: SortByFrequency.java
  * <b>Project</b>: SMT-Kata
@@ -42,7 +49,13 @@ public class SortByFrequency {
 	 * @return characters sorted by the number of times they appear in the word
 	 */
 	public String sort(String word) {
-		return word;
+		return StringUtils.isEmpty(word) ? "" : word.toLowerCase().chars()
+				.mapToObj(c -> (char) c)
+				.collect(Collectors.groupingBy(Function.identity(), Collectors.counting()))
+				.entrySet().stream()
+				.sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
+				.map(entry -> entry.getKey().toString())
+				.collect(Collectors.joining(""));
 	}
 
 }
