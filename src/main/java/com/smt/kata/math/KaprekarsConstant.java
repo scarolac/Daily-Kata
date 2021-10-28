@@ -1,5 +1,8 @@
 package com.smt.kata.math;
 
+import java.util.Arrays;
+import java.util.HashSet;
+
 /****************************************************************************
  * <b>Title</b>: KaprekarsConstant.java
  * <b>Project</b>: SMT-Kata
@@ -31,6 +34,8 @@ package com.smt.kata.math;
  * @updates:
  ****************************************************************************/
 public class KaprekarsConstant {
+	
+	private static final int KAPREKARS_CONSTANT = 6174;
 
 	/**
 	 * Calculates the number of steps until Kaprekar's Constant is achieved
@@ -38,6 +43,36 @@ public class KaprekarsConstant {
 	 * @return the number of steps to acheive the number
 	 */
 	public int calculateSteps(int num) {
-		return num;
+		if (badInput(num)) 
+			return 0;
+		
+		var count = 0;		
+		for (; num != KAPREKARS_CONSTANT; ++count)
+			num = Math.abs(descending(num) - ascending(num));
+		
+		return count;
+	}
+	
+	private boolean badInput(int num) {
+		return num < 0 || Integer.toString(num).length() != 4 || checkDigits(num);
+	}
+	
+	private boolean checkDigits(int num) {
+		var set = new HashSet<Character>();
+		for (var letter : Integer.toString(num).toCharArray())
+			set.add(letter);
+		return set.size() < 2;
+	}
+	
+	private int ascending(int num) {
+		var array = Integer.toString(num).toCharArray();
+		Arrays.sort(array);
+		return Integer.parseInt(new String(array));
+	}
+	
+	private int descending(int num) {
+		var array = Integer.toString(num).toCharArray();
+		Arrays.sort(array);
+		return Integer.parseInt(new StringBuilder(new String(array)).reverse().toString());
 	}
 }
