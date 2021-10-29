@@ -3,6 +3,8 @@ package com.smt.kata.distance.bean;
 // JDK 11.x
 import java.io.Serializable;
 
+import com.siliconmtn.core.HashCodeUtil;
+
 /****************************************************************************
  * <b>Title</b>: CoordinateVO.java
  * <b>Project</b>: SMT-Kata
@@ -80,6 +82,19 @@ public class CoordinateVO implements Serializable {
 	 */
 	public void setRow(int row) {
 		this.row = row;
+	}
+	
+	@Override
+	public int hashCode() {
+		return HashCodeUtil.hash(row) + HashCodeUtil.hash(column);
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null) return false;
+		if (this == obj) return true;
+		var other = (CoordinateVO) obj;
+		return other.getRow() == row && other.getColumn() == column;
 	}
 
 }

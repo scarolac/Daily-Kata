@@ -1,5 +1,14 @@
 package com.smt.kata.game;
 
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+
+import org.apache.commons.lang3.ArrayUtils;
+
+import com.smt.kata.distance.bean.CoordinateVO;
+
 /****************************************************************************
  * <b>Title</b>: TicTacToeCheck.java
  * <b>Project</b>: SMT-Kata
@@ -62,7 +71,19 @@ package com.smt.kata.game;
  * @updates:
  ****************************************************************************/
 public class TicTacToeCheck {
-
+	
+	private static Map<Integer, Set<CoordinateVO>> winConditions = new HashMap<>();
+	static {
+		winConditions.put(1, Set.of(new CoordinateVO(0,0), new CoordinateVO(0,1), new CoordinateVO(0,2)));
+		winConditions.put(2, Set.of(new CoordinateVO(1,0), new CoordinateVO(1,1), new CoordinateVO(1,2)));
+		winConditions.put(3, Set.of(new CoordinateVO(2,0), new CoordinateVO(2,1), new CoordinateVO(2,2)));
+		winConditions.put(4, Set.of(new CoordinateVO(0,0), new CoordinateVO(1,0), new CoordinateVO(2,0)));
+		winConditions.put(5, Set.of(new CoordinateVO(0,1), new CoordinateVO(1,1), new CoordinateVO(2,1)));
+		winConditions.put(6, Set.of(new CoordinateVO(0,2), new CoordinateVO(1,2), new CoordinateVO(2,2)));
+		winConditions.put(7, Set.of(new CoordinateVO(0,0), new CoordinateVO(1,1), new CoordinateVO(2,2)));
+		winConditions.put(8, Set.of(new CoordinateVO(0,2), new CoordinateVO(1,1), new CoordinateVO(2,0)));
+	}
+	
 	/**
 	 * Identifies the players of the game
 	 */
@@ -80,6 +101,34 @@ public class TicTacToeCheck {
 	 * @return Player A or B if a player won.  Player N if no winner
 	 */
 	public Player evaluate(int[][] moves) {
+		if (ArrayUtils.isEmpty(moves) || ArrayUtils.isEmpty(moves[0]) || moves.length < 3)
+			return Player.N;
+		if (checkA(moves))
+			return Player.A;
+		if (checkB(moves))
+			return Player.B;
 		return Player.N;
+	}
+
+	private boolean checkA(int[][] moves) {
+		var result = new HashSet<CoordinateVO>();
+		for (var moveA = 0; moveA < moves.length; moveA += 2)
+			result.add(new CoordinateVO(moves[moveA][0],moves[moveA][1]));
+		
+		for (var win : winConditions.values())
+			if (result.containsAll(win))
+				return true;
+		return false;
+	}
+	
+	private boolean checkB(int[][] moves) {
+		var result = new HashSet<CoordinateVO>();
+		for (var moveB = 1; moveB < moves.length; moveB += 2)
+			result.add(new CoordinateVO(moves[moveB][0],moves[moveB][1]));
+		
+		for (var win : winConditions.values())
+			if (result.containsAll(win))
+				return true;
+		return false;
 	}
 }
