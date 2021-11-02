@@ -2,7 +2,11 @@ package com.smt.kata.distance;
 
 // JDK 11.x
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
+
+import org.apache.commons.lang3.ArrayUtils;
 
 /****************************************************************************
  * <b>Title</b>: IntersectingArrays.java
@@ -49,7 +53,24 @@ public class IntersectingArrays {
 	 * @return Array of the intersected values
 	 */
 	public Integer[] intersectNoCollections(Integer[] one, Integer[] two) {
-		return two;
+		if (ArrayUtils.isEmpty(one) || ArrayUtils.isEmpty(two))
+			return new Integer[0];		
+		
+		var intersects = new Integer[Math.min(one.length, two.length)];
+		var index = 0;
+		for (var i = 0; i < one.length; ++i) {
+			for(var j = 0; j < two.length; ++j) {
+				if (one[i] == null || two[j] == null)
+					return new Integer[0]; 
+				if(one[i].equals(two[j])) {
+					intersects[index++] = two[j];
+					two[j] = -1;
+					break;
+				}
+			}
+		}		
+		
+		return Arrays.copyOf(intersects, index);
 	}
 	
 	/**
@@ -59,6 +80,13 @@ public class IntersectingArrays {
 	 * @return Collection of the intersected values
 	 */
 	public List<Integer> intersectWithCollections(Integer[] one, Integer[] two) {
-		return new ArrayList<>();
+		if (ArrayUtils.isEmpty(one) || ArrayUtils.isEmpty(two))
+			return new ArrayList<>();
+		var list1 = Arrays.stream(one).collect(Collectors.toList());
+		var list2 = Arrays.stream(two).collect(Collectors.toList());
+		if (list1.contains(null) || list2.contains(null))
+			return new ArrayList<>();
+		list1.retainAll(list2);	
+		return list1;
 	}
 }
