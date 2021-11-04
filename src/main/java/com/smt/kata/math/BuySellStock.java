@@ -42,7 +42,14 @@ public class BuySellStock {
 	 * @return Max profit amount.  ) if no profit (or loss)
 	 */ 
 	public int calculateMaxProfit(int[] trades) {
-		return trades.length;
+		if (trades == null || trades.length < 2) return 0;
+		
+		var maxProfit = 0;
+		for (var buy = 0; buy < trades.length; ++buy)
+			for (var sell = buy + 1; sell < trades.length; ++sell)
+				maxProfit = Math.max(maxProfit, trades[sell] - trades[buy]);			
+			
+		return maxProfit;
 	}
 
 }
