@@ -1,5 +1,9 @@
 package com.smt.kata.word;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 /****************************************************************************
  * <b>Title</b>: TextJustification.java
  * <b>Project</b>: Daily-Kata
@@ -76,6 +80,43 @@ public class TextJustification {
 	 * @return Formatted phrase
 	 */
 	public String formatPhrase(String phrase, int maxWidth) {
+		if (phrase == null) return "";
+		var split = phrase.split(" ");
+		for (var word : split)
+			if (word.length() > maxWidth)
+				return "";
+		
+		p(Arrays.toString(split));		
+		
+		var lines = buildLines(split, maxWidth);
+		p(lines);
+		
 		return phrase;
 	}
+	
+
+	
+	private List<List<String>> buildLines(String[] split, int maxWidth) {
+		var line = new ArrayList<String>();
+		var lines = new ArrayList<List<String>>();
+		var len = 0;
+		for (var word : split) {
+			if (len + word.length() > maxWidth) {
+				lines.add(line);
+				line = new ArrayList<String>();				
+				len = 0;
+			}
+			
+			line.add(word);
+			len += word.length();
+			
+			if (len < maxWidth)
+				++len;
+		}
+		lines.add(line);
+		return lines;
+	}
+
+	private static <T> void p(T msg) { System.out.println(msg); }
+	
 }
