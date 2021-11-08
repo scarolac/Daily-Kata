@@ -1,8 +1,10 @@
 package com.smt.kata.game;
 
+import java.util.HashSet;
 // JDK 11.x
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /****************************************************************************
  * <b>Title</b>: LazyBartender.java
@@ -37,13 +39,28 @@ import java.util.Map;
  * @updates:
  ****************************************************************************/
 public class LazyBartender {
-
+	
 	/**
 	 * Finds the minimum number of drinks the bartender has to memorize to satisfy all customers
 	 * @param custDrinks Map of customers and their drink preferences
 	 * @return Minimum number of drinks to memorize.
 	 */
 	public int minimumTypes(Map<Integer, List<Integer>> custDrinks) {
-		return custDrinks.size();
+		return leastDrinkKnowledge(custDrinks, 0, new HashSet<>());
 	}
+
+	private int leastDrinkKnowledge(Map<Integer, List<Integer>> custDrinks, int person, Set<Integer> drinks) {
+		if (custDrinks == null) return 0;
+		if (! custDrinks.containsKey(person)) return drinks.size();
+		
+		var count = Integer.MAX_VALUE;
+		for (var drink : custDrinks.get(person)) {
+			var drinkSet = new HashSet<Integer>(drinks);
+			drinkSet.add(drink);
+			count = Math.min(count, leastDrinkKnowledge(custDrinks, person + 1, drinkSet));
+		}
+		
+		return count;
+	}
+	
 }
