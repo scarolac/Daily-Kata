@@ -2,7 +2,14 @@ package com.smt.kata.word;
 
 // JDK 11.x
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+
+import org.apache.commons.lang3.ArrayUtils;
+
+import com.siliconmtn.data.text.StringUtil;
 
 /****************************************************************************
  * <b>Title</b>: SubstringConcatenationMatching.java
@@ -54,6 +61,38 @@ public class SubstringConcatenationMatching {
 	 * @return List of matching indexes
 	 */
 	public List<Integer> find(String phrase, String[] words) {
-		return new ArrayList<>();
+		var result = new ArrayList<Integer>();
+		if (StringUtil.isEmpty(phrase) || ArrayUtils.isEmpty(words))
+			return result;
+		
+		phrase = phrase.toLowerCase();
+		for (var i = 0; i < words.length; ++i)
+			if (words[i] != null) 
+				words[i] = words[i].toLowerCase();			
+		
+		var list = concatenator(words);
+		for (var word : list) {
+			var index = phrase.indexOf(word);
+			if (index >= 0) 
+				result.add(index);
+		}		
+		
+		return result;
+	}
+
+	private HashSet<String> concatenator(String[] words) {
+		var wordsList = new ArrayList<String>(Arrays.asList(words));
+		wordsList.removeAll(Collections.singleton(null));
+		
+		var result = new HashSet<String>();
+		result.add(String.join("", wordsList));
+		
+		var big = 1000;
+		while (big-- > 0) {
+			Collections.shuffle(wordsList);
+			result.add(String.join("", wordsList));
+		}
+				
+		return result;
 	}
 }
