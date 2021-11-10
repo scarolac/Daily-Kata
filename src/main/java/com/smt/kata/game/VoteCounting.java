@@ -1,9 +1,15 @@
 package com.smt.kata.game;
 
+import java.io.BufferedReader;
 // JDK 11.x
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.EnumMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /****************************************************************************
  * <b>Title</b>: VoteCounting.java
@@ -49,7 +55,31 @@ public class VoteCounting {
 	 * @throws IOException If votes can't be loaded
 	 */
 	public List<Candidates> count(int version) throws IOException {
-		return new ArrayList<>();
+		var votes = new EnumMap<Candidates, Integer>(Candidates.class);
+		var voters = new ArrayList<String>();
+		try (var reader = new BufferedReader(
+				new InputStreamReader(
+						this.getClass().getResourceAsStream(String.format(RESOURCE, version)))))
+		{
+			var line = reader.readLine();
+			while (line != null) {
+				var pair = line.split("\t");
+				votes.merge(Candidates.valueOf(pair[1]), 1, Integer::sum);	
+				
+				if (voters.contains(pair[0]))
+					possibleFraudVotes.add(Integer.parseInt(pair[0]));
+				else
+					voters.add(pair[0]);
+				
+				line = reader.readLine();
+			}
+		}		
+		
+		return votes.entrySet().stream()
+				.sorted(Collections.reverseOrder(Map.Entry.comparingByValue()))
+				.limit(3)
+				.map(Map.Entry::getKey)
+		        .collect(Collectors.toList());
 	}
 	
 
