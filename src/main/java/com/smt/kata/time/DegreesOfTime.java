@@ -1,5 +1,7 @@
 package com.smt.kata.time;
 
+import com.siliconmtn.data.text.StringUtil;
+
 /****************************************************************************
  * <b>Title</b>: DegreesOfTime.java
  * <b>Project</b>: SMT-Kata
@@ -32,7 +34,32 @@ public class DegreesOfTime {
 	 * @return difference in degrees between the minute and hour hand.  0 if invalid data
 	 */
 	public int calculate(String time) {
-		return time.length();
+		if (StringUtil.isEmpty(time) || !time.contains(":")) 
+			return 0;
+		var split = time.split(":");
+		var first = split[0];
+		var second = split[1];
+		if (! isNumber(first) || !isNumber(second)) 
+			return 0;
+		var hours = Integer.parseInt(first);
+		var mins = Integer.parseInt(second);
+		if (hours < 0 || hours > 24 || mins < 0 || mins > 59 || hours == mins) 
+			return 0;
+		
+		hours %= 12;
+		hours *= 30;
+		mins *= 6;
+		
+		return Math.abs(hours - mins);
+	}
+	
+	private boolean isNumber(String phrase) {
+		try {
+			Integer.parseInt(phrase);
+		} catch (Exception e) {
+			return false;
+		}
+		return true;
 	}
 
 }
