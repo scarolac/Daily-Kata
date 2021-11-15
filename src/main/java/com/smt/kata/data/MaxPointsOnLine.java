@@ -1,5 +1,16 @@
 package com.smt.kata.data;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import org.apache.commons.lang3.ArrayUtils;
+
+import com.smt.kata.distance.bean.CoordinateVO;
+
 /****************************************************************************
  * <b>Title</b>: MaxPointsOnLine.java
  * <b>Project</b>: SMT-Kata
@@ -42,6 +53,36 @@ public class MaxPointsOnLine {
 	 * @return Max points in any straight line (vertical, horizontal and diagonal)
 	 */
 	public int findMax(int[][] points) {
-		return points.length;
+		if (ArrayUtils.isEmpty(points)) return 0;
+		
+		var set = makePoints(points);
+		var result = new HashMap<CoordinateVO, Integer>();
+		checkSlopes(result, new ArrayList<>(set), 0);
+		
+		return result.values().stream().max((v1,v2) -> v1.compareTo(v2)).get() + 1;
+	}
+	
+	private Set<CoordinateVO> makePoints(int[][] points){
+		var result = new HashSet<CoordinateVO>();
+		for (var coord : points)
+			if (coord != null)
+				result.add(new CoordinateVO(coord[0], coord[1]));
+		
+		return result;
+	}
+	
+	private CoordinateVO getSlope(CoordinateVO point1, CoordinateVO point2) {
+		return new CoordinateVO(point2.getColumn() - point1.getColumn(), point2.getRow() - point1.getRow());
+	}
+	
+	private void checkSlopes(Map<CoordinateVO, Integer> counts, List<CoordinateVO> list, int index) {
+		if (index == list.size()) return;
+		
+		var coord = list.get(index);
+		for (var item : list)
+			if (list.indexOf(item) != index) 
+				counts.merge(getSlope(coord, item), 1, Integer::sum);			
+		
+		checkSlopes(counts, list, index + 1);		
 	}
 }
