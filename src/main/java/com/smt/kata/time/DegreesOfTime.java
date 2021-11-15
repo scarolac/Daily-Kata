@@ -34,19 +34,14 @@ public class DegreesOfTime {
 	 * @return difference in degrees between the minute and hour hand.  0 if invalid data
 	 */
 	public int calculate(String time) {
-		if (! isTime(time)) return 0;
-		var localTime = LocalTime.parse(time);
-		
-		return Math.abs(localTime.getHour() % 12 - localTime.getMinute() * 6);
-	}
-	
-	private boolean isTime(String time) {
 		try {
-			LocalTime.parse(time);
-		} catch (Exception e) {
-			return false;
-		}
-		return true;
+			if (time.length() != 5) 
+				time = "0" + time;
+			var localTime = LocalTime.parse(time);
+			return Math.abs(30 * (localTime.getHour() % 12) - localTime.getMinute() * 6);			
+		} catch(Exception e) {
+			return 0;
+		}		
 	}
 
 }
