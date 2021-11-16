@@ -1,5 +1,7 @@
 package com.smt.kata.math;
 
+import com.siliconmtn.data.text.StringUtil;
+
 /****************************************************************************
  * <b>Title</b>: AddBinary.java
  * <b>Project</b>: SMT-Kata
@@ -40,7 +42,7 @@ public class AddBinary {
 	 * @return Sum of the 2 binary numbers added together 
 	 */
 	public String addBinary(String a, String b) {
-        return a + b;
+        return (StringUtil.isEmpty(a) || StringUtil.isEmpty(b)) ? "0" : Integer.toBinaryString(Integer.parseInt(a, 2) + Integer.parseInt(b, 2));
     }
 
 }
