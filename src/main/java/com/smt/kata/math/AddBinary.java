@@ -42,7 +42,9 @@ public class AddBinary {
 	 * @return Sum of the 2 binary numbers added together 
 	 */
 	public String addBinary(String a, String b) {
-        return (StringUtil.isEmpty(a) || StringUtil.isEmpty(b)) ? "0" : Integer.toBinaryString(Integer.parseInt(a, 2) + Integer.parseInt(b, 2));
+        return (StringUtil.isEmpty(a) || StringUtil.isEmpty(b) || !a.matches("[0-1]+") || !b.matches("[0-1]+")) 
+        		? "0" 
+        		: Integer.toBinaryString(Integer.parseInt(a, 2) + Integer.parseInt(b, 2));
     }
 
 }
