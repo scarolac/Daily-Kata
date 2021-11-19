@@ -3,6 +3,7 @@ package com.smt.kata.math;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 /****************************************************************************
@@ -51,7 +52,12 @@ public class LargestNumber {
 	 * empty or null
 	 */
 	public String find(int[] values) {
-		return getMaxString(quickPerm(values));
+		return Arrays.stream(values)
+				.mapToObj(String::valueOf)
+				.sorted((s1,s2) -> (s2+s1).compareTo(s1+s2))
+				.collect(Collectors.joining());		
+		
+//		return getMaxString(quickPerm(values));
 	}
 
 	private List<int[]> quickPerm(int[] array) {
