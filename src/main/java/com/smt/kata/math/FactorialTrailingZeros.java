@@ -1,5 +1,7 @@
 package com.smt.kata.math;
 
+import java.math.BigInteger;
+
 /****************************************************************************
  * <b>Title</b>: FactorialTrailingZeros.java
  * <b>Project</b>: Daily-Kata
@@ -42,6 +44,17 @@ public class FactorialTrailingZeros {
 	 * @return Number of trailing zeros.
 	 */
 	public int calculate(int n) {
-		return n;
+		if (n > 104) return 0;		
+		var factorial = factorial(n, BigInteger.ONE).toString();
+		var count = 0;
+		for (var i = factorial.length() - 1; i > 0; --i)
+			if (factorial.charAt(i) != '0') return count;
+			else ++count;
+		return count;
+	}
+	
+	private static final BigInteger factorial(long n, BigInteger acc) {
+		if (n <= 1) return acc;
+		return factorial(n - 1, acc.multiply(BigInteger.valueOf(n)));
 	}
 }
