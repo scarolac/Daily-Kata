@@ -76,5 +76,13 @@ class HouseRobberTest {
 	void testCalculateExampleStarttwo() throws Exception {
 		assertEquals(16, hr.calculate(new int[] {2, 7, 3, 9, 1} ));
 	}
+	
+	/**
+    * Test method for {@link com.smt.kata.game.HouseRobber#calculate(int[])}.
+    */
+   @Test
+   void testCalculateExampleOne2() throws Exception {
+       assertEquals(4, hr.calculate(new int[] {1, 0, 1, 3} ));
+   }
 
 }

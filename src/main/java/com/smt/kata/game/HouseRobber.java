@@ -46,6 +46,19 @@ public class HouseRobber {
 	 * @return
 	 */
 	public int calculate(int[] values) {
-		return values.length;
+		if (values == null || values.length == 0) return 0;
+		if (values.length == 1) return values[0];		
+		
+		return Math.max(sum(values, 0 ,0), sum(values, 1, 0));
+	}
+	
+	private int sum(int[] values, int start, int total) {
+		if (start >= values.length) return total;
+		
+		total += values[start];
+		var temp = total;
+		for (var i = start + 2; i < values.length; ++i)
+			total = Math.max(sum(values, i, temp), total);
+		return total;
 	}
 }
