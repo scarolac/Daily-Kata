@@ -48,6 +48,18 @@ public class AdditiveNumber {
 	 * @return True if additive, false otherwise
 	 */
 	public boolean isAdditive(String sequence) {
-		return sequence == null;
+		if (sequence == null || !sequence.matches("[0-9]{3,35}")) return false;
+		
+		
+		for (var i = 0; i < sequence.length(); ++i) {
+			for (var j = i+1; j <= sequence.length();++j) {
+				System.out.println(sequence.substring(i,j));
+			}
+		}
+		
+		
+		return true;
 	}
+	
+	
 }
