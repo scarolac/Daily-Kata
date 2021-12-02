@@ -47,6 +47,14 @@ public class OneThreeTwoPattern {
 	 * @return Number of 123 patterns in the data
 	 */
 	public int getTotal(int[] values) {
-		return values.length;
+		var count = 0;
+		if (values == null || values.length < 3) return count;
+		
+		for (var i = 0; i < values.length - 2; ++i)
+			for (var j = i + 1; j < values.length - 1; ++j)
+				for (var k = j + 1; k < values.length; ++k)
+					if (values[i] < values[j] && values[k] < values[j])
+						++count;
+		return count;
 	}
 }
