@@ -53,6 +53,9 @@ public class MinimumAsciiDelete {
 	 * @return Total of the removed ascii values
 	 */
 	public int getMinumumValue(String s1, String s2) {
-		return s1.length() + s2.length();
+		return (s1 == null || s2 == null) 
+				? 0 
+				: s1.chars().map(c -> s2.indexOf(c) == -1 ? c : 0).reduce(0, Integer::sum)
+					+ s2.chars().map(c -> s1.indexOf(c) == -1 ? c : 0).reduce(0, Integer::sum);
 	}
 }
