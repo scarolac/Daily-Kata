@@ -59,7 +59,15 @@ package com.smt.kata.word;
 public class ReplaceWords {
 
 	public String update(String phrase, String[] roots) {
-		return phrase;
+		if (phrase == null || phrase.length() == 0 || roots == null || roots.length == 0)
+			return "";
+
+		for (var root : roots)
+			for (var word : phrase.split(" "))
+				if (root != null && word.startsWith(root))
+					phrase = phrase.replaceFirst(word, root);
+
+		return phrase.strip();
 	}
 
 }
