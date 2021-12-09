@@ -38,6 +38,16 @@ public class DailyTemperatures {
 	 * @return array matching the temps array that has the ith day for each day
 	 */
 	public int[] calculate(int[] temps) {
-		return temps;
+		if (temps == null || temps.length == 0) return new int[0];
+		var result = new int[temps.length];
+		
+		for (var i = 0; i < temps.length; ++i) 
+			for (var j = i + 1; j < temps.length; ++j) 
+				if (temps[j] > temps[i]) { 
+					result[i] = j - i;
+					break;
+				}				
+			
+		return result;
 	}
 }
