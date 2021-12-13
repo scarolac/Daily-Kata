@@ -53,8 +53,14 @@ public class ShiftingLetters {
 	 * @return Transformed string.  Returns source if data is invalid
 	 */
 	public String transform(String source, int[] shifts) {
-		return source;
-		
+		if (source == null || source.length() == 0 || shifts == null || shifts.length == 0 || source.matches(".*\\d.*"))
+			return source;
+
+		var sourceArray = source.toLowerCase().toCharArray();
+		for (var i = 0; i < shifts.length; ++i)
+			for (var j = 0; j <= i; ++j)
+				sourceArray[j] = (char) ('a' + ((sourceArray[j] - 'a' + shifts[i]) % 26));
+		return new String(sourceArray);
 	}
 
 }
