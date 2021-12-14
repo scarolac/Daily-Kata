@@ -48,7 +48,11 @@ public class XORMania {
 	 * @return Number of matching positive integers.  ) if invalid data
 	 */
 	public int findMatches(int m, int n) {
-		return m + n;
+		var count = 0;		
+		for (var i = m; i >= 0; --i)
+			if ((i ^ (m - i)) == n)
+				++count;
+		return count;
 	}
 
 }
