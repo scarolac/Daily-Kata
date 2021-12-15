@@ -1,5 +1,8 @@
 package com.smt.kata.code;
 
+import java.util.Arrays;
+import java.util.stream.Collectors;
+
 /****************************************************************************
  * <b>Title</b>: FlippingMatrix.java
  * <b>Project</b>: SMT-Kata
@@ -48,6 +51,64 @@ public class FlippingMatrix {
 	 * @return Sum of the binary values for each row
 	 */
 	public int calculate(int[][] matrix) {
-		return matrix.length;
+		if (badInput(matrix))
+			return 0;
+		
+		for (var row = 0; row < matrix.length; ++row)
+			if (matrix[row][0] == 0)
+				flipRow(matrix, row);
+		
+		for (var col = 0; col < matrix[0].length; ++col)
+			if (colHasMoreZeroes(matrix, col))
+				flipCol(matrix, col);
+
+		return sumRows(matrix);
+	}
+	
+	private boolean badInput(int[][] matrix) {
+		if (matrix == null || matrix.length == 0)
+			return true;
+		var size = matrix[0] != null ? matrix[0].length : 0;
+		for (var row : matrix) {
+			if (row == null || row.length != size)
+				return true;
+			size = row.length;
+			for (var num : row)
+				if (num < 0 || num > 1)
+					return true;
+		}
+		return false;
+	}
+	
+	private int sumRows(int[][] matrix) {
+		var sum = 0;
+		for (var row : matrix)
+			sum += Integer.parseInt(Arrays.stream(row).mapToObj(String::valueOf).collect(Collectors.joining()), 2);
+		return sum;
+	}
+	
+	private void flipRow(int[][] matrix, int row) {
+		if (row < 0 || row > matrix.length) return;
+		
+		for (var i = 0; i < matrix[row].length; ++i)
+			matrix[row][i] = matrix[row][i] != 0 ? 0 : 1;
+	}
+	
+	private void flipCol(int[][] matrix, int col) {
+		if (col < 0 || col > matrix[0].length) return;
+		
+		for (var i = 0; i < matrix.length; ++i)
+			matrix[i][col] = matrix[i][col] != 0 ? 0 : 1;
+	}
+	
+	private boolean colHasMoreZeroes(int[][] matrix, int col) {
+		if (col < 0 || col > matrix[0].length) return false;
+		
+		var zeroes = 0;
+		for (var row = 0; row < matrix.length; ++row)
+			if (matrix[row][col] == 0) 
+				++zeroes;
+		
+		return zeroes > matrix.length / 2;
 	}
 }
