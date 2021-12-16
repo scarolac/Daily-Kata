@@ -1,5 +1,7 @@
 package com.smt.kata.code;
 
+import java.util.stream.Collectors;
+
 /****************************************************************************
  * <b>Title</b>: StringWindow.java
  * <b>Project</b>: SMT-Kata
@@ -27,7 +29,22 @@ public class StringWindow {
 	 * @return Smallest Window.  0 is returned if invalid data.
 	 */
 	public int find(String word) {
-		return word.length();
+		if (word == null || word.length() == 0)
+			return 0;
+
+		word = word.toLowerCase();
+		var distinct = word.chars().mapToObj(c -> (char) c).distinct().collect(Collectors.toList());
+
+		var min = Integer.MAX_VALUE;
+		for (var i = 0; i < word.length(); ++i)
+			for (var j = i + 1; j <= word.length(); ++j)
+				if (word.substring(i, j)
+						.chars().mapToObj(c -> (char) c)
+						.collect(Collectors.toList())
+						.containsAll(distinct))
+					min = Math.min(min, word.substring(i, j).length());
+
+		return min;
 	}
 
 }
