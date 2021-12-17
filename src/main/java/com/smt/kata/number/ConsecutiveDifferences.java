@@ -8,9 +8,11 @@ import java.util.List;
  * <b>Project</b>: SMT-Kata
  * <b>Description: </b> Numbers With Same Consecutive Differences Kata
  * 
- * Return all non-negative integers of length n such that the absolute difference between every two consecutive digits is k.
+ * Return all non-negative integers of length n such that the absolute difference 
+ * between every two consecutive digits is k.
  * 
- * Note that every number in the answer must not have leading zeros. For example, 01 has one leading zero and is invalid.
+ * Note that every number in the answer must not have leading zeros. For example, 
+ * 01 has one leading zero and is invalid.
  * 
  * You may return the answer in any order.
  * 
@@ -53,7 +55,41 @@ public class ConsecutiveDifferences {
 	 * data or none found
 	 */
 	public List<Integer> find(int n, int k) {
-		return new ArrayList<>();
+		if (n < 2 || n > 9 || k < 0 || k > 9) 		
+			return new ArrayList<>();
+		
+		var list = new ArrayList<Integer>();
+		var start = (int) Math.pow(10, n - 1.0);
+		var end = (int) Math.pow(10, n);
+		var temp = start;
+		var next = 0;
+		while (temp < end) {
+			var first = temp / (int) Math.pow(10, n - 1.0);
+			
+			var res = new StringBuilder();
+			res.append(first);
+			if (first - k >= 0) {
+				next = first - k;
+				res.append(next);
+				first = next;
+			}
+			if (first + k <= 9) {
+				next = first + k;
+				res.append(next);
+				first = next;
+			}
+			
+			temp += start;
+		}
+		
+		
+		return list;
 	}
+	
+	private void append(int first, int k, int length) {
+		var str = "";
+		
+	}
+	
 
 }

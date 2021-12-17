@@ -55,7 +55,7 @@ class ConsecutiveDifferencesTest {
 		int[] matches = new int[] {181,292,707,818,929};
 		List<Integer> diff = cd.find(3, 7);
 		List<Integer> results = new ArrayList<>(Arrays.stream(matches).mapToObj(i -> Integer.valueOf(i)).collect(Collectors.toList()));
-		assertTrue(results.containsAll(diff));
+		assertTrue(diff.containsAll(results));
 	}
 	
 	/**
