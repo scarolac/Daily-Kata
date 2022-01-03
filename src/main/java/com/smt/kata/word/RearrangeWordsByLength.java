@@ -1,6 +1,7 @@
 package com.smt.kata.word;
 
 import java.util.Arrays;
+import java.util.Comparator;
 
 /****************************************************************************
  * <b>Title</b>: RearrangeWordsByLength.java
@@ -54,7 +55,7 @@ public class RearrangeWordsByLength {
 		if (phrase == null || phrase.length() == 0) return "";
 		
 		var array = phrase.toLowerCase().split(" ");
-		Arrays.sort(array, (s1, s2) -> Integer.compare(s1.length(), s2.length()));
+		Arrays.sort(array, Comparator.comparingInt(String::length));
 		array[0] = capitalize(array[0]);
 		return String.join(" ", array);
 	}
