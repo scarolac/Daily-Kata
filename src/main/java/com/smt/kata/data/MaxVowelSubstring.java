@@ -63,7 +63,18 @@ public class MaxVowelSubstring {
 	 * @return max number of vowels found.  0 otherwise
 	 */
 	public int find(String word, int k) {
-		return k;
+		if (word == null || word.length() == 0 || k < 1 || k > word.length())
+			return 0;
+		var countVowels = 0;
+		for (var i = 0; i < word.length() - k; ++i)
+			countVowels = (int) Math.max(
+					countVowels,
+					word.substring(i, i + k)
+						.chars()
+						.filter(c -> vowels.indexOf(c) != -1)
+						.count());
+
+		return countVowels;
 	}
 
 }
