@@ -6,9 +6,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
 
+// JDK 11.x
 import java.util.ArrayList;
 import java.util.Arrays;
-// JDK 11.x
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -47,51 +47,52 @@ class ConsecutiveDifferencesTest {
 		assertEquals(0, cd.find(10, 1).size());
 	}
 
-	/**
-	 * Test method for {@link com.smt.kata.number.ConsecutiveDifferences#find(int, int)}.
-	 */
-	@Test
-	void testFindExampleOne() throws Exception {
-		int[] matches = new int[] {181,292,707,818,929};
-		List<Integer> diff = cd.find(3, 7);
-		List<Integer> results = new ArrayList<>(Arrays.stream(matches).mapToObj(i -> Integer.valueOf(i)).collect(Collectors.toList()));
-		assertTrue(diff.containsAll(results));
-	}
-	
-	/**
-	 * Test method for {@link com.smt.kata.number.ConsecutiveDifferences#find(int, int)}.
-	 */
-	@Test
-	void testFindExampleTwo() throws Exception {
-		int[] matches = new int[] {10,12,21,23,32,34,43,45,54,56,65,67,76,78,87,89,98};
-		List<Integer> diff = cd.find(2, 1);
-		List<Integer> results = new ArrayList<>(Arrays.stream(matches).mapToObj(i -> Integer.valueOf(i)).collect(Collectors.toList()));
-		
-		assertTrue(results.containsAll(diff));
-	}
-	
-	/**
-	 * Test method for {@link com.smt.kata.number.ConsecutiveDifferences#find(int, int)}.
-	 */
-	@Test
-	void testFindExampleThree() throws Exception {
-		int[] matches = new int[] {11,22,33,44,55,66,77,88,99};
-		List<Integer> diff = cd.find(2, 0);
-		List<Integer> results = new ArrayList<>(Arrays.stream(matches).mapToObj(i -> Integer.valueOf(i)).collect(Collectors.toList()));
-		
-		assertTrue(results.containsAll(diff));
-	}
-	
-	/**
-	 * Test method for {@link com.smt.kata.number.ConsecutiveDifferences#find(int, int)}.
-	 */
-	@Test
-	void testFindExampleFour() throws Exception {
-		int[] matches = new int[] {13,20,24,31,35,42,46,53,57,64,68,75,79,86,97};
-		List<Integer> diff = cd.find(2, 2);
-		List<Integer> results = new ArrayList<>(Arrays.stream(matches).mapToObj(i -> Integer.valueOf(i)).collect(Collectors.toList()));
-		
-		assertTrue(results.containsAll(diff));
-	}
+	 /**
+     * Test method for {@link com.smt.kata.number.ConsecutiveDifferences#find(int, int)}.
+     */
+    @Test
+    void testFindExampleOne() throws Exception {
+        int[] matches = new int[] {181,292,707,818,929};
+        List<Integer> diff = cd.find(3, 7);
+        List<Integer> results = new ArrayList<>(Arrays.stream(matches).mapToObj(i -> Integer.valueOf(i)).collect(Collectors.toList()));
+        assertTrue(!diff.isEmpty());
+        assertTrue(results.containsAll(diff));
+    }
+    
+    /**
+     * Test method for {@link com.smt.kata.number.ConsecutiveDifferences#find(int, int)}.
+     */
+    @Test
+    void testFindExampleTwo() throws Exception {
+        int[] matches = new int[] {10,12,21,23,32,34,43,45,54,56,65,67,76,78,87,89,98};
+        List<Integer> diff = cd.find(2, 1);
+        List<Integer> results = new ArrayList<>(Arrays.stream(matches).mapToObj(i -> Integer.valueOf(i)).collect(Collectors.toList()));
+        assertTrue(!diff.isEmpty());    
+        assertTrue(results.containsAll(diff));
+    }
+    
+    /**
+     * Test method for {@link com.smt.kata.number.ConsecutiveDifferences#find(int, int)}.
+     */
+    @Test
+    void testFindExampleThree() throws Exception {
+        int[] matches = new int[] {11,22,33,44,55,66,77,88,99};
+        List<Integer> diff = cd.find(2, 0);
+        List<Integer> results = new ArrayList<>(Arrays.stream(matches).mapToObj(i -> Integer.valueOf(i)).collect(Collectors.toList()));
+        assertTrue(!diff.isEmpty());    
+        assertTrue(results.containsAll(diff));
+    }
+    
+    /**
+     * Test method for {@link com.smt.kata.number.ConsecutiveDifferences#find(int, int)}.
+     */
+    @Test
+    void testFindExampleFour() throws Exception {
+        int[] matches = new int[] {13,20,24,31,35,42,46,53,57,64,68,75,79,86,97};
+        List<Integer> diff = cd.find(2, 2);
+        List<Integer> results = new ArrayList<>(Arrays.stream(matches).mapToObj(i -> Integer.valueOf(i)).collect(Collectors.toList()));
+        assertTrue(!diff.isEmpty());    
+        assertTrue(results.containsAll(diff));
+    }
 
 }
