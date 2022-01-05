@@ -1,5 +1,9 @@
 package com.smt.kata.number;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.stream.Collectors;
+
 // JDK 11.x
 
 /****************************************************************************
@@ -77,6 +81,23 @@ public class SortIntegerByPower {
 	 * @return value in the high/low range, sorted that matches the kth element
 	 */
 	public int find(int low, int high, int k) {
-		return k;
+		if (low < 1 || high < 1 || k < 1 || k > high - low + 1) 
+			return 0;
+		
+		var map = new HashMap<Integer, Integer>();
+		for (var i = low; i <= high; ++i) 
+			map.put(i, steps(i, 0));
+		
+		return map.entrySet().stream()
+				.sorted(Map.Entry.comparingByValue())
+				.map(Map.Entry::getKey)
+				.collect(Collectors.toList())
+				.get(k - 1);
+	}
+	
+	private int steps(int num, int steps) {
+		if (num == 1) return steps;
+		if (num % 2 == 0) return steps(num / 2, ++steps);
+		return steps((3 * num) + 1, ++steps);
 	}
 }
