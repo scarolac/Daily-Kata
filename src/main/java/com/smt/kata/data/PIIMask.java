@@ -98,6 +98,39 @@ public class PIIMask {
 	 * @return Masked data.  Empty if data is invalid
 	 */
 	public String mask(String source) {
-		return source;
+		if (source == null || source.length() == 0)
+			return "";
+		if (source.matches(EMAIL_REGEX))
+			return maskEmail(source);
+		if (isValidPhone(source))
+			return maskPhone(source);
+
+		return "";
 	}
+	
+	private String maskEmail(String email) {
+		email = email.toLowerCase();
+		var split = email.split("@");
+		var front = split[0];
+		var end = "@" + split[1];
+		front = front.charAt(0) + "*****" + front.charAt(front.length() - 1);
+		
+		return front + end; 
+	}
+
+	private boolean isValidPhone(String phone) {
+		phone = phone.replaceAll("[^\\d.]", "");
+		return !(phone.length() < 10 || phone.length() > 20);
+	}
+
+	private String maskPhone(String phone) {
+		var len = phone.length();
+		var end = phone.substring(len - 4, len);
+		var front = phone.substring(0, len - 5);
+		front = front.replaceAll("\\.", "-").replaceAll("[\\d]", "*").replaceAll("\\(", "-").replace(")", "-");
+		if (front.charAt(0) == '-')
+			front = front.substring(1);
+
+		return front + "-" + end;
+	}	
 }
