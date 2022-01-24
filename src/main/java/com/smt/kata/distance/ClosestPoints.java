@@ -36,7 +36,25 @@ public class ClosestPoints {
 	 * @return Closest points
 	 */
 	public Integer[][] calculateClosestPoints(Integer[][] points) {
-		// Return the pairs with the min distance
-		return points;
+		if (points == null || points.length == 0)
+			return new Integer[0][0];
+
+		var max = Double.MAX_VALUE;
+		var result = new Integer[2][];
+		for (var i = 0; i < points.length - 1; ++i)
+			for (var j = i + 1; j < points.length; ++j) {
+				var distance = distance(points[i], points[j]);
+				if (distance < max) {
+					result[0] = points[i];
+					result[1] = points[j];
+					max = distance;
+				}
+			}
+
+		return result;
+	}
+
+	private double distance(Integer[] one, Integer[] two) {
+		return Math.sqrt(Math.pow((double) two[0] - one[0], 2) + Math.pow((double) two[1] - one[1], 2));
 	}
 }
