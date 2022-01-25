@@ -42,6 +42,40 @@ public class SoundexConverter {
 	 * @return Soundex word.  Blank word if word is empty or contains numbers
 	 */
 	public String convert(String word) {
+		if (word == null || word.length() == 0 || word.matches(".*\\d.*")) 
+			return "";
+		word = word.toLowerCase();
+		
+		var firstLetter = word.charAt(0);
+		word = word.replaceAll("[aeiouywh]", "");
+		
+		if (!(firstLetter+"").matches("[aeiouywh]"))
+			word = word.substring(1);
+		word = (firstLetter + "").toUpperCase() + word
+			.replaceAll("[bfpv]", "1")
+			.replaceAll("[cgjkqsxz]", "2")
+			.replaceAll("[dt]", "3")
+			.replaceAll("[l]", "4")
+			.replaceAll("[mn]", "5")
+			.replaceAll("[r]", "6");
+		
+		word = removeDuplicates(word);
+
+		if (word.length() < 4)
+			word = word + "0000";
+		if (word.length() > 4)
+			word = word.substring(0, 4);
+		
 		return word;
+	}
+
+	public static String removeDuplicates(String word) {
+		if (word.length() <= 1)
+			return word;
+
+		if (word.substring(0, 1).equalsIgnoreCase(word.substring(1, 2)))
+			return removeDuplicates(word.substring(0, 1) + word.substring(2));
+		else
+			return word.substring(0, 1) + removeDuplicates(word.substring(1));
 	}
 }
