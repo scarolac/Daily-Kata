@@ -50,7 +50,29 @@ public class MaxRectangle {
 	 * @return Max rectangle area
 	 */
 	public int find(int[] vals) {
-		return vals.length;
+		if (badInput(vals))
+			return 0;
+		
+		var maxArea = 0;
+		for (int i = 0; i < vals.length; ++i) {
+			var height = vals[i];
+			for (int j = i; j < vals.length; ++j) {
+				var width = j - i + 1;
+				height = Math.min(height, vals[j]);
+				maxArea = Math.max(maxArea, height * width);
+			}
+		}
+
+		return maxArea;
+	}
+
+	private boolean badInput(int[] vals) {
+		if (vals == null || vals.length == 0)
+			return true;
+		for (var val : vals)
+			if (val < 0)
+				return true;
+		return false;
 	}
 
 }

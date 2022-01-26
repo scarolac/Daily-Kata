@@ -42,7 +42,7 @@ class MaxRectangleTest {
 	 */
 	@Test
 	void testFindNegative() throws Exception {
-		assertEquals(6, mr.find(new int[]{1 ,-3, 2, 5}));
+		assertEquals(0, mr.find(new int[]{1 ,-3, 2, 5}));
 	}
 
 	/**

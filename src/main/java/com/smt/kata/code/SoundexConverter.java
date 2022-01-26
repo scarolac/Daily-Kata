@@ -47,7 +47,7 @@ public class SoundexConverter {
 		word = word.toLowerCase();
 		
 		var firstLetter = word.charAt(0);
-		word = word.replaceAll("[aeiouywh]", "");
+		word = word.replaceAll("[aeiouywh]", "0");
 		
 		if (!(firstLetter+"").matches("[aeiouywh]"))
 			word = word.substring(1);
@@ -60,6 +60,7 @@ public class SoundexConverter {
 			.replaceAll("[r]", "6");
 		
 		word = removeDuplicates(word);
+		word = word.replace("0", "");
 
 		if (word.length() < 4)
 			word = word + "0000";

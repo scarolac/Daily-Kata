@@ -108,4 +108,12 @@ class SoundexConverterTest {
 	void testConvertAllSame() throws Exception {
 		assertEquals("G400", sc.convert("GLLLLLLLLLLLLLLLLLLL"));
 	}
+	
+	/**
+     * Test method for {@link com.smt.kata.code.SoundexConverter#convert(java.lang.String)}.
+     */
+    @Test
+    void testAlternateSameChars() throws Exception {
+        assertEquals("H111", sc.convert("HABABABABABABA"));
+    }
 }
