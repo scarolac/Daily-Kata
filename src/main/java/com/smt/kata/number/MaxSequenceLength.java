@@ -1,5 +1,7 @@
 package com.smt.kata.number;
 
+import java.util.Arrays;
+
 /****************************************************************************
  * <b>Title</b>: MaxSequenceLength.java
  * <b>Project</b>: SMT-Kata
@@ -29,7 +31,19 @@ public class MaxSequenceLength {
 	 * @return Longest sequence
 	 */
 	public int calculate(int[] values, int step) {
-		return values.length;
+		if (values == null || values.length == 0)
+			return 0;
+		Arrays.sort(values);
+
+		var count = 1;
+		var max = 1;
+		for (int i = 0; i < values.length - 1; ++i)
+			if (values[i] + step == values[i + 1])
+				max = Math.max(++count, max);
+			else
+				count = 1;
+
+		return max;
 	}
 
 }
