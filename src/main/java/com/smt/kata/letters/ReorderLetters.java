@@ -1,5 +1,10 @@
 package com.smt.kata.letters;
 
+import java.util.Collections;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+
 /****************************************************************************
  * <b>Title</b>: ReorderLetters.java
  * <b>Project</b>: SMT-Kata
@@ -38,7 +43,16 @@ public class ReorderLetters {
 	 * @param word Word to reorder it's letters
 	 * @return Reordered word
 	 */
-	public String process(String word) {
-		return word;
+	public String process(String word) {		
+		return (word == null) 
+				? "" 
+				: word.chars()
+					.mapToObj(Character::toString)
+					.collect(Collectors.groupingBy(Function.identity(), Collectors.counting()))
+					.entrySet().stream()
+					.sorted(Map.Entry.comparingByKey())
+					.sorted(Map.Entry.comparingByValue(Collections.reverseOrder()))
+					.map(entry -> entry.getKey().repeat(entry.getValue().intValue()))
+					.collect(Collectors.joining());
 	}
 }
