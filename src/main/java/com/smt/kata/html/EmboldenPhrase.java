@@ -1,5 +1,7 @@
 package com.smt.kata.html;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 // JDK 11.x
 import java.util.List;
 
@@ -39,6 +41,41 @@ public class EmboldenPhrase {
 	 * @return Bolded phrase
 	 */
 	public String embolden(String phrase, List<String> boldWords) {
+		if (phrase == null || phrase.length() == 0)
+			return "";
+		if (boldWords == null || boldWords.isEmpty())
+			return phrase;
+		
+		var map = new HashMap<Integer, String>();
+		boldWords = comboMaker(boldWords);
+		while(!boldWords.isEmpty()) {
+			var combo = boldWords.remove(0);
+			var taggedWord = OPEN_TAG + combo + CLOSED_TAG;
+			var index = phrase.indexOf(combo);
+			map.put(index, taggedWord);
+			phrase = phrase.replace(combo, index + "");
+		}
+		
+		for (var entry : map.entrySet())
+			phrase = phrase.replace(entry.getKey() + "", entry.getValue());
+		
 		return phrase;
 	}
+	
+	private List<String> comboMaker(List<String> boldWords) {
+		var list = new ArrayList<String>();
+		for (var i = 0; i < boldWords.size() - 1; ++i)
+			for (var j = i + 1; j < boldWords.size(); ++j) {
+				var first = boldWords.get(i);
+				var second = boldWords.get(j);
+				if (first.charAt(first.length() - 1) == second.charAt(0))
+					list.add(first + second.substring(1));
+				if (second.charAt(second.length() - 1) == first.charAt(0))
+					list.add(second + first.substring(1));
+			}
+		for (var item : boldWords)
+			list.add(item);
+		return list;
+	}
+	
 }

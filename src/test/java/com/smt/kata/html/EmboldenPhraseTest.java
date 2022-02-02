@@ -96,4 +96,9 @@ class EmboldenPhraseTest {
 	void testEmboldenExampleFour() throws Exception {
 		assertEquals("<b>def</b><b>defcd</b>f<b>fcd</b>g", ep.embolden("defdefcdffcdg", Arrays.asList("fcd","def")));
 	}
+	
+	@Test
+	void testEmboldenExampleFourrr() throws Exception {
+	    assertEquals("<b>def</b><b>defcd</b><b>f</b><b>fcd</b>g", ep.embolden("defdefcdffcdg", Arrays.asList("fcd","def", "f")));
+	}
 }
