@@ -2,9 +2,8 @@ package com.smt.kata.number;
 
 // JDK 8.x
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-
-import org.apache.commons.lang3.StringUtils;
 
 /****************************************************************************
  * <b>Title</b>: CheckWriter.java
@@ -51,50 +50,40 @@ public class CheckWriter {
 	 * @return
 	 */
 	public String convertWords(double data) {
-		StringUtils.capitalize(null);
-		String number = splitIt(data);
+		var pair = Double.toString(data).split("\\.");
+		var dollars = pair[0];
+		var change = pair[1];
+		
+		return makeDollars(dollars) + makeChange(change);
+	}
+	
+	private String makeDollars(String dollars) {
+		var value = Integer.parseInt(dollars);
+		var places = List.of(1000, 100, 10);
 		var result = new StringBuilder();
-		for (var i = 0; i < number.length(); ++i) {
-			String digit;
-			if (number.length() - i == 4) {
-				digit = numberMap.get(1000) + " ";
-				result.append(digit);
-			}			
-			else if (number.length() - i == 3) {
-				digit = numberMap.get(Integer.parseInt(number.charAt(i) +"")) + " " + numberMap.get(100) + " ";
-				result.append(digit);
-			}	
-			else if (number.length() - i == 2){
-				System.out.println(Integer.parseInt((number.charAt(i)) + (number.charAt(i + 1)) + ""));
-				digit = numberMap.get(Integer.parseInt((number.charAt(i)) + (number.charAt(i + 1)) + ""));
-				result.append(digit);
+		for (var place : places) {
+			var quotient = value / place;
+			if (quotient == 0) 
+				continue;
+			if (numberMap.containsKey(value)) {
+				result.append(numberMap.get(value)).append(" dollars ");
+				break;
 			}
-			else if (number.length() - i == 1){
-				digit = numberMap.get(Integer.parseInt(number.charAt(i) + "")) + " ";
-				result.append(digit);
-			}
+			else if (place == 10)				
+				result.append(numberMap.get(quotient * place)).append(" ");
+			else
+				result.append(numberMap.get(quotient)).append(" ").append(numberMap.get(place)).append(" ");
+			value %= place;
 		}
-		System.out.println(result + "dollars " + change(data));
+		if (value / 10 != 1)
+			result.append(numberMap.get(value)).append(" dollars ");
 		
-//		ones, tens, pull from map in order
-//		hundred pulls from ones then hundred
-//		thousands pull from all below
-		
-		return StringUtils.capitalize(result.toString() + "dollars " + change(data));
-	}
-	private String splitIt(double data) {
-		String amount = Double.toString(data);
-		if (! amount.contains(".")) 
-			return amount;
-		return amount.split("\\.")[0];
+		var str = result.toString();
+		return str.substring(0, 1).toUpperCase() + str.substring(1);
 	}
 	
-	
-	private String change(double data) {
-		String amount = Double.toString(data);
-		if (! amount.contains(".")) 
-			return "";
-		return "and " + amount.split("\\.")[1] + "/100";
+	private String makeChange(String change) {
+		return (change.equals("0")) ? "" : "and " + change + "/100";
 	}
 
 	/**
