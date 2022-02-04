@@ -69,7 +69,7 @@ public class CheckWriter {
 				result.append(numberMap.get(value)).append(" dollars ");
 				break;
 			}
-			else if (place == 10)				
+			if (place == 10)
 				result.append(numberMap.get(quotient * place)).append(" ");
 			else
 				result.append(numberMap.get(quotient)).append(" ").append(numberMap.get(place)).append(" ");
