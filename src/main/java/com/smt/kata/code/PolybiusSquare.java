@@ -62,7 +62,8 @@ public class PolybiusSquare {
 		return result.toString().trim();
 	}
 	
-	private static final Map<String, String> encode = new HashMap<>();
+	private static final Map<String, String> encode = new HashMap<>();	
+	private static final Map<String, String> decode = new HashMap<>();
 	static {
 		encode.put("a", "11");
 		encode.put("b", "12");
@@ -89,10 +90,7 @@ public class PolybiusSquare {
 		encode.put("x", "53");
 		encode.put("y", "54");
 		encode.put("z", "55");
-	}
-	
-	private static final Map<String, String> decode = new HashMap<>();
-	static {
+		
 		decode.put("11", "a");
 		decode.put("12", "b");
 		decode.put("13", "c");
