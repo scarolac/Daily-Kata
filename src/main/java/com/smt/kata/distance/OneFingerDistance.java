@@ -1,7 +1,5 @@
 package com.smt.kata.distance;
 
-import com.siliconmtn.data.text.StringUtil;
-
 /****************************************************************************
  * <b>Title:</b> OneFingerDistance.java
  * <b>Project:</b> SMT-Kata
@@ -37,10 +35,11 @@ public class OneFingerDistance {
 	 */
 	public int calculate(String word) {
 		var sum = 0;
-		if (StringUtil.isEmpty(word) || word.length() == 1 || ! word.matches("[a-zA-Z]+")) return sum;		
-		word = word.toLowerCase();	
-		for (var i = 1; i < word.length(); ++i) 
-			sum += Math.max(Math.abs((word.charAt(i - 1) - word.charAt(i))) - 1, 0);		
+		if (word == null || word.length() < 2 || !word.matches("[a-zA-Z]+"))
+			return sum;
+		word = word.toUpperCase();
+		for (var i = 0; i < word.length() - 1; ++i)
+			sum += Math.max(Math.abs((word.charAt(i + 1) - word.charAt(i))) - 1, 0);
 		return sum;
 	}
 }
