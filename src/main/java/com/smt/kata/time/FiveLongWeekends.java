@@ -44,16 +44,18 @@ public class FiveLongWeekends {
 	 * @return Date of the five long weekends month.  Null otherwise
 	 */
 	public Date findNext(Date d) {
-		if (d.equals(new Date())) return null;
-		var c = Calendar.getInstance();
-		c.setTime(d);
-		if (c.get(Calendar.DAY_OF_MONTH) > 1) {
-			c.set(Calendar.DAY_OF_MONTH, 1);
-			c.add(Calendar.MONTH, 1);
+		if (d.equals(new Date()))
+			return null;
+		var calendar = Calendar.getInstance();
+		calendar.setTime(d);
+		if (calendar.get(Calendar.DAY_OF_MONTH) > 1) {
+			calendar.set(Calendar.DAY_OF_MONTH, 1);
+			calendar.add(Calendar.MONTH, 1);
 		}
-		while (c.get(Calendar.DAY_OF_WEEK) != 6 || c.getActualMaximum(Calendar.DAY_OF_MONTH) != 31)
-			c.add(Calendar.MONTH, 1);
-		return c.getTime();
+
+		while (calendar.get(Calendar.DAY_OF_WEEK) != 6 || calendar.getActualMaximum(Calendar.DAY_OF_MONTH) != 31)
+			calendar.add(Calendar.MONTH, 1);
+		return calendar.getTime();
 	}
 
 }
