@@ -1,8 +1,11 @@
 package com.smt.kata.game;
 
+import java.util.ArrayList;
 // JDK 11.x
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /****************************************************************************
  * <b>Title</b>: AnagramGroup.java
@@ -42,6 +45,18 @@ public class AnagramGroup {
 	 * @return A collection of lists grouping the 
 	 */
 	public Collection<List<String>> findGroups(String[] words) {
-		return null;
+		var result = new HashMap<String, List<String>>();
+		if (words == null)
+			return result.values();
+
+		for (var word : words)
+			if (word != null) {
+				word = word.toLowerCase();
+				result.computeIfAbsent(
+						word.chars().sorted().mapToObj(Character::toString).collect(Collectors.joining()),
+						k -> new ArrayList<>()).add(word);
+			}
+
+		return result.values();
 	}
 }
