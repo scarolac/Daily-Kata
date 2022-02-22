@@ -1,5 +1,8 @@
 package com.smt.kata.data;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /****************************************************************************
  * <b>Title</b>: StrobogrammaticNumber.java
  * <b>Project</b>: SMT-Kata
@@ -20,13 +23,33 @@ package com.smt.kata.data;
  ****************************************************************************/
 public class StrobogrammaticNumber {
 	
+	private static Map<Character, Character> map = new HashMap<>();
+	static {
+		map.put('0', '0');
+		map.put('1', '1');
+		map.put('6', '9');
+		map.put('8', '8');
+		map.put('9', '6');
+	}
+	
 	/**
 	 * Determines if a number is strobomatic
 	 * @param source Number to evaluate
 	 * @return True if stobomatic.  False otherwise
 	 */
 	public boolean isStrobogrammaticNumber(int source) {
-		return source == 0;
+		if (source < 0) return false;
+		
+		var str = Integer.toString(source);
+		var reverse = new StringBuilder(str.length());
+		
+		for (var letter : str.toCharArray()) 
+			if(! map.containsKey(letter)) 
+				return false;
+			else
+				reverse.insert(0, map.get(letter));		
+		
+		return str.equals(reverse.toString());
 	}
 
 }
