@@ -53,6 +53,15 @@ public class PairsDivisibleByK {
 	 * @return Number of matching pairs
 	 */
 	public int calculate(int[] values, int k) {
-		return k;
+		if (values == null || k < 1 || values.length < 1 || k > 105 || values.length % 2 == 1) return 0;
+		var n = values.length / 2;
+		
+		var count = 0;
+		for (var i = 0; i < values.length; ++i)
+			for (var j = i + 1; j < values.length; ++j)
+				if ((values[i] + values[j]) % k == 0) ++count;
+		
+		System.out.println((count));
+		return (count >= n) ? count : 0;
 	}
 }

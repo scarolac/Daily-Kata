@@ -93,4 +93,8 @@ class PairsDivisibleByKTest {
 		assertEquals(4, mdbk.calculate(new int[] { 1,-2,3,4,-5,6}, 2));
 	}
 
+	@Test
+	void test() {
+		assertEquals(8, mdbk.calculate(new int[] { -1, -1, -1, -1, 2, 2, -2, -2 }, 3));
+	}
 }
