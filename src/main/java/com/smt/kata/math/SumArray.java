@@ -21,12 +21,13 @@ package com.smt.kata.math;
  ****************************************************************************/
 public class SumArray {
 
+	private int[] vals;
 	/**
 	 * Constructor to assigns vals
 	 * @param vals
 	 */
 	public SumArray(int[] vals) {
-		
+		this.vals = vals;
 	}
 	
 	/**
@@ -36,7 +37,10 @@ public class SumArray {
 	 * @return Sum of values in range
 	 */
 	public int sum(int i, int j) {
-		return i+j;
+		if (vals == null || i < 0 || j > vals.length || i > j) return 0;
+		var sum = 0;
+		for (; i < j; ++i)
+			sum += vals[i];
+		return sum;
 	}
-
 }
