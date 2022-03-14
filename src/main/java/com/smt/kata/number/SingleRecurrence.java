@@ -1,5 +1,10 @@
 package com.smt.kata.number;
 
+import java.util.Arrays;
+import java.util.Map.Entry;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+
 /****************************************************************************
  * <b>Title</b>: SingleRecurrence.java
  * <b>Project</b>: SMT-Kata
@@ -30,7 +35,10 @@ public class SingleRecurrence {
 	 * @return Only values with a single occurrence.  Empty int[] if none found
 	 */
 	public int[] find(int[] values) {
-		return new int[] {};
+		return values == null ? new int[0]
+				: Arrays.stream(values).boxed()
+						.collect(Collectors.groupingBy(Function.identity(), Collectors.counting())).entrySet().stream()
+						.filter(map -> map.getValue() == 1).mapToInt(Entry::getKey).toArray();
 	}
 
 }
