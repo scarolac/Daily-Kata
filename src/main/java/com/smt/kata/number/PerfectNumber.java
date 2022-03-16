@@ -30,11 +30,9 @@ public class PerfectNumber {
 		var number = 0;
 		var count = 0;
 		
-		while (count < nth) {
-//			number++;
+		while (count < nth) 
 			if (isPerfect(++number))
-				count++;
-		}		
+				count++;	
 			
 		return number;
 	}
