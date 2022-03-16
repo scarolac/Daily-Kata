@@ -27,7 +27,23 @@ public class PerfectNumber {
 	 * @return Value of the nth perfect number
 	 */
 	public int find(int nth) {
-		return 0;
+		var number = 0;
+		var count = 0;
+		
+		while (count < nth) {
+//			number++;
+			if (isPerfect(++number))
+				count++;
+		}		
+			
+		return number;
+	}
+	
+	private boolean isPerfect(int number) {
+		int sum = 0;
+		for (;number != 0; number /= 10) 
+			sum += number % 10;		
+		return sum == 10;
 	}
 
 }
