@@ -48,7 +48,21 @@ public class SplitBinaryString {
 	 * @return Count of matches when split
 	 */
 	public int split(String s) {
+		if (s == null || s.isEmpty() || !s.matches("[01]+") || !s.contains("1") || !threeOnes(s))
+			return 0;		
+		if (s.length() == 3) 
+			return 1;
+		
+		// 3-partition problem
+
 		return s.length();
 	}
 
+	private boolean threeOnes(String s) {
+		var count = 0;
+		for (var letter : s.toCharArray())
+			if (letter == '1')
+				++count;
+		return count % 3 == 0;
+	}
 }
