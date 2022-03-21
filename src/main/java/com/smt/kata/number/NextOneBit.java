@@ -29,6 +29,25 @@ public class NextOneBit {
 	 * @return Next binary number with the same number of ones
 	 */
 	public String calculate(String binNum) {
-		return binNum;
+		if (badInput(binNum)) return "";
+		
+		var count = countBits(binNum);		
+		var value = Integer.parseInt(binNum, 2);
+		var binary = Integer.toBinaryString(++value);
+		
+		while(countBits(binary) != count)
+			binary = Integer.toBinaryString(++value);
+		
+		return binary;
+	}
+	
+	private boolean badInput(String binNum) {
+		return binNum == null 
+				|| binNum.isEmpty() 
+				|| binNum.chars().filter(c -> !(c =='1' || c == '0')).count() > 0;		
+	}
+	
+	private long countBits(String number) {
+		return number.chars().filter(c -> c == '1').count();
 	}
 }
