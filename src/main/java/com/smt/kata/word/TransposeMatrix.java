@@ -38,15 +38,14 @@ public class TransposeMatrix {
 	 * @return
 	 */
 	public String parse(String[][] matrix) {
-		if (matrix == null || matrix.length == 0) return "";
-		
-		StringBuilder sb = new StringBuilder();
-		for (int i = 0; i < matrix[0].length; ++i) {
-			for (int j = 0; j < matrix.length; ++j)	{
-				sb.append(matrix[j][i] + " ");
-			}
-		}
-		
-		return sb.toString().trim();
+		if (matrix == null || matrix.length == 0)
+			return "";
+
+		var result = new StringBuilder();
+		for (var col = 0; col < matrix[0].length; ++col)
+			for (var row = 0; row < matrix.length; ++row)
+				result.append(matrix[row][col]).append(" ");
+
+		return result.toString().strip();
 	}
 }
