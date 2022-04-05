@@ -29,6 +29,7 @@ class JosephusProblemTest {
 		assertEquals(11, jp.josephusRecursive(11, 1)); // 11
 		assertEquals(31, jp.josephusRecursive(41, 3)); // 31
 		assertEquals(13, jp.josephusRecursive(14, 2)); // 13
+		assertEquals(7, jp.josephusRecursive(8, 10)); 
 	}
 
 }

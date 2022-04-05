@@ -30,6 +30,8 @@ public class JosephusProblem {
 	 * @return
 	 */
 	public int josephusRecursive(int numSoldiers, int interval) {
-		return numSoldiers * interval;
+		// https://www.geeksforgeeks.org/josephus-problem-set-1-a-on-solution/
+		if (numSoldiers == 1) return 1;
+		return (josephusRecursive(numSoldiers - 1, interval) + interval - 1) % numSoldiers + 1;
 	}
 }
