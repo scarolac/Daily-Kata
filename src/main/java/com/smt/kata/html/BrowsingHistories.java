@@ -1,5 +1,6 @@
 package com.smt.kata.html;
 
+import java.util.ArrayList;
 // JDK 11.x
 import java.util.List;
 
@@ -39,6 +40,29 @@ public class BrowsingHistories {
 	 * @return Longest set of matching paths
 	 */
 	public List<String> findLongest(List<String> user1, List<String> user2) {
-		return user1;
+		// This is a Longest Common Subsequence problem
+		if (user1 == null || user2 == null) return new ArrayList<>();
+		
+		var result = new ArrayList<String>();
+		var i = 0;
+		var j = 0;
+		while (i < user1.size() || j < user2.size()) {
+			var temp = new ArrayList<String>();
+			while (i < user1.size() && j < user2.size() && user1.get(i).equals(user2.get(j))) {
+				temp.add(user1.get(i));
+					++i;				
+					++j;
+			}
+			System.out.println(temp);
+			if (temp.size() > result.size())
+				result = temp;
+			if (i != user1.size())
+				++i;
+			if (j != user2.size())
+				++j;
+				
+		}
+		
+		return result;
 	}
 }
