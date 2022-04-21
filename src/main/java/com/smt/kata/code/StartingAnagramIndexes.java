@@ -2,6 +2,7 @@ package com.smt.kata.code;
 
 // JDK 11.x
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /****************************************************************************
@@ -31,6 +32,22 @@ public class StartingAnagramIndexes {
 	 * @return Collection of the matching indexes
 	 */
 	public List<Integer> find(String word, String phrase) {
-		return new ArrayList<>();		
+		if (word == null || phrase == null || word.isEmpty() || phrase.isEmpty())
+			return new ArrayList<>();
+		
+		var result = new ArrayList<Integer>();
+		for (var i = 0; i <= phrase.length() - word.length(); ++i)
+			if (isAnagram(phrase.substring(i, i + word.length()), word))
+				result.add(i);
+		
+		return result;
+	}
+	
+	private boolean isAnagram(String str1, String str2) {
+		var temp1 = str1.toLowerCase().toCharArray();
+		var temp2 = str2.toLowerCase().toCharArray();
+		Arrays.sort(temp1);
+		Arrays.sort(temp2);
+		return Arrays.equals(temp1, temp2);
 	}
 }
