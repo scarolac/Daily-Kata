@@ -1,5 +1,7 @@
 package com.smt.kata.time;
 
+import java.util.ArrayList;
+
 /****************************************************************************
  * <b>Title</b>: CompatibleJobs.java
  * <b>Project</b>: SMT-Kata
@@ -41,6 +43,31 @@ public class CompatibleJobs {
 	 * @return Max compatible jobs
 	 */
 	public int[][] calculate(int[][] arrJobs) {
-		return arrJobs;
+		if (arrJobs == null || arrJobs.length == 0)
+			return new int[0][];
+		
+		var temp = new ArrayList<int[]>();
+		var max = new ArrayList<int[]>();
+		var prev = new int[] {0,0};		
+		for (var i = 0; i < arrJobs.length; ++i) {
+			temp.add(arrJobs[i]);
+			for (var j = 0; j < arrJobs.length; ++j) 
+				if (i != j && (arrJobs[j][0] >= arrJobs[i][1] || arrJobs[j][1] <= arrJobs[i][0])
+						&& (arrJobs[j][0] >= prev[1] || arrJobs[j][1] <= prev[0])) 
+				{
+					prev = arrJobs[j];
+					temp.add(arrJobs[j]);
+				}
+			
+			if (temp.size() > max.size())
+				max = temp;
+			temp = new ArrayList<int[]>();
+		}
+		
+		var result = new int[max.size()][];
+		result = max.toArray(result);
+		
+		return result;
 	}
+	
 }
