@@ -33,7 +33,9 @@ public class CountMatrixPaths {
 	 * @param cols Number of columns in the matrix
 	 * @return Number of pathways through the matrix
 	 */
-	public int count(int rows, int cols) {
-		return rows + cols;
-	}
+    public int count(int rows, int cols) {
+    	if (rows < 0 || cols < 0) return 0;
+    	if (rows == 1 && cols == 1) return 1;
+    	return count(rows - 1, cols) + count(rows, cols - 1);
+    }
 }
