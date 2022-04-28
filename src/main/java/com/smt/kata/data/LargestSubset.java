@@ -1,5 +1,8 @@
 package com.smt.kata.data;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
 // JDK 11.x
 import java.util.List;
 
@@ -30,7 +33,23 @@ public class LargestSubset {
 	 * @return Collection of values with all modulus 0
 	 */
 	public List<Integer> find(List<Integer> values) {
-		return null;
+		if (values == null || values.size() < 2) 
+			return new ArrayList<>();
+		Collections.sort(values);
+		var result = new ArrayList<Integer>();
+		for (var item : values) {
+			var temp = new HashSet<Integer>();
+			temp.add(item);
+			for (var item2 : values) {
+				if (item != item2 && (item % item2 != 0 && item2 % item != 0))
+					continue;
+				temp.add(item2);
+			}
+			if (temp.size() > result.size())
+				result = new ArrayList<>(temp);
+		}
+		System.out.println(result);
+		return result;
 	}
 
 }
