@@ -59,7 +59,7 @@ class LargestSubsetTest {
 	 */
 	@Test
 	void testFindExampleOne() throws Exception {
-		List<Integer> results = ls.find(new ArrayList<>(Arrays.asList(3, 5, 10, 20, 2)));
+		List<Integer> results = ls.find(new ArrayList<>(Arrays.asList(3, 5, 10, 20, 21)));
 		assertEquals(3, results.size());
 		assertTrue(results.contains(5));
 		assertTrue(results.contains(10));
