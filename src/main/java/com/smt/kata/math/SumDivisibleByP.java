@@ -1,5 +1,7 @@
 package com.smt.kata.math;
 
+import java.util.Arrays;
+
 /****************************************************************************
  * <b>Title</b>: SumDivisibleByP.java
  * <b>Project</b>: SMT-Kata
@@ -55,6 +57,26 @@ public class SumDivisibleByP {
 	 * @return Smallest number of removed items.  -1 if not possible
 	 */
  	public int calculate(int[] nums, int p) {
+ 		if (nums == null || p > sum(nums))
+ 			return -1;
+ 		
+ 		if (sum(nums) % p == 0)
+ 			return 0;
+ 		
+ 		// make array with each item removed
+ 		System.out.println(sum(nums) % p);
+ 		
+ 		
+ 		// check sum
+ 		
+ 		// repeat until found or empty
+ 		
+ 		
+ 		
  		return p;
+ 	}
+ 	
+ 	private int sum(int[] array) {
+ 		return Arrays.stream(array).sum();
  	}
 }
