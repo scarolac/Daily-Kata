@@ -1,8 +1,12 @@
 package com.smt.kata.time;
 
+import java.time.LocalTime;
+import java.time.temporal.ChronoUnit;
 // JDK 11.x
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map.Entry;
 
 /****************************************************************************
  * <b>Title</b>: KeyCardAlert.java
@@ -64,8 +68,36 @@ public class KeyCardAlert {
 	 * @param keyTime Log of times
 	 * @return List of names that met the criteria from above
 	 */
-    public List<String> find(String[] keyName, String[] keyTime) {
-    	return new ArrayList<>();
-    }
+	public List<String> find(String[] keyName, String[] keyTime) {
+		var result = new ArrayList<String>();
+		if (badInput(keyName, keyTime))
+			return result;
 
+		var schedule = new HashMap<String, List<LocalTime>>();
+		for (var i = 0; i < keyName.length; ++i)
+			schedule.computeIfAbsent(keyName[i], k -> new ArrayList<>()).add(LocalTime.parse(keyTime[i]));
+
+		for (var person : schedule.entrySet()) 
+			if (tooManyUses(person))
+				result.add(person.getKey());		
+
+		return result;
+	}	
+
+	private boolean badInput(String[] keyName, String[] keyTime) {
+		return (keyName == null || keyName.length == 0 || keyTime == null || keyTime.length == 0
+				|| keyName.length != keyTime.length);
+	}
+
+	private boolean tooManyUses(Entry<String, List<LocalTime>> person) {
+		LocalTime start = null;
+		var count = 1;
+		for (var time : person.getValue())
+			if (start != null && start.until(time, ChronoUnit.MINUTES) <= 60)
+				++count;
+			else
+				start = time;
+		
+		return (count >= 3);
+	}
 }
