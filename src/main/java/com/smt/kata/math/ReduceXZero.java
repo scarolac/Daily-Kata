@@ -1,5 +1,10 @@
 package com.smt.kata.math;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
 /****************************************************************************
  * <b>Title</b>: ReduceXZero.java
  * <b>Project</b>: SMT-Kata
@@ -48,6 +53,32 @@ public class ReduceXZero {
 	 * @return Minimum number of moves to match the sum
 	 */
 	public int minOperations(int[] nums, int x) {
-		return x;
+		if (badInput(nums, x))
+			return -1;
+		
+		var list = new ArrayList<>(Arrays.stream(nums).boxed().collect(Collectors.toList()));		
+		
+		return nums.length - count(list, sum(list) - x) ;
+	}
+	
+	private int count(List<Integer> list, int x) {
+		if (list.isEmpty() || sum(list) == x) 
+			return list.size();
+		
+		var left = count(list.subList(1, list.size()), x);
+		var right = count(list.subList(0, list.size() - 1), x);
+		return Math.max(left, right);
+	}
+	
+	private int sum(List<Integer> list) {
+		return list.stream().mapToInt(Integer::intValue).sum();
+	}
+	private boolean badInput(int[] nums, int x) {
+		if (nums == null || nums.length == 0 || x < 0)
+			return true;
+		for (var num : nums)
+			if (num <= x) 
+				return false;
+		return true;
 	}
 }
