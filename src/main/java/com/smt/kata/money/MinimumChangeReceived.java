@@ -27,7 +27,20 @@ public class MinimumChangeReceived {
 	 * @return
 	 */
 	public int calculate(double dAmt) {
-		return 0;
+		if (dAmt < 0) return 0;
+		dAmt *= 100;
+		var count = 0;
+		count += dAmt / 25;
+		dAmt %= 25;
+		count += dAmt / 10;
+		dAmt %= 10;
+		count += dAmt / 5;
+		dAmt %= 5;
+		count += dAmt / 1;
+		dAmt %= 1;
+		count += dAmt;
+
+		return count;
 	}
 
 }
