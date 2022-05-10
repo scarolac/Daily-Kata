@@ -37,12 +37,17 @@ public class ZigZagNumbers {
 	 * @return True if a zig zag array.  False otherwise
 	 */
 	public boolean isZigZag(int[] source) {
-		if (source == null || source.length < 2) return false;		
-		var zigZag = true;
-		for (var i = 1; i < source.length; ++i) 
-			if (zigZag && source[i] > source[i - 1]) zigZag = !zigZag;			
-			else if (!zigZag && source[i] < source[i - 1]) zigZag = !zigZag;			
-			else return false;				
+		if (source == null || source.length < 2)
+			return false;
+
+		var zigzag = true;
+		for (var i = 1; i < source.length; ++i) {
+			if ((zigzag && source[i] > source[i - 1]) || (!zigzag && source[i] < source[i - 1]))
+				zigzag = !zigzag;
+			else
+				return false;
+		}
+
 		return true;
 	}
 }
