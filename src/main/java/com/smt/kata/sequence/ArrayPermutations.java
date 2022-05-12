@@ -2,7 +2,11 @@ package com.smt.kata.sequence;
 
 // JDK 11.x
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /****************************************************************************
  * <b>Title</b>: ArrayPermutations.java
@@ -32,6 +36,25 @@ public class ArrayPermutations {
 	 * @return Collection of permutations
 	 */
 	public List<List<Integer>> findPermutations(int[] num) {
-		return new ArrayList<>();
+		if (num == null || num.length == 0) 
+			return new ArrayList<>();
+		
+		var list = Arrays.stream(num).boxed().collect(Collectors.toList());
+		var set = new HashSet<List<Integer>>();
+		var aLot = fact(num.length, 1);
+		
+		while(set.size() < aLot) {
+			Collections.shuffle(list);
+			var temp = new ArrayList<>(list);
+			set.add(temp);
+		}
+		
+		return new ArrayList<>(set);
 	}
+	
+	private int fact(int num, int acc) {
+		if (num == 0) return acc;
+		return fact(num - 1, acc * num);
+	}
+	
 }
