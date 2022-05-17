@@ -38,8 +38,11 @@ class PatternDecoderTest {
 		patterns.put("111d", new ArrayList<>());
 		patterns.put("444", Arrays.asList("ddd"));
 		patterns.put("414", Arrays.asList("dad", "dn"));
-		patterns.put("1221", Arrays.asList("abba", "abu", "ava", "lba", "lu"));
+		patterns.put("4444", Arrays.asList("dddd"));
 		patterns.put("1212", Arrays.asList("abab","aub","lab","abl","ll"));
+		patterns.put("11111", Arrays.asList("aaaaa", "aaak", "aaka", "akaa", "kaaa", "akk", "kak", "kka"));
+		patterns.put("1221", Arrays.asList("abba", "ava", "abu", "lba", "lu"));
+		patterns.put("221", Arrays.asList("bba", "va", "bu"));
 	}
 
 	/**
