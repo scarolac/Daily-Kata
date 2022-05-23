@@ -1,5 +1,7 @@
 package com.smt.kata.sequence;
 
+import java.util.HashSet;
+
 /****************************************************************************
  * <b>Title</b>: LongestSubarray.java
  * <b>Project</b>: SMT-Kata
@@ -27,6 +29,20 @@ public class LongestSubarray {
 	 * @return Length of the longest distinct sub-array
 	 */
 	public int find(int[] sequence) {
-		return sequence.length;
+		if (sequence == null || sequence.length == 0) 
+			return 0;
+		
+		var max = 0;
+		for (var i = 0; i < sequence.length; ++i) {
+			var set = new HashSet<Integer>();
+			for (var j = i; j < sequence.length; ++j) {
+				if (set.contains(sequence[j]))
+					set = new HashSet<Integer>();
+				set.add(sequence[j]);
+				max = Math.max(set.size(), max);				
+			}
+		}
+		
+		return max;
 	}
 }
