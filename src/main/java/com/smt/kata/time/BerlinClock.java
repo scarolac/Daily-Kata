@@ -1,5 +1,8 @@
 package com.smt.kata.time;
 
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+
 /**
  * The Berlin Clock (Mengenlehreclock or Berlin Uhr) is a clock that tells the
  * time using a series of illuminated coloured blocks, as you can see in the
@@ -54,8 +57,9 @@ public class BerlinClock {
 	 * @param time
 	 * @return
 	 */
-	public String generateTime(String time) {
-		return null;
+	public String generateTime(String time) {		
+		if (getTime(time) == null) return null;
+		return generateSeconds(time) + generateFiveHoursRow(time) + generateSingleHoursRow(time) + generateFiveMinutesRow(time) + generateSingleMinutesRow(time);
 	}
 
 	/**
@@ -66,7 +70,17 @@ public class BerlinClock {
 	 * @return
 	 */
 	public String generateSingleMinutesRow(String time) {
-		return null;
+		var clock = getTime(time);
+		if (clock == null) return null;
+		var mins = Integer.parseInt(clock.split(":")[1]);
+		var r = mins % 5;
+		var singleMins = "";
+		for (var i = 0; i < 4; ++i) {
+			if (i < r) singleMins += "Y";
+			else singleMins += "0";		
+		}
+		
+		return singleMins;
 	}
 
 	/**
@@ -77,7 +91,18 @@ public class BerlinClock {
 	 * @return
 	 */
 	public String generateFiveMinutesRow(String time) {
-		return null;
+		var clock = getTime(time);
+		if (clock == null) return null;
+		var mins = Integer.parseInt(clock.split(":")[1]);
+		var r = mins / 5;
+		var fiveMins = "";
+		for (var i = 0; i < 11; ++i) {
+			if (i % 3 == 2 && i < r) fiveMins += "R";
+			else if (i < r) fiveMins += "Y";
+			else fiveMins += "0";		
+		}
+		
+		return fiveMins;
 	}
 
 	/**
@@ -88,7 +113,18 @@ public class BerlinClock {
 	 * @return
 	 */
 	public String generateSingleHoursRow(String time) {
-		return null;
+		var clock = getTime(time);
+		if (clock == null) return null;
+		
+		var hours = Integer.parseInt(clock.split(":")[0]);
+		
+		var r = hours % 5;
+		var singleHours = "";
+		for (var i = 0; i < 4; ++i)
+			if (i < r) singleHours += "R";
+			else singleHours += "0";	
+		
+		return singleHours;
 	}
 
 	/**
@@ -99,7 +135,17 @@ public class BerlinClock {
 	 * @return
 	 */
 	public String generateFiveHoursRow(String time) {
-		return null;
+		var clock = getTime(time);
+		if (clock == null) return null;
+		var hours = Integer.parseInt(clock.split(":")[0]);
+		
+		var r = hours / 5;
+		var fiveHours = "";
+		for (var i = 0; i < 4; ++i)
+			if (i < r) fiveHours += "R";
+			else fiveHours += "0";		
+		
+		return fiveHours;
 	}
 
 	/**
@@ -110,6 +156,22 @@ public class BerlinClock {
 	 * @return
 	 */
 	public String generateSeconds(String time) {
-		return null;
+		var clock = getTime(time);
+		if (clock == null) return null;
+		return (Integer.parseInt(clock.split(":")[2]) % 2 == 0) ? "Y" : "0";
+	}
+	
+	private String getTime(String time) {
+		var clock = LocalTime.now();
+		try {
+			clock = LocalTime.parse(time);
+		}
+		catch (Exception e) {
+			return null;
+		}
+		var result = clock.toString();
+		if (result.length() < 8)
+			result += ":00";
+		return result;
 	}
 }
