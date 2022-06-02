@@ -30,7 +30,21 @@ public class WordRank {
 	 * @return
 	 */
 	public String calculate(String phrase) {
+		if (phrase == null) 
+			return "";
 		
-		return phrase;
+		var max = 0;
+		var answer = "";
+		for (var word : phrase.split(" ")) {
+			var value = 0;
+			for (var letter : word.toLowerCase().toCharArray())
+				value += letter;
+			if (value > max) {
+				max = value;
+				answer = word;
+			}
+		}
+		
+		return answer;
 	}
 }
