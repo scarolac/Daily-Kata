@@ -42,13 +42,13 @@ public class OrderPlease {
 
 	
 	public String reorder(String phrase) {		
-        return Stream.of(
-        	StringUtil.defaultString(phrase).split(" "))
-        		.sorted((s1, s2) -> 
-        			Integer.compare(
-						NumberUtil.toInt(StringUtil.removeNonNumeric(s1)),
-						NumberUtil.toInt(StringUtil.removeNonNumeric(s2))))
-        		.collect(Collectors.joining(" ")
-        );
+		return (phrase == null) 
+				? ""
+				: Stream.of(phrase.split(" "))
+						.sorted((s1, s2) -> 
+							Integer.compare(
+								NumberUtil.toInt(StringUtil.removeNonNumeric(s1)),
+								NumberUtil.toInt(StringUtil.removeNonNumeric(s2))))
+						.collect(Collectors.joining(" "));
     }
 }
