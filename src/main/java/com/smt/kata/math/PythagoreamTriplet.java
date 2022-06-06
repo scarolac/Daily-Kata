@@ -29,6 +29,19 @@ public class PythagoreamTriplet {
 	 * @return True if 3 values match pythagoreams thereom.  False otherwise
 	 */
 	public boolean hasMatch(int[] values) {
-		return values == null;
+		if (values == null || values.length < 3) return false;
+		
+		for (var i = 0; i < values.length; ++i)
+			for (var j = 1; j < values.length; ++j)
+				for (var k = 2; k < values.length; ++k) {
+					var a = Math.pow(values[i], 2);
+					var b = Math.pow(values[j], 2);
+					var c = Math.pow(values[k], 2);
+					if (a + b == c || a + c == b || b + c == a)
+						return true;
+				}
+					
+		
+		return false;
 	}
 }
