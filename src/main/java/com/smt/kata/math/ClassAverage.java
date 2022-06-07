@@ -30,10 +30,10 @@ public class ClassAverage {
 	 * @param scores Current scores
 	 * @return Score required to bring down the overall average by 5%
 	 */
-	public String takeDownAverage(String[] scores) {		
-		double sum = 0.0;
-		for (var str : scores) 
-			sum += Double.parseDouble(str.replace("%", ""));		
+	public String takeDownAverage(String[] scores) {
+		var sum = 0.0;
+		for (var score : scores)
+			sum += Double.parseDouble(score.replace("%", ""));
 		return Math.round(((((sum / scores.length) * .95) * (scores.length + 1)) - sum)) + "%";
 	}
 }
