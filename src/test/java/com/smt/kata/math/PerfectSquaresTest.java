@@ -66,7 +66,7 @@ class PerfectSquaresTest {
 	 */
 	@Test
 	void testFindSmallestNumberExampleSix() throws Exception {
-		assertEquals(4, ps.findSmallestNumber(43));
+		assertEquals(3, ps.findSmallestNumber(43));
 	}
 	
 	/**

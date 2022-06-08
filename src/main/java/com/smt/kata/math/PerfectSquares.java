@@ -28,25 +28,26 @@ public class PerfectSquares {
 	 * @return Number of squares to solve the matches
 	 */
 	public int findSmallestNumber(int n) {
-		if (isSquare(n)) 
+		// Lagrange’s Four Square Theorem
+		// 1
+		if (isSquare(n))
 			return 1;
+		// 2
+		for (int i = 1; i <= (int) Math.sqrt(n); i++)
+			if (isSquare(n - (i * i)))
+				return 2;
+		// 4
+		while (n % 4 == 0)
+			n >>= 2;
+		if (n % 8 == 7)
+			return 4;
 		
-	    for (int i = 1; i <= (int)Math.sqrt(n); i++) 
-	        if (isSquare(n - (i * i))) 
-	            return 2;
-	        
-	    while (n % 4 == 0) {
-	        n >>= 2;
-	    }
-	    
-	    if (n % 8 == 7) 
-	        return 4;
-	    
-	    return 3;
+		// 3
+		return 3;
 	}
-	
+
 	private boolean isSquare(int n) {
-		var sq = (int)Math.sqrt(n);
+		var sq = (int) Math.sqrt(n);
 		return sq * sq == n;
 	}
 }
