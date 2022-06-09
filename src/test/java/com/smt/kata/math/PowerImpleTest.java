@@ -62,7 +62,15 @@ public class PowerImpleTest {
 	 */
 	@Test
 	void BothZeroPow() throws Exception {
-		assertEquals(0, pi.calcPower(0, 0));
+		assertEquals(1, pi.calcPower(0, 0));
+	}
+	
+	/**
+	 * Test method for {@link com.smt.kata.math.NoOpDivision#divide(int, int)}.
+	 */
+	@Test
+	void raisetoOne() throws Exception {
+		assertEquals(345, pi.calcPower(345, 1));
 	}
 	
 }
