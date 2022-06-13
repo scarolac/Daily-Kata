@@ -78,7 +78,9 @@ public class StrongPassword {
 	 * @return Boolean if valid or not
 	 */
 	public boolean isValidPattern(String password) {
-		return password == null;
+		if (password == null)
+			return false;
+		return password.matches("(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()\\-+]).{"+minPasswordLength+",}");
 	}
 
 	/**
