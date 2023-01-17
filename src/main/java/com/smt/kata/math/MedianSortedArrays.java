@@ -56,6 +56,43 @@ public class MedianSortedArrays {
 	 * @return median value.  0 if invalid data
 	 */
 	public double calculate(int[] first, int[] second) {
-		return first.length + second.length;
+		if (first == null || second == null) return 0;
+		
+		var result = merge(first, second);
+		if (result.length == 0) return 0;
+		
+		//median
+		var len = result.length;
+		if (len % 2 == 1)
+			return result[len/2];
+		else
+			return average(result[len/2], result[len/2-1]);
 	}
+	
+	private double average(int first, int second) {
+		return (first + second) / 2.0;
+	}
+	
+	private int[] merge(int[] first, int[] second) {
+		var result = new int[first.length + second.length];
+		
+		var index = 0;
+		var f = 0;
+		var s = 0;
+		while (f < first.length && s < second.length) {
+			if (first[f] < second[s])
+				result[index++] = first[f++];
+			else
+				result[index++] = second[s++];
+		}
+		
+		while (f < first.length)
+			result[index++] = first[f++];
+		while (s < second.length)
+			result[index++] = second[s++];
+		
+		return result;
+	}
+	
+	
 }
