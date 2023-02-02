@@ -1,5 +1,7 @@
 package com.smt.kata.word;
 
+import java.util.stream.Collectors;
+
 /****************************************************************************
  * <b>Title</b>: Pangram.java
  * <b>Project</b>: SMT-Kata
@@ -24,8 +26,8 @@ public class Pangram {
 	 * @param startNumber
 	 * @return
 	 */
-	public boolean isPangram(String sentence){
-		return "".equals(sentence);
+	public boolean isPangram(String sentence) {
+		return sentence.toLowerCase().replaceAll("[^a-z]", "").chars().mapToObj(c->(char)c).collect(Collectors.toSet()).size() == 26;
 	}
 
 }
