@@ -1,6 +1,6 @@
 package com.smt.kata.math;
 
-import java.util.Stack;
+import java.util.ArrayDeque;
 
 /****************************************************************************
  * <b>Title:</b> CountingParens.java
@@ -34,23 +34,19 @@ public class CountingParens {
 	 * @return
 	 */
 	public int calculate(String parens) {
-		if (parens == null)
-			return 0;
+		if (parens == null)	return 0;
 
-		Stack<Character> left = new Stack<>();
-		Stack<Character> right = new Stack<>();
-
-		for (var item : parens.toCharArray()) {
+		var stack = new ArrayDeque<Character>();
+		for (var item : parens.toCharArray()) 
 			if (item == '(')
-				left.push(item);
+				stack.push(item);
 			else if (item == ')') {
-				if (!left.isEmpty())
-					left.pop();
+				if (!stack.isEmpty() && stack.peek() == '(')
+					stack.pop();
 				else
-					right.push(item);
-			}
-		}
+					stack.push(item);
+			}		
 
-		return left.size() + right.size();
+		return stack.size();
 	}
 }
